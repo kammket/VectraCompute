@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600" role="img" aria-label="Vectra EPYC Edge">
+  <defs>
+    <linearGradient id="bgabkwie" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1A0B20"/>
+      <stop offset="1" stop-color="#6D28D9"/>
+    </linearGradient>
+    <radialGradient id="glowabkwie" cx="0.5" cy="0.45" r="0.6">
+      <stop offset="0" stop-color="#A78BFA" stop-opacity="0.25"/>
+      <stop offset="1" stop-color="#A78BFA" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="dotsabkwie" width="26" height="26" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.4" fill="#FFFFFF" opacity="0.05"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="600" fill="url(#bgabkwie)"/>
+  <rect width="800" height="600" fill="url(#dotsabkwie)"/>
+  <rect width="800" height="600" fill="url(#glowabkwie)"/>
+
+        <rect x="320" y="230" width="160" height="160" rx="14" fill="#0F172A" stroke="#A78BFA" stroke-width="3"/>
+        <rect x="352" y="262" width="96" height="96" rx="8" fill="#A78BFA" opacity="0.8"/>
+        <text x="400" y="318" text-anchor="middle" font-family="Inter, sans-serif" font-size="26" font-weight="700" fill="#0B1220">VC</text>
+        <rect x="336" y="210" width="8" height="20" rx="2" fill="#A78BFA"/><rect x="336" y="390" width="8" height="20" rx="2" fill="#A78BFA"/><rect x="358" y="210" width="8" height="20" rx="2" fill="#A78BFA"/><rect x="358" y="390" width="8" height="20" rx="2" fill="#A78BFA"/><rect x="380" y="210" width="8" height="20" rx="2" fill="#A78BFA"/><rect x="380" y="390" width="8" height="20" rx="2" fill="#A78BFA"/><rect x="402" y="210" width="8" height="20" rx="2" fill="#A78BFA"/><rect x="402" y="390" width="8" height="20" rx="2" fill="#A78BFA"/><rect x="424" y="210" width="8" height="20" rx="2" fill="#A78BFA"/><rect x="424" y="390" width="8" height="20" rx="2" fill="#A78BFA"/><rect x="446" y="210" width="8" height="20" rx="2" fill="#A78BFA"/><rect x="446" y="390" width="8" height="20" rx="2" fill="#A78BFA"/>
+        <rect x="300" y="252" width="20" height="8" rx="2" fill="#A78BFA"/><rect x="480" y="252" width="20" height="8" rx="2" fill="#A78BFA"/><rect x="300" y="274" width="20" height="8" rx="2" fill="#A78BFA"/><rect x="480" y="274" width="20" height="8" rx="2" fill="#A78BFA"/><rect x="300" y="296" width="20" height="8" rx="2" fill="#A78BFA"/><rect x="480" y="296" width="20" height="8" rx="2" fill="#A78BFA"/><rect x="300" y="318" width="20" height="8" rx="2" fill="#A78BFA"/><rect x="480" y="318" width="20" height="8" rx="2" fill="#A78BFA"/><rect x="300" y="340" width="20" height="8" rx="2" fill="#A78BFA"/><rect x="480" y="340" width="20" height="8" rx="2" fill="#A78BFA"/><rect x="300" y="362" width="20" height="8" rx="2" fill="#A78BFA"/><rect x="480" y="362" width="20" height="8" rx="2" fill="#A78BFA"/>
+  <text x="56" y="92" font-family="Inter, system-ui, sans-serif" font-size="15" letter-spacing="3" font-weight="600" fill="#A78BFA">CPU-PLATFORM WORKSTATION</text>
+  <text x="56" y="480" font-family="Inter, system-ui, sans-serif" font-size="34" font-weight="700" fill="#FFFFFF">Vectra EPYC Edge</text>
+  <text x="56" y="532" font-family="Inter, system-ui, sans-serif" font-size="17" fill="#CBD5E1">AMD EPYC deskside server</text>
+  <text x="744" y="92" text-anchor="end" font-family="Inter, system-ui, sans-serif" font-size="16" font-weight="700" fill="#FFFFFF" opacity="0.9">VectraCompute</text>
+</svg>

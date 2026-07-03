@@ -1,0 +1,33 @@
+# OS
+.DS_Store
+
+# Editors
+.idea
+.vscode
+.claude/
+
+# Dependencies and build outputs
+node_modules/
+**/node_modules/
+.next/
+**/.next/
+dist/
+build/
+coverage/
+*.tsbuildinfo
+.medusa/
+**/.medusa/
+
+# Env files at the repo root (backend/ and storefront/ have their own)
+/.env
+/.env.local
+/backend/.env
+/backend/.env.*
+/storefront/.env
+/storefront/.env.*
+!/backend/.env.template
+!/storefront/.env.template
+
+# Local operational inboxes
+/backend/data/*.jsonl
+/backend/data/*.json

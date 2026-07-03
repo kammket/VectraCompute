@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600" role="img" aria-label="VectraRack Refurb H200">
+  <defs>
+    <linearGradient id="bgp2uf4h" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0B0F1A"/>
+      <stop offset="1" stop-color="#0F766E"/>
+    </linearGradient>
+    <radialGradient id="glowp2uf4h" cx="0.5" cy="0.45" r="0.6">
+      <stop offset="0" stop-color="#2DD4BF" stop-opacity="0.25"/>
+      <stop offset="1" stop-color="#2DD4BF" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="dotsp2uf4h" width="26" height="26" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.4" fill="#FFFFFF" opacity="0.05"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="600" fill="url(#bgp2uf4h)"/>
+  <rect width="800" height="600" fill="url(#dotsp2uf4h)"/>
+  <rect width="800" height="600" fill="url(#glowp2uf4h)"/>
+
+        <rect x="250" y="240" width="300" height="46" rx="6" fill="#0F172A" stroke="#2DD4BF" stroke-width="2.5"/>
+        <rect x="250" y="296" width="300" height="46" rx="6" fill="#0F172A" stroke="#2DD4BF" stroke-width="2.5"/>
+        <rect x="266" y="254" width="20" height="18" rx="3" fill="#2DD4BF" opacity="0.55"/><rect x="300" y="254" width="20" height="18" rx="3" fill="#2DD4BF" opacity="0.7000000000000001"/><rect x="334" y="254" width="20" height="18" rx="3" fill="#2DD4BF" opacity="0.8500000000000001"/><rect x="368" y="254" width="20" height="18" rx="3" fill="#2DD4BF" opacity="0.55"/><rect x="402" y="254" width="20" height="18" rx="3" fill="#2DD4BF" opacity="0.7000000000000001"/><rect x="436" y="254" width="20" height="18" rx="3" fill="#2DD4BF" opacity="0.8500000000000001"/><rect x="470" y="254" width="20" height="18" rx="3" fill="#2DD4BF" opacity="0.55"/><rect x="504" y="254" width="20" height="18" rx="3" fill="#2DD4BF" opacity="0.7000000000000001"/><rect x="266" y="310" width="20" height="18" rx="3" fill="#2DD4BF" opacity="0.55"/><rect x="300" y="310" width="20" height="18" rx="3" fill="#2DD4BF" opacity="0.7000000000000001"/><rect x="334" y="310" width="20" height="18" rx="3" fill="#2DD4BF" opacity="0.8500000000000001"/><rect x="368" y="310" width="20" height="18" rx="3" fill="#2DD4BF" opacity="0.55"/><rect x="402" y="310" width="20" height="18" rx="3" fill="#2DD4BF" opacity="0.7000000000000001"/><rect x="436" y="310" width="20" height="18" rx="3" fill="#2DD4BF" opacity="0.8500000000000001"/><rect x="470" y="310" width="20" height="18" rx="3" fill="#2DD4BF" opacity="0.55"/><rect x="504" y="310" width="20" height="18" rx="3" fill="#2DD4BF" opacity="0.7000000000000001"/>
+        <circle cx="528" cy="263" r="5" fill="#2DD4BF"/>
+        <circle cx="528" cy="319" r="5" fill="#2DD4BF"/>
+  <text x="56" y="92" font-family="Inter, system-ui, sans-serif" font-size="15" letter-spacing="3" font-weight="600" fill="#2DD4BF">GPU RACK SERVER</text>
+  <text x="56" y="480" font-family="Inter, system-ui, sans-serif" font-size="34" font-weight="700" fill="#FFFFFF">VectraRack Refurb H200</text>
+  <text x="56" y="532" font-family="Inter, system-ui, sans-serif" font-size="17" fill="#CBD5E1">Validated high-memory GPU server</text>
+  <text x="744" y="92" text-anchor="end" font-family="Inter, system-ui, sans-serif" font-size="16" font-weight="700" fill="#FFFFFF" opacity="0.9">VectraCompute</text>
+</svg>
