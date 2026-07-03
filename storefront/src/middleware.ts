@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 
 const DEFAULT_REGION = process.env.NEXT_PUBLIC_DEFAULT_REGION || "us"
+const SUPPORTED_COUNTRIES = [DEFAULT_REGION.toLowerCase()]
 
 const regionMapCache = {
   regionMap: new Map<string, true>(),
@@ -14,11 +15,10 @@ async function getRegionMap(_cacheId: string) {
     !regionMap.keys().next().value ||
     regionMapUpdated < Date.now() - 3600 * 1000
   ) {
-    regionMapCache.regionMap.set("us", true)
-    regionMapCache.regionMap.set("gb", true)
-    regionMapCache.regionMap.set("ca", true)
-    regionMapCache.regionMap.set("de", true)
-    regionMapCache.regionMap.set("ng", true)
+    regionMapCache.regionMap.clear()
+    SUPPORTED_COUNTRIES.forEach((country) => {
+      regionMapCache.regionMap.set(country, true)
+    })
     regionMapCache.regionMapUpdated = Date.now()
   }
 
@@ -38,20 +38,8 @@ async function getCountryCode(
 
   const urlCountryCode = request.nextUrl.pathname.split("/")[1]?.toLowerCase()
 
-  // Cloudflare Workers provides country via request.cf.country
-  const cloudflareCountryCode = (request as { cf?: { country?: string } }).cf?.country?.toLowerCase()
-
-  // Vercel provides x-vercel-ip-country header
-  const vercelCountryCode = request.headers
-    .get("x-vercel-ip-country")
-    ?.toLowerCase()
-
   if (urlCountryCode && regionMap.has(urlCountryCode)) {
     countryCode = urlCountryCode
-  } else if (cloudflareCountryCode && regionMap.has(cloudflareCountryCode)) {
-    countryCode = cloudflareCountryCode
-  } else if (vercelCountryCode && regionMap.has(vercelCountryCode)) {
-    countryCode = vercelCountryCode
   } else if (regionMap.has(DEFAULT_REGION)) {
     countryCode = DEFAULT_REGION
   } else if (regionMap.keys().next().value) {
@@ -95,9 +83,14 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next()
   }
 
-  // if the url doesn't have the country, redirect to it
-  const redirectPath =
-    request.nextUrl.pathname === "/" ? "" : request.nextUrl.pathname
+  const unsupportedCountryPath =
+    firstPathSegment?.length === 2 && !regionMap.has(firstPathSegment)
+
+  const redirectPath = unsupportedCountryPath
+    ? request.nextUrl.pathname.replace(`/${firstPathSegment}`, "") || ""
+    : request.nextUrl.pathname === "/"
+    ? ""
+    : request.nextUrl.pathname
   const queryString = request.nextUrl.search || ""
   const redirectUrl = `${request.nextUrl.origin}/${country}${redirectPath}${queryString}`
 
