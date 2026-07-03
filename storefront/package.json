@@ -4,9 +4,6 @@
   "private": true,
   "author": "VectraCompute",
   "description": "VectraCompute storefront (Next.js + Medusa v2).",
-  "engines": {
-    "node": "20.x"
-  },
   "keywords": [
     "vectracompute-storefront"
   ],
