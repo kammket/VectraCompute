@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "npm install --prefix storefront --legacy-peer-deps && npm run build --prefix storefront",
-    "dev": "npm run dev --prefix storefront",
-    "start": "npm run start --prefix storefront"
+    "build": "npm ci --prefix backend && npm run build --prefix backend",
+    "dev": "npm run dev --prefix backend",
+    "start": "npm run start --prefix backend"
   }
 }
