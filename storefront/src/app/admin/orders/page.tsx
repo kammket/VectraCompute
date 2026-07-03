@@ -1,5 +1,6 @@
 import { requireAdmin } from "@lib/data/admin-auth"
 import {
+  isCommerceStorageConfigured,
   listSimpleOrders,
   updateSimpleOrderStatus,
   type SimpleOrderStatus,
@@ -19,6 +20,7 @@ const statuses: SimpleOrderStatus[] = [
 
 export default async function AdminOrdersPage() {
   await requireAdmin()
+  const storageConfigured = await isCommerceStorageConfigured()
   const orders = await listSimpleOrders()
 
   return (
@@ -35,7 +37,18 @@ export default async function AdminOrdersPage() {
         </div>
 
         <div className="mt-8 overflow-hidden rounded-md border border-ui-border-base bg-white">
-          {orders.length === 0 ? (
+          {!storageConfigured ? (
+            <div className="border-l-4 border-amber-500 bg-amber-50 p-6">
+              <p className="text-base-semi text-amber-900">
+                Order storage is not connected
+              </p>
+              <p className="mt-2 text-small-regular leading-6 text-amber-800">
+                Add your Railway Postgres connection string as DATABASE_URL in
+                Vercel, then redeploy the storefront. New checkout orders will
+                appear here after the database is connected.
+              </p>
+            </div>
+          ) : orders.length === 0 ? (
             <p className="p-6 text-small-regular text-ui-fg-subtle">
               No orders yet.
             </p>

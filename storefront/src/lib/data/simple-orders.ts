@@ -40,7 +40,7 @@ const getDatabaseUrl = () => process.env.DATABASE_URL
 const getClient = () => {
   const connectionString = getDatabaseUrl()
   if (!connectionString) {
-    throw new Error("DATABASE_URL is required for production order storage.")
+    return null
   }
 
   return new Client({
@@ -51,8 +51,14 @@ const getClient = () => {
   })
 }
 
+export const isCommerceStorageConfigured = async () => Boolean(getDatabaseUrl())
+
 async function query<T>(sql: string, params: unknown[] = []) {
   const client = getClient()
+  if (!client) {
+    throw new Error("DATABASE_URL is required for order storage.")
+  }
+
   await client.connect()
   try {
     const result = await client.query<T>(sql, params)
@@ -168,41 +174,49 @@ export async function createSimpleOrder(
     return { error: "Please complete your contact and delivery details." }
   }
 
-  await ensureCommerceTables()
-
   const id = `ord_${crypto.randomUUID().replace(/-/g, "").slice(0, 18)}`
-  await query(
-    `
-      insert into vectra_orders (
-        id, email, customer_name, phone, company, address, payment_method,
-        bitcoin_txid, notes, status, currency_code, subtotal, total, items
-      )
-      values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)
-    `,
-    [
-      id,
-      email,
-      customerName,
-      phone,
-      String(formData.get("company") ?? "").trim() || null,
-      {
-        address_1: address1,
-        address_2: String(formData.get("address_2") ?? "").trim(),
-        city,
-        province: String(formData.get("province") ?? "").trim(),
-        postal_code: String(formData.get("postal_code") ?? "").trim(),
-        country_code: countryCode,
-      },
-      String(formData.get("payment_method") ?? "bitcoin"),
-      String(formData.get("bitcoin_txid") ?? "").trim() || null,
-      String(formData.get("notes") ?? "").trim() || null,
-      "awaiting_payment",
-      cart.currency_code,
-      cart.item_subtotal ?? cart.subtotal ?? 0,
-      cart.total ?? 0,
-      cart.items,
-    ]
-  )
+  try {
+    await ensureCommerceTables()
+
+    await query(
+      `
+        insert into vectra_orders (
+          id, email, customer_name, phone, company, address, payment_method,
+          bitcoin_txid, notes, status, currency_code, subtotal, total, items
+        )
+        values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)
+      `,
+      [
+        id,
+        email,
+        customerName,
+        phone,
+        String(formData.get("company") ?? "").trim() || null,
+        {
+          address_1: address1,
+          address_2: String(formData.get("address_2") ?? "").trim(),
+          city,
+          province: String(formData.get("province") ?? "").trim(),
+          postal_code: String(formData.get("postal_code") ?? "").trim(),
+          country_code: countryCode,
+        },
+        String(formData.get("payment_method") ?? "bitcoin"),
+        String(formData.get("bitcoin_txid") ?? "").trim() || null,
+        String(formData.get("notes") ?? "").trim() || null,
+        "awaiting_payment",
+        cart.currency_code,
+        cart.item_subtotal ?? cart.subtotal ?? 0,
+        cart.total ?? 0,
+        cart.items,
+      ]
+    )
+  } catch (error) {
+    console.error("Failed to create VectraCompute order", error)
+    return {
+      error:
+        "Order storage is not connected yet. Please add DATABASE_URL in Vercel from your Railway Postgres database, redeploy, and try again.",
+    }
+  }
 
   await clearCart()
   revalidatePath("/", "layout")
@@ -210,24 +224,33 @@ export async function createSimpleOrder(
 }
 
 export async function retrieveOrder(id: string) {
-  await ensureCommerceTables()
-  const result = await query<StoredOrder>(
-    "select * from vectra_orders where id = $1 limit 1",
-    [id]
-  )
-  return result.rows[0] ? rowToOrder(result.rows[0]) : null
+  try {
+    await ensureCommerceTables()
+    const result = await query<StoredOrder>(
+      "select * from vectra_orders where id = $1 limit 1",
+      [id]
+    )
+    return result.rows[0] ? rowToOrder(result.rows[0]) : null
+  } catch (error) {
+    console.error("Failed to retrieve VectraCompute order", error)
+    return null
+  }
 }
 
 export async function listSimpleOrders() {
-  await ensureCommerceTables()
-  const result = await query<StoredOrder>(
-    "select * from vectra_orders order by created_at desc limit 100"
-  )
-  return result.rows.map(rowToOrder)
+  try {
+    await ensureCommerceTables()
+    const result = await query<StoredOrder>(
+      "select * from vectra_orders order by created_at desc limit 100"
+    )
+    return result.rows.map(rowToOrder)
+  } catch (error) {
+    console.error("Failed to list VectraCompute orders", error)
+    return []
+  }
 }
 
 export async function updateSimpleOrderStatus(formData: FormData) {
-  await ensureCommerceTables()
   const id = String(formData.get("id") ?? "")
   const status = String(formData.get("status") ?? "") as SimpleOrderStatus
 
@@ -235,9 +258,14 @@ export async function updateSimpleOrderStatus(formData: FormData) {
     return
   }
 
-  await query(
-    "update vectra_orders set status = $1, updated_at = now() where id = $2",
-    [status, id]
-  )
-  revalidatePath("/admin/orders")
+  try {
+    await ensureCommerceTables()
+    await query(
+      "update vectra_orders set status = $1, updated_at = now() where id = $2",
+      [status, id]
+    )
+    revalidatePath("/admin/orders")
+  } catch (error) {
+    console.error("Failed to update VectraCompute order status", error)
+  }
 }
