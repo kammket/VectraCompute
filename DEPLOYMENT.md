@@ -67,7 +67,7 @@ Create a Vercel project from this Git repo and set:
 
 - Root directory: `storefront`
 - Framework preset: Next.js
-- Install command: `npm ci`
+- Install command: `npm install --legacy-peer-deps`
 - Build command: `npm run build`
 
 The included [storefront/vercel.json](storefront/vercel.json) sets the install/build defaults.
