@@ -1,12 +1,11 @@
 "use server"
 
-import { sdk } from "@lib/config"
 import { sortProducts } from "@lib/util/sort-products"
 import { HttpTypes } from "@medusajs/types"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
 import type { ProductFilterValue } from "@modules/store/types"
-import { withProductImages } from "@lib/util/product-image"
-import { getAuthHeaders, getCacheOptions } from "./cookies"
+import { localProducts } from "@lib/catalog/local-catalog"
+import { applyProductOverrides } from "@lib/data/product-overrides"
 import { getRegion, retrieveRegion } from "./regions"
 
 export const listProducts = async ({
@@ -47,44 +46,49 @@ export const listProducts = async ({
     }
   }
 
-  const headers = {
-    ...(await getAuthHeaders()),
+  let products = await applyProductOverrides([...localProducts])
+
+  if (queryParams?.handle) {
+    const handles = Array.isArray(queryParams.handle)
+      ? queryParams.handle
+      : [queryParams.handle]
+    products = products.filter((product) => handles.includes(product.handle))
   }
 
-  const next = {
-    ...(await getCacheOptions("products")),
+  if (queryParams?.id) {
+    const ids = Array.isArray(queryParams.id) ? queryParams.id : [queryParams.id]
+    products = products.filter((product) => ids.includes(product.id))
   }
-  const isExactProductLookup = Boolean(queryParams?.handle || queryParams?.id)
 
-  return sdk.client
-    .fetch<{ products: HttpTypes.StoreProduct[]; count: number }>(
-      `/store/products`,
-      {
-        method: "GET",
-        query: {
-          limit,
-          offset,
-          region_id: region?.id,
-          fields:
-            "*variants.calculated_price,+variants.inventory_quantity,*variants.images,*categories,+metadata,+tags,",
-          ...queryParams,
-        },
-        headers,
-        ...(isExactProductLookup ? { cache: "no-store" as const } : { next }),
-      }
+  if (queryParams?.category_id) {
+    const categoryIds = Array.isArray(queryParams.category_id)
+      ? queryParams.category_id
+      : [queryParams.category_id]
+    products = products.filter((product) =>
+      product.categories?.some((category) => categoryIds.includes(category.id))
     )
-    .then(({ products, count }) => {
-      const nextPage = count > offset + limit ? pageParam + 1 : null
+  }
 
-      return {
-        response: {
-          products: products.map(withProductImages),
-          count,
-        },
-        nextPage: nextPage,
-        queryParams,
-      }
-    })
+  if (queryParams?.collection_id) {
+    products = []
+  }
+
+  if (queryParams?.order === "created_at") {
+    products = products.reverse()
+  }
+
+  const count = products.length
+  const paginatedProducts = products.slice(offset, offset + limit)
+  const nextPage = count > offset + limit ? pageParam + 1 : null
+
+  return {
+    response: {
+      products: paginatedProducts,
+      count,
+    },
+    nextPage,
+    queryParams,
+  }
 }
 
 /**

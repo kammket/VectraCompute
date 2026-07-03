@@ -58,6 +58,14 @@
     @apply px-4 py-2 border border-black rounded-full hover:bg-black hover:text-white transition-colors duration-200 ease-in;
   }
 
+  .checkout-input {
+    @apply h-11 rounded-md border border-ui-border-base bg-white px-3 py-2 text-base-regular text-ui-fg-base outline-none transition-colors placeholder:text-ui-fg-muted focus:border-brand-500 focus:ring-2 focus:ring-brand-100;
+  }
+
+  textarea.checkout-input {
+    @apply h-auto;
+  }
+
   .text-xsmall-regular {
     @apply text-[10px] leading-4 font-normal;
   }

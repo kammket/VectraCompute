@@ -53,13 +53,7 @@ export const toMajorCurrencyAmount = (
   amount: number,
   currencyCode?: string
 ) => {
-  if (!currencyCode) {
-    return amount / 100
-  }
-
-  return ZERO_DECIMAL_CURRENCIES.has(currencyCode.toLowerCase())
-    ? amount
-    : amount / 100
+  return amount
 }
 
 export const formatBtcAmount = (

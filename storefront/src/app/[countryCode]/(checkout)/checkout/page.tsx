@@ -1,8 +1,6 @@
 import { retrieveCart } from "@lib/data/cart"
-import { retrieveCustomer } from "@lib/data/customer"
-import PaymentWrapper from "@modules/checkout/components/payment-wrapper"
 import CheckoutTrustPanel from "@modules/checkout/components/checkout-trust-panel"
-import CheckoutForm from "@modules/checkout/templates/checkout-form"
+import SimpleCheckoutForm from "@modules/checkout/components/simple-checkout-form"
 import CheckoutSummary from "@modules/checkout/templates/checkout-summary"
 import { Heading, Text } from "@modules/common/components/ui"
 import { Metadata } from "next"
@@ -21,8 +19,6 @@ export default async function Checkout() {
     return notFound()
   }
 
-  const customer = await retrieveCustomer()
-
   return (
     <div className="bg-grey-5">
       <div className="content-container py-8 large:py-12">
@@ -37,8 +33,8 @@ export default async function Checkout() {
               </Heading>
               <Text className="text-ui-fg-subtle max-w-3xl leading-7">
                 Place the order in four steps. VectraCompute receives it in
-                Medusa Admin for configuration review, payment coordination,
-                validation, and fulfillment management.
+                the admin dashboard for configuration review, payment
+                coordination, validation, and fulfillment management.
               </Text>
             </div>
             <div className="grid grid-cols-2 small:grid-cols-4 gap-2 text-center text-small-regular">
@@ -60,9 +56,7 @@ export default async function Checkout() {
         </div>
         <div className="grid grid-cols-1 large:grid-cols-[minmax(0,1fr)_416px] gap-8 large:gap-10 items-start">
           <div className="border border-ui-border-base bg-white rounded-md p-5 large:p-6">
-            <PaymentWrapper cart={cart}>
-              <CheckoutForm cart={cart} customer={customer} />
-            </PaymentWrapper>
+            <SimpleCheckoutForm />
           </div>
           <div className="flex flex-col gap-6 large:sticky large:top-24">
             <CheckoutSummary cart={cart} />

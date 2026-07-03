@@ -1,0 +1,243 @@
+"use server"
+
+import { clearCart, retrieveCart } from "@lib/data/cart"
+import { HttpTypes } from "@medusajs/types"
+import { revalidatePath } from "next/cache"
+import { redirect } from "next/navigation"
+import { Client } from "pg"
+
+export type SimpleOrderStatus =
+  | "awaiting_payment"
+  | "payment_review"
+  | "confirmed"
+  | "processing"
+  | "shipped"
+  | "completed"
+  | "cancelled"
+
+type StoredOrder = {
+  id: string
+  display_id: number
+  email: string
+  customer_name: string
+  phone: string
+  company: string | null
+  address: Record<string, string>
+  payment_method: string
+  bitcoin_txid: string | null
+  notes: string | null
+  status: SimpleOrderStatus
+  currency_code: string
+  subtotal: number
+  total: number
+  items: HttpTypes.StoreCartLineItem[]
+  created_at: string
+  updated_at: string
+}
+
+const getDatabaseUrl = () => process.env.DATABASE_URL
+
+const getClient = () => {
+  const connectionString = getDatabaseUrl()
+  if (!connectionString) {
+    throw new Error("DATABASE_URL is required for production order storage.")
+  }
+
+  return new Client({
+    connectionString,
+    ssl: connectionString.includes("localhost")
+      ? undefined
+      : { rejectUnauthorized: false },
+  })
+}
+
+async function query<T>(sql: string, params: unknown[] = []) {
+  const client = getClient()
+  await client.connect()
+  try {
+    const result = await client.query<T>(sql, params)
+    return result
+  } finally {
+    await client.end()
+  }
+}
+
+export async function ensureCommerceTables() {
+  await query(`
+    create table if not exists vectra_orders (
+      id text primary key,
+      display_id serial unique,
+      email text not null,
+      customer_name text not null,
+      phone text not null,
+      company text,
+      address jsonb not null,
+      payment_method text not null,
+      bitcoin_txid text,
+      notes text,
+      status text not null default 'awaiting_payment',
+      currency_code text not null default 'usd',
+      subtotal numeric not null default 0,
+      total numeric not null default 0,
+      items jsonb not null,
+      created_at timestamptz not null default now(),
+      updated_at timestamptz not null default now()
+    )
+  `)
+}
+
+const rowToOrder = (row: StoredOrder): HttpTypes.StoreOrder => {
+  const shippingAddress = {
+    first_name: row.customer_name.split(" ")[0] ?? row.customer_name,
+    last_name: row.customer_name.split(" ").slice(1).join(" "),
+    phone: row.phone,
+    address_1: row.address.address_1,
+    address_2: row.address.address_2,
+    city: row.address.city,
+    province: row.address.province,
+    postal_code: row.address.postal_code,
+    country_code: row.address.country_code || "us",
+  }
+
+  return {
+    id: row.id,
+    display_id: row.display_id,
+    email: row.email,
+    currency_code: row.currency_code,
+    items: row.items,
+    subtotal: Number(row.subtotal),
+    total: Number(row.total),
+    tax_total: 0,
+    shipping_total: 0,
+    discount_total: 0,
+    gift_card_total: 0,
+    fulfillment_status: row.status,
+    payment_status:
+      row.status === "awaiting_payment" || row.status === "payment_review"
+        ? "awaiting"
+        : "captured",
+    shipping_address: shippingAddress,
+    shipping_methods: [
+      {
+        name: "Admin-reviewed freight / insured delivery",
+        amount: 0,
+      },
+    ],
+    payment_collections: [
+      {
+        payments: [
+          {
+            provider_id:
+              row.payment_method === "bitcoin"
+                ? "pp_system_default"
+                : "manual_invoice",
+            amount: Number(row.total),
+            created_at: row.created_at,
+            data: row.bitcoin_txid ? { bitcoin_txid: row.bitcoin_txid } : {},
+          },
+        ],
+      },
+    ],
+    created_at: row.created_at,
+    updated_at: row.updated_at,
+    metadata: {
+      company: row.company,
+      notes: row.notes,
+      internal_status: row.status,
+    },
+  } as HttpTypes.StoreOrder
+}
+
+export async function createSimpleOrder(
+  _currentState: { error?: string; success?: boolean } | undefined,
+  formData: FormData
+) {
+  const cart = await retrieveCart()
+  if (!cart?.items?.length) {
+    return { error: "Your cart is empty." }
+  }
+
+  const email = String(formData.get("email") ?? "").trim()
+  const customerName = String(formData.get("customer_name") ?? "").trim()
+  const phone = String(formData.get("phone") ?? "").trim()
+  const address1 = String(formData.get("address_1") ?? "").trim()
+  const city = String(formData.get("city") ?? "").trim()
+  const countryCode = String(formData.get("country_code") ?? "us").trim() || "us"
+
+  if (!email || !customerName || !phone || !address1 || !city) {
+    return { error: "Please complete your contact and delivery details." }
+  }
+
+  await ensureCommerceTables()
+
+  const id = `ord_${crypto.randomUUID().replace(/-/g, "").slice(0, 18)}`
+  await query(
+    `
+      insert into vectra_orders (
+        id, email, customer_name, phone, company, address, payment_method,
+        bitcoin_txid, notes, status, currency_code, subtotal, total, items
+      )
+      values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)
+    `,
+    [
+      id,
+      email,
+      customerName,
+      phone,
+      String(formData.get("company") ?? "").trim() || null,
+      {
+        address_1: address1,
+        address_2: String(formData.get("address_2") ?? "").trim(),
+        city,
+        province: String(formData.get("province") ?? "").trim(),
+        postal_code: String(formData.get("postal_code") ?? "").trim(),
+        country_code: countryCode,
+      },
+      String(formData.get("payment_method") ?? "bitcoin"),
+      String(formData.get("bitcoin_txid") ?? "").trim() || null,
+      String(formData.get("notes") ?? "").trim() || null,
+      "awaiting_payment",
+      cart.currency_code,
+      cart.item_subtotal ?? cart.subtotal ?? 0,
+      cart.total ?? 0,
+      cart.items,
+    ]
+  )
+
+  await clearCart()
+  revalidatePath("/", "layout")
+  redirect(`/us/order/${id}/confirmed`)
+}
+
+export async function retrieveOrder(id: string) {
+  await ensureCommerceTables()
+  const result = await query<StoredOrder>(
+    "select * from vectra_orders where id = $1 limit 1",
+    [id]
+  )
+  return result.rows[0] ? rowToOrder(result.rows[0]) : null
+}
+
+export async function listSimpleOrders() {
+  await ensureCommerceTables()
+  const result = await query<StoredOrder>(
+    "select * from vectra_orders order by created_at desc limit 100"
+  )
+  return result.rows.map(rowToOrder)
+}
+
+export async function updateSimpleOrderStatus(formData: FormData) {
+  await ensureCommerceTables()
+  const id = String(formData.get("id") ?? "")
+  const status = String(formData.get("status") ?? "") as SimpleOrderStatus
+
+  if (!id || !status) {
+    return
+  }
+
+  await query(
+    "update vectra_orders set status = $1, updated_at = now() where id = $2",
+    [status, id]
+  )
+  revalidatePath("/admin/orders")
+}

@@ -1,7 +1,5 @@
 "use server"
 
-import { sdk } from "@lib/config"
-
 export type ContactFormState = {
   success: boolean
   error: string | null
@@ -49,9 +47,11 @@ export async function submitContactForm(
       .filter(Boolean)
       .join("\n")
 
-    await sdk.client.fetch("/store/contact", {
-      method: "POST",
-      body: { name, email, company, message: structuredMessage },
+    console.info("VectraCompute contact inquiry", {
+      name,
+      email,
+      company,
+      message: structuredMessage,
     })
     return { success: true, error: null }
   } catch {

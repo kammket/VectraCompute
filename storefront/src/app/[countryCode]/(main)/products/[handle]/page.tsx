@@ -18,7 +18,11 @@ type Props = {
   searchParams: Promise<{ v_id?: string }>
 }
 
+export const dynamic = "force-dynamic"
+
 export async function generateStaticParams() {
+  return []
+
   try {
     const countryCodes = await listRegions().then((regions) =>
       regions?.map((r) => r.countries?.map((c) => c.iso_2)).flat()
