@@ -1,0 +1,8 @@
+# Override the Nixpacks install phase so that `npm ci` is NOT run automatically.
+# The buildCommand in railway.json (`npm install --legacy-peer-deps && npm run build`)
+# handles dependency installation, which is required because the package-lock.json
+# has transitive dependencies (e.g. posthog-node) that are out of sync with package.json.
+# `npm ci` would fail in that state; `npm install --legacy-peer-deps` resolves it cleanly.
+
+[phases.install]
+cmds = []
