@@ -1,183 +1,160 @@
-# VectraCompute Deployment
+# VectraCompute Production Deployment
 
-This repo has two separate apps:
+VectraCompute is now prepared as a lightweight production commerce app:
 
-- `backend/` -> Medusa v2 backend and Admin, deploy to Railway.
-- `storefront/` -> Next.js storefront, deploy to Vercel.
+- **Frontend / app runtime:** Next.js on Vercel
+- **Backend data layer:** PostgreSQL on Railway
+- **Admin:** Built into the Vercel app at `/admin`
+- **Orders:** Stored in Railway PostgreSQL
+- **Product management:** Built-in catalog plus admin-managed price/content/image overrides
+- **Bitcoin checkout:** Manual wallet mode through environment variables
 
-Deploy in this order: Railway backend first, then Vercel storefront, then update backend CORS with the final Vercel URL.
+You do not need Medusa for the current production deployment.
 
-## 1. Backend On Railway
+## 1. Railway
 
-Create a Railway project from this Git repo and set:
+Create a Railway project for the backend database.
 
-- Root directory: `backend`
-- Build command: `npm ci && npm run build`
-- Start command: `npm run start`
+Add:
 
-The included [backend/railway.json](backend/railway.json) sets these defaults when Railway reads it.
+- PostgreSQL
 
-Add Railway services:
-
-- Postgres
-- Redis
-
-Railway should inject:
-
-- `DATABASE_URL`
-- `REDIS_URL`
-
-Set these backend variables manually:
+Copy the Railway PostgreSQL connection string:
 
 ```txt
-NODE_ENV=production
-PORT=9000
-JWT_SECRET=<generate a long random value>
-COOKIE_SECRET=<generate a long random value>
-STORE_CORS=https://your-storefront.vercel.app
-ADMIN_CORS=https://your-backend.up.railway.app
-AUTH_CORS=https://your-backend.up.railway.app,https://your-storefront.vercel.app
+DATABASE_URL=postgresql://...
 ```
 
-Generate secrets locally with:
+Keep this value for Vercel. You do not need to deploy the old `backend/` service unless you decide to return to Medusa later.
 
-```bash
-openssl rand -base64 32
-```
+## 2. Vercel
 
-After the first successful backend deploy, run these one-off Railway commands from the `backend` service:
-
-```bash
-npm run db:migrate
-npm run admin:create -- -e owner@yourdomain.com -p 'ChangeThisStrongPassword!'
-npm run seed
-```
-
-Open Admin:
+Import the GitHub repository:
 
 ```txt
-https://your-backend.up.railway.app/app
+kammket/VectraCompute
 ```
 
-Then create/copy a publishable API key for the storefront.
-
-## 2. Storefront On Vercel
-
-Create a Vercel project from this Git repo and set:
-
-- Root directory: `storefront`
-- Framework preset: Next.js
-- Install command: `npm install --legacy-peer-deps`
-- Build command: `npm run build`
-
-The included [storefront/vercel.json](storefront/vercel.json) sets the install/build defaults.
-
-Set these Vercel environment variables:
+Recommended Vercel settings:
 
 ```txt
-NEXT_PUBLIC_MEDUSA_BACKEND_URL=https://your-backend.up.railway.app
-NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY=<publishable key token from Medusa Admin>
-NEXT_PUBLIC_BASE_URL=https://your-storefront.vercel.app
+Framework Preset: Next.js
+Root Directory: storefront
+Install Command: npm install --legacy-peer-deps
+Build Command: npm run build
+Output Directory: .next
+```
+
+Alternative root import also works:
+
+```txt
+Root Directory: leave empty
+Install Command: npm install --legacy-peer-deps
+Build Command: npm run build
+Output Directory: storefront/.next
+```
+
+## 3. Vercel Environment Variables
+
+Add these in Vercel Project Settings -> Environment Variables:
+
+```txt
+DATABASE_URL=<Railway Postgres DATABASE_URL>
+ADMIN_PASSWORD=<strong admin password>
+NEXT_PUBLIC_BASE_URL=https://your-vercel-domain.vercel.app
 NEXT_PUBLIC_DEFAULT_REGION=us
 ```
 
-Optional, only if you later enable Stripe/Medusa Payments:
+Optional Bitcoin settings:
 
 ```txt
-NEXT_PUBLIC_STRIPE_KEY=
-NEXT_PUBLIC_MEDUSA_PAYMENTS_PUBLISHABLE_KEY=
-NEXT_PUBLIC_MEDUSA_PAYMENTS_ACCOUNT_ID=
+BITCOIN_WALLET_ADDRESS=<your BTC receiving address>
+BITCOIN_QR_CODE_URL=<optional hosted QR code image URL>
+BITCOIN_REQUIRED_CONFIRMATIONS=2
+BITCOIN_PAYMENT_EXPIRY=30
+BITCOIN_PAYMENT_INSTRUCTIONS=Send the exact BTC amount and include your order number when contacting support.
 ```
 
-Deploy the storefront.
-
-## 3. Update Backend CORS
-
-After Vercel gives you the final storefront URL, update Railway backend env vars:
+Optional product image hosting:
 
 ```txt
-STORE_CORS=https://your-storefront.vercel.app,https://www.yourdomain.com
-AUTH_CORS=https://your-backend.up.railway.app,https://your-storefront.vercel.app,https://www.yourdomain.com
-ADMIN_CORS=https://your-backend.up.railway.app
+MEDUSA_CLOUD_S3_HOSTNAME=
+MEDUSA_CLOUD_S3_PATHNAME=
 ```
 
-Redeploy the backend after changing these.
+Those S3 variables are only needed if you use remote S3-style product images.
 
-## 4. Bitcoin Checkout Setup
+## 4. Deploy
 
-Bitcoin checkout settings are stored in Postgres in production.
+Redeploy the Vercel project after adding env vars.
 
-In Admin:
+Open:
 
 ```txt
-https://your-backend.up.railway.app/app/bitcoin-payments
+https://your-vercel-domain.vercel.app/us
 ```
 
-Set:
-
-- Bitcoin checkout enabled
-- Stage 1: Manual wallet
-- BTC wallet receiving address
-- QR code image URL, optional but recommended
-- Payment window
-- Required confirmations
-- Customer instructions
-
-The BTC/USD conversion is automatic through the backend endpoint:
+Admin:
 
 ```txt
-/store/bitcoin-exchange-rate
+https://your-vercel-domain.vercel.app/admin
 ```
 
-It uses CoinGecko first and Coinbase as fallback.
+Use the `ADMIN_PASSWORD` value to log in.
 
-## 5. Product And Price Management
+## 5. Admin Management
 
-Admin pages:
+Admin can currently:
 
-```txt
-/app/products
-/app/categories
-/app/orders
-/app/price-manager
-/app/hardware-ops
-/app/bitcoin-payments
-```
+- View and manage orders at `/admin/orders`
+- Update order status
+- Update existing product title
+- Update existing product description
+- Update existing product price
+- Change product image by hosted image URL
+- Activate/deactivate products
 
-Use `Price Manager` when you want a simple table where the current price is already inside the input and can be replaced quickly.
+Coming later:
 
-## 6. Final Smoke Test
+- Create brand-new products from admin
+- Upload image files directly from admin
+- Manage categories from admin
 
-After both services are deployed:
+## 6. Production Smoke Test
 
-1. Open the storefront.
-2. Confirm products and categories load.
-3. Add a product to cart.
-4. Checkout with Bitcoin/manual payment.
-5. Confirm the order page says `Awaiting Bitcoin payment`, not paid.
-6. Open Railway Admin and confirm the order appears.
-7. Update a product price in `Price Manager` and confirm the storefront price changes.
+After deployment:
+
+1. Open `/us`.
+2. Open `/us/store`.
+3. Open any product page.
+4. Add product to cart.
+5. Open `/us/cart`.
+6. Continue to checkout.
+7. Place an order.
+8. Log in to `/admin`.
+9. Confirm the order appears in `/admin/orders`.
+10. Update a product price in `/admin/products`.
+11. Confirm the public product page shows the updated price.
 
 ## Common Issues
 
-If products do not show:
+If admin login fails:
 
-- Check `NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY`.
-- Make sure products are published.
-- Make sure products are assigned to the sales channel linked to the publishable key.
+- Confirm `ADMIN_PASSWORD` is set in Vercel.
+- Redeploy after setting the env var.
 
-If Admin login says unauthorized:
+If orders do not save:
 
-- Confirm you created the admin user on the Railway database, not only locally.
-- Clear browser site data for the Railway backend domain.
-- Use the backend Admin URL, not the Vercel storefront URL.
+- Confirm `DATABASE_URL` is set in Vercel.
+- Confirm the Railway PostgreSQL database is running.
+- Redeploy Vercel after setting `DATABASE_URL`.
 
-If checkout cannot reach backend:
+If Bitcoin details do not show:
 
-- Check `NEXT_PUBLIC_MEDUSA_BACKEND_URL` in Vercel.
-- Check `STORE_CORS` and `AUTH_CORS` in Railway.
+- Set `BITCOIN_WALLET_ADDRESS`.
+- Redeploy Vercel.
 
-If Bitcoin amount does not show:
+If product images do not show:
 
-- Make sure Railway backend can make outbound HTTPS requests.
-- Make sure the backend is deployed with the `/store/bitcoin-exchange-rate` route.
+- Use a public HTTPS image URL in `/admin/products`.
+- Make sure the image host allows public browser access.
