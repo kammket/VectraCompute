@@ -1,6 +1,7 @@
 import { localCategories } from "@lib/catalog/local-catalog"
 import { requireAdmin } from "@lib/data/admin-auth"
 import {
+  isProductStorageConfigured,
   listAdminCatalogProducts,
   listProductOverrides,
   saveProductOverride,
@@ -256,9 +257,10 @@ function ProductFields({
 
 export default async function AdminProductsPage() {
   await requireAdmin()
-  const [products, overrides] = await Promise.all([
+  const [products, overrides, storageConfigured] = await Promise.all([
     listAdminCatalogProducts(),
     listProductOverrides(),
+    isProductStorageConfigured(),
   ])
   const overrideMap = new Map(overrides.map((item) => [item.handle, item]))
 
@@ -281,6 +283,17 @@ export default async function AdminProductsPage() {
             appear on the Vercel storefront after save.
           </p>
         </div>
+
+        {!storageConfigured && (
+          <div className="mt-6 rounded-md border border-amber-200 bg-amber-50 p-5 text-amber-900">
+            <p className="text-base-semi">Product storage is not connected</p>
+            <p className="mt-2 text-small-regular leading-6">
+              Add the Railway public Postgres URL as DATABASE_URL in Vercel and
+              redeploy. The page will still show seeded products, but new
+              products, uploaded photos, and edits need the database.
+            </p>
+          </div>
+        )}
 
         <form
           action={saveProductOverride}

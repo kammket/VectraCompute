@@ -59,10 +59,15 @@ async function query<T>(sql: string, params: unknown[] = []) {
   try {
     const result = await client.query<T>(sql, params)
     return result
+  } catch (error) {
+    console.error("VectraCompute product database query failed", error)
+    return { rows: [] as T[] }
   } finally {
     await client.end()
   }
 }
+
+export const isProductStorageConfigured = async () => Boolean(getDatabaseUrl())
 
 const slugify = (value: string) =>
   value
@@ -131,11 +136,16 @@ export async function ensureProductOverrideTable() {
 }
 
 export async function listProductOverrides() {
-  await ensureProductOverrideTable()
-  const result = await query<ProductOverrideRow>(
-    "select * from vectra_product_overrides order by is_custom desc, updated_at desc"
-  )
-  return result.rows
+  try {
+    await ensureProductOverrideTable()
+    const result = await query<ProductOverrideRow>(
+      "select * from vectra_product_overrides order by is_custom desc, updated_at desc"
+    )
+    return result.rows
+  } catch (error) {
+    console.error("Failed to list VectraCompute product overrides", error)
+    return []
+  }
 }
 
 const resolveCategory = (value?: string | null) => {
@@ -342,7 +352,12 @@ export async function findCatalogProductByVariantId(variantId: string) {
 }
 
 export async function saveProductOverride(formData: FormData) {
-  await ensureProductOverrideTable()
+  try {
+    await ensureProductOverrideTable()
+  } catch (error) {
+    console.error("Failed to prepare VectraCompute product storage", error)
+    return
+  }
 
   const title = readText(formData, "title")
   const requestedHandle = readText(formData, "handle")
@@ -353,69 +368,80 @@ export async function saveProductOverride(formData: FormData) {
 
   const priceValue = readText(formData, "price_usd")
   const isActive = formData.get("is_active") === "on"
-  const imageUpload = await readImageUpload(formData)
+  let imageUpload: string | null = null
+  try {
+    imageUpload = await readImageUpload(formData)
+  } catch (error) {
+    console.error("Failed to read uploaded product photo", error)
+    return
+  }
   const imageUrl = imageUpload || readNullableText(formData, "image_url")
   const isCustom =
     formData.get("is_custom") === "true" ||
     !localProducts.some((product) => product.handle === handle)
 
-  await query(
-    `
-      insert into vectra_product_overrides
-        (
-          handle, title, subtitle, description, category, image_url, price_usd,
-          sku, option_title, option_value, seo_title, seo_description,
-          seo_keywords, best_for, specs, warranty, condition, lead_time,
-          support_level, is_active, is_custom, updated_at
-        )
-      values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,now())
-      on conflict (handle) do update set
-        title = excluded.title,
-        subtitle = excluded.subtitle,
-        description = excluded.description,
-        category = excluded.category,
-        image_url = coalesce(excluded.image_url, vectra_product_overrides.image_url),
-        price_usd = excluded.price_usd,
-        sku = excluded.sku,
-        option_title = excluded.option_title,
-        option_value = excluded.option_value,
-        seo_title = excluded.seo_title,
-        seo_description = excluded.seo_description,
-        seo_keywords = excluded.seo_keywords,
-        best_for = excluded.best_for,
-        specs = excluded.specs,
-        warranty = excluded.warranty,
-        condition = excluded.condition,
-        lead_time = excluded.lead_time,
-        support_level = excluded.support_level,
-        is_active = excluded.is_active,
-        is_custom = excluded.is_custom,
-        updated_at = now()
-    `,
-    [
-      handle,
-      title,
-      readNullableText(formData, "subtitle"),
-      readNullableText(formData, "description"),
-      readNullableText(formData, "category"),
-      imageUrl,
-      priceValue ? Number(priceValue) : null,
-      readNullableText(formData, "sku"),
-      readNullableText(formData, "option_title"),
-      readNullableText(formData, "option_value"),
-      readNullableText(formData, "seo_title"),
-      readNullableText(formData, "seo_description"),
-      readNullableText(formData, "seo_keywords"),
-      readNullableText(formData, "best_for"),
-      readNullableText(formData, "specs"),
-      readNullableText(formData, "warranty"),
-      readNullableText(formData, "condition"),
-      readNullableText(formData, "lead_time"),
-      readNullableText(formData, "support_level"),
-      isActive,
-      isCustom,
-    ]
-  )
+  try {
+    await query(
+      `
+        insert into vectra_product_overrides
+          (
+            handle, title, subtitle, description, category, image_url, price_usd,
+            sku, option_title, option_value, seo_title, seo_description,
+            seo_keywords, best_for, specs, warranty, condition, lead_time,
+            support_level, is_active, is_custom, updated_at
+          )
+        values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,now())
+        on conflict (handle) do update set
+          title = excluded.title,
+          subtitle = excluded.subtitle,
+          description = excluded.description,
+          category = excluded.category,
+          image_url = coalesce(excluded.image_url, vectra_product_overrides.image_url),
+          price_usd = excluded.price_usd,
+          sku = excluded.sku,
+          option_title = excluded.option_title,
+          option_value = excluded.option_value,
+          seo_title = excluded.seo_title,
+          seo_description = excluded.seo_description,
+          seo_keywords = excluded.seo_keywords,
+          best_for = excluded.best_for,
+          specs = excluded.specs,
+          warranty = excluded.warranty,
+          condition = excluded.condition,
+          lead_time = excluded.lead_time,
+          support_level = excluded.support_level,
+          is_active = excluded.is_active,
+          is_custom = excluded.is_custom,
+          updated_at = now()
+      `,
+      [
+        handle,
+        title,
+        readNullableText(formData, "subtitle"),
+        readNullableText(formData, "description"),
+        readNullableText(formData, "category"),
+        imageUrl,
+        priceValue ? Number(priceValue) : null,
+        readNullableText(formData, "sku"),
+        readNullableText(formData, "option_title"),
+        readNullableText(formData, "option_value"),
+        readNullableText(formData, "seo_title"),
+        readNullableText(formData, "seo_description"),
+        readNullableText(formData, "seo_keywords"),
+        readNullableText(formData, "best_for"),
+        readNullableText(formData, "specs"),
+        readNullableText(formData, "warranty"),
+        readNullableText(formData, "condition"),
+        readNullableText(formData, "lead_time"),
+        readNullableText(formData, "support_level"),
+        isActive,
+        isCustom,
+      ]
+    )
+  } catch (error) {
+    console.error("Failed to save VectraCompute product override", error)
+    return
+  }
 
   revalidatePath("/", "layout")
   revalidatePath("/admin/products")
