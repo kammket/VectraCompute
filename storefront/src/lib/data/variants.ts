@@ -1,10 +1,10 @@
 "use server"
 
-import { findLocalProductByVariantId } from "@lib/catalog/local-catalog"
+import { findCatalogProductByVariantId } from "@lib/data/product-overrides"
 import { HttpTypes } from "@medusajs/types"
 
 export const retrieveVariant = async (
   variant_id: string
 ): Promise<HttpTypes.StoreProductVariant | null> => {
-  return findLocalProductByVariantId(variant_id)?.variant ?? null
+  return (await findCatalogProductByVariantId(variant_id))?.variant ?? null
 }

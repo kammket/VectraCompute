@@ -1,6 +1,7 @@
 "use server"
 
-import { findLocalProductByVariantId, localRegion } from "@lib/catalog/local-catalog"
+import { localRegion } from "@lib/catalog/local-catalog"
+import { findCatalogProductByVariantId } from "@lib/data/product-overrides"
 import { HttpTypes } from "@medusajs/types"
 import { revalidatePath } from "next/cache"
 import { cookies } from "next/headers"
@@ -50,17 +51,18 @@ const priceForVariant = (variant: HttpTypes.StoreProductVariant) =>
 
 const buildCart = async (id = "local-cart"): Promise<HttpTypes.StoreCart> => {
   const cookieItems = await readItems()
-  const items = cookieItems.flatMap((item) => {
-    const match = findLocalProductByVariantId(item.variantId)
+  const items = (
+    await Promise.all(
+      cookieItems.map(async (item) => {
+        const match = await findCatalogProductByVariantId(item.variantId)
     if (!match) {
-      return []
+          return null
     }
 
     const unitPrice = priceForVariant(match.variant)
     const total = unitPrice * item.quantity
 
-    return [
-      {
+        return {
         id: `line_${item.variantId}`,
         title: match.product.title,
         product_id: match.product.id,
@@ -77,9 +79,10 @@ const buildCart = async (id = "local-cart"): Promise<HttpTypes.StoreCart> => {
         metadata: {},
         created_at: item.addedAt,
         updated_at: item.addedAt,
-      } as HttpTypes.StoreCartLineItem,
-    ]
-  })
+        } as HttpTypes.StoreCartLineItem
+      })
+    )
+  ).filter((item): item is HttpTypes.StoreCartLineItem => Boolean(item))
 
   const itemSubtotal = items.reduce((sum, item) => sum + (item.total ?? 0), 0)
   const taxTotal = Math.round(itemSubtotal * TAX_RATE)
@@ -131,7 +134,7 @@ export async function addToCart({
     throw new Error("Missing variant ID when adding to cart")
   }
 
-  const match = findLocalProductByVariantId(variantId)
+  const match = await findCatalogProductByVariantId(variantId)
   if (!match) {
     throw new Error("Selected product configuration was not found")
   }
