@@ -201,7 +201,9 @@ const createStoredOrder = async (order: CommerceOrderRequest) => {
       order.currencyCode || "usd",
       Number(order.subtotal || order.total || 0),
       Number(order.total || 0),
-      order.items,
+      // node-postgres serializes JS arrays as Postgres array literals, which
+      // are invalid jsonb — stringify explicitly or every insert fails.
+      JSON.stringify(order.items ?? []),
     ]
   )
 

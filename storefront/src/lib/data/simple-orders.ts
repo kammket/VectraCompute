@@ -297,7 +297,9 @@ export async function createSimpleOrder(
         cart.currency_code,
         cart.item_subtotal ?? cart.subtotal ?? 0,
         cart.total ?? 0,
-        cart.items,
+        // node-postgres serializes JS arrays as Postgres array literals, which
+        // are invalid jsonb — stringify explicitly or every insert fails.
+        JSON.stringify(cart.items ?? []),
       ]
     )
     createdDisplayId = inserted.rows[0]?.display_id ?? null
