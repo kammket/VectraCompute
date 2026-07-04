@@ -95,7 +95,7 @@ export default function ProductActions({
     }
 
     router.replace(pathname + "?" + params.toString())
-  }, [selectedVariant, isValidVariant])
+  }, [isValidVariant, pathname, router, searchParams, selectedVariant])
 
   // check if the selected variant is in stock
   const inStock = useMemo(() => {
@@ -142,12 +142,12 @@ export default function ProductActions({
 
   return (
     <>
-      <div className="flex flex-col gap-y-2" ref={actionsRef}>
-        <div className="mb-3 border-b border-ui-border-base pb-4">
-          <p className="text-small-semi uppercase text-brand-600 mb-1">
+      <div className="flex flex-col gap-y-3" ref={actionsRef}>
+        <div className="rounded-md border border-brand-200 bg-brand-50 p-4">
+          <p className="text-small-semi uppercase text-brand-700 mb-1">
             Configure & buy
           </p>
-          <p className="text-small-regular text-ui-fg-subtle">
+          <p className="text-small-regular leading-6 text-brand-900">
             Select a tested configuration, add it to cart, or request a reviewed
             quote for procurement.
           </p>
@@ -176,7 +176,7 @@ export default function ProductActions({
 
         <ProductPrice product={product} variant={selectedVariant} />
 
-        <div className="grid grid-cols-1 gap-2 py-2 text-small-regular text-ui-fg-subtle">
+        <div className="grid grid-cols-1 gap-2 rounded-md border border-ui-border-base bg-grey-5 p-3 text-small-regular text-ui-fg-subtle">
           {proofPoints.map((item) => (
             <div key={item} className="flex items-center gap-2">
               <span className="h-1.5 w-1.5 rounded-full bg-brand-600" />
@@ -195,7 +195,7 @@ export default function ProductActions({
             !isValidVariant
           }
           variant="primary"
-          className="w-full h-10"
+          className="w-full h-11 bg-grey-90 hover:bg-brand-700"
           isLoading={isAdding}
           data-testid="add-product-button"
         >

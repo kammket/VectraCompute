@@ -41,7 +41,7 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
   return (
     <div className="bg-grey-5">
       <ProductBreadcrumbs product={product} />
-      <section className="border-b border-ui-border-base bg-white">
+      <section className="border-b border-grey-80 bg-grey-90 text-white">
         <div className="content-container py-5">
           <div className="grid grid-cols-1 gap-3 medium:grid-cols-4">
             {[
@@ -52,10 +52,10 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
             ].map(([title, body]) => (
               <div
                 key={title}
-                className="rounded-md border border-ui-border-base bg-grey-5 px-4 py-3"
+                className="rounded-md border border-white/15 bg-white/10 px-4 py-3"
               >
-                <p className="text-small-semi text-ui-fg-base">{title}</p>
-                <p className="mt-1 text-xs leading-5 text-ui-fg-subtle">
+                <p className="text-small-semi text-white">{title}</p>
+                <p className="mt-1 text-xs leading-5 text-grey-20">
                   {body}
                 </p>
               </div>
@@ -72,7 +72,7 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
           <div className="w-full min-w-0 large:sticky large:top-24 large:self-start">
             <ImageGallery images={images} productTitle={product.title} />
           </div>
-          <aside className="flex flex-col large:sticky large:top-24 large:self-start gap-y-5 rounded-md border border-ui-border-base bg-white p-5 small:p-6 shadow-elevation-card-rest">
+          <aside className="flex flex-col large:sticky large:top-24 large:self-start gap-y-5 rounded-md border border-grey-80 bg-white p-5 shadow-elevation-card-rest small:p-6">
             <ProductInfo product={product} />
             <ProductOnboardingCta />
             <Suspense

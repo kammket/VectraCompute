@@ -15,7 +15,7 @@ const TRUST_ITEMS = [
   },
   {
     title: "Procurement ready",
-    body: "Clear SKUs, configuration notes, invoice checkout, and quote support.",
+    body: "Clear SKUs, configuration notes, approval support, and quote review.",
   },
 ]
 
@@ -25,9 +25,10 @@ const TrustBar = ({ compact = false }: { compact?: boolean }) => {
       className={
         compact
           ? "border border-ui-border-base rounded-md bg-white p-5"
-          : "content-container py-12"
+          : "bg-grey-5 border-y border-ui-border-base py-12"
       }
     >
+      <div className={compact ? "" : "content-container"}>
       {!compact && (
         <div className="mb-6">
           <Heading level="h2" className="text-xl mb-2">
@@ -57,6 +58,7 @@ const TrustBar = ({ compact = false }: { compact?: boolean }) => {
             </Text>
           </div>
         ))}
+      </div>
       </div>
     </section>
   )

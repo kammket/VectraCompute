@@ -32,7 +32,7 @@ const PRIMARY_LINKS = [
 const TRUST_POINTS = [
   "Validated AI infrastructure",
   "Burn-in tested",
-  "PO and quote support",
+  "Engineering review",
   "Deployment review available",
 ]
 
@@ -45,11 +45,11 @@ export default async function Nav() {
 
   return (
     <div className="sticky top-0 inset-x-0 z-50 group">
-      <header className="relative mx-auto border-b border-ui-border-base bg-white/95 shadow-sm backdrop-blur duration-200">
-        <div className="hidden border-b border-ui-border-base bg-ui-bg-subtle medium:block">
-          <div className="content-container flex h-9 items-center justify-between gap-6 text-small-regular text-ui-fg-subtle">
-            <div className="flex min-w-0 items-center gap-2 text-ui-fg-base">
-              <ShieldCheck className="shrink-0 text-brand-600" />
+      <header className="relative mx-auto border-b border-grey-80 bg-white/95 shadow-sm backdrop-blur duration-200">
+        <div className="hidden border-b border-white/10 bg-grey-90 text-white medium:block">
+          <div className="content-container flex h-9 items-center justify-between gap-6 text-small-regular text-grey-20">
+            <div className="flex min-w-0 items-center gap-2 text-white">
+              <ShieldCheck className="shrink-0 text-brand-200" />
               <span className="truncate">
                 AI workstations, GPU servers, and infrastructure validated
                 before shipment
@@ -58,14 +58,14 @@ export default async function Nav() {
             <div className="hidden items-center gap-4 large:flex">
               {TRUST_POINTS.map((point) => (
                 <span key={point} className="inline-flex items-center gap-1.5">
-                  <CheckCircleMiniSolid className="text-brand-600" />
+                  <CheckCircleMiniSolid className="text-brand-200" />
                   {point}
                 </span>
               ))}
             </div>
             <LocalizedClientLink
               href="/contact"
-              className="shrink-0 text-small-semi text-brand-700 hover:text-brand-800"
+              className="shrink-0 text-small-semi text-brand-100 hover:text-white"
             >
               Talk to an engineer
             </LocalizedClientLink>
@@ -86,7 +86,7 @@ export default async function Nav() {
               className="group flex min-w-0 items-center gap-3"
               data-testid="nav-store-link"
             >
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-ui-fg-base text-small-semi text-white shadow-sm group-hover:bg-brand-700">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-grey-90 text-small-semi text-white shadow-sm ring-1 ring-grey-80 group-hover:bg-brand-700">
                 VC
               </span>
               <span className="min-w-0">
@@ -158,7 +158,7 @@ export default async function Nav() {
                 <LocalizedClientLink
                   key={link.href}
                   href={link.href}
-                  className="shrink-0 transition-colors hover:text-ui-fg-base"
+                  className="shrink-0 rounded-md px-2 py-1 transition-colors hover:bg-grey-5 hover:text-ui-fg-base"
                 >
                   {link.label}
                 </LocalizedClientLink>

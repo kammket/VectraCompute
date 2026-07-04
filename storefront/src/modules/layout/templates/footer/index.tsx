@@ -31,17 +31,17 @@ export default async function Footer() {
   ).filter(Boolean)
 
   return (
-    <footer className="border-t border-ui-border-base bg-white w-full">
+    <footer className="border-t border-grey-80 bg-grey-90 text-white w-full">
       <div className="content-container flex flex-col w-full py-12">
         <div className="grid grid-cols-1 large:grid-cols-[320px_minmax(0,1fr)] gap-10">
-          <div className="max-w-sm rounded-md border border-ui-border-base bg-grey-5 p-5">
+          <div className="max-w-sm rounded-md border border-white/15 bg-white/10 p-5">
             <LocalizedClientLink
               href="/"
-              className="txt-compact-xlarge-plus text-brand-600 hover:text-brand-700 uppercase font-semibold"
+              className="txt-compact-xlarge-plus text-brand-100 hover:text-white uppercase font-semibold"
             >
               VectraCompute
             </LocalizedClientLink>
-            <Text className="text-small-regular text-ui-fg-subtle leading-6 mt-4">
+            <Text className="text-small-regular text-grey-20 leading-6 mt-4">
               AI workstations and GPU servers built to order, burn-in tested,
               CUDA validated, and supported by engineers.
             </Text>
@@ -49,14 +49,14 @@ export default async function Footer() {
               {[
                 "24-hour burn-in",
                 "Engineer support",
-                "PO and quote support",
+                "Configuration review",
                 "Warranty options",
               ].map((item) => (
                 <span
                   key={item}
-                  className="inline-flex items-center gap-2 rounded-md border border-ui-border-base bg-white px-3 py-2"
+                  className="inline-flex items-center gap-2 rounded-md border border-white/15 bg-white/10 px-3 py-2 text-grey-10"
                 >
-                  <CheckCircleMiniSolid className="text-brand-600" />
+                  <CheckCircleMiniSolid className="text-brand-200" />
                   {item}
                 </span>
               ))}
@@ -65,15 +65,15 @@ export default async function Footer() {
           <div className="text-small-regular gap-8 grid grid-cols-2 medium:grid-cols-3 large:grid-cols-5">
             {topCategories.length > 0 && (
               <div className="flex flex-col gap-y-2">
-                <span className="text-base-semi text-ui-fg-base">Shop</span>
+                <span className="text-base-semi text-white">Shop</span>
                 <ul
-                  className="grid grid-cols-1 gap-2 text-ui-fg-subtle"
+                  className="grid grid-cols-1 gap-2 text-grey-20"
                   data-testid="footer-categories"
                 >
                   {topCategories.map((c) => (
                     <li key={c.id}>
                       <LocalizedClientLink
-                        className="hover:text-ui-fg-base"
+                        className="hover:text-white"
                         href={`/categories/${c.handle}`}
                         data-testid="category-link"
                       >
@@ -83,7 +83,7 @@ export default async function Footer() {
                   ))}
                   <li>
                     <LocalizedClientLink
-                      className="hover:text-ui-fg-base"
+                      className="hover:text-white"
                       href="/store"
                     >
                       All products
@@ -93,11 +93,11 @@ export default async function Footer() {
               </div>
             )}
             <div className="flex flex-col gap-y-2">
-              <span className="text-base-semi text-ui-fg-base">Buying</span>
-              <ul className="grid grid-cols-1 gap-y-2 text-ui-fg-subtle">
+              <span className="text-base-semi text-white">Buying</span>
+              <ul className="grid grid-cols-1 gap-y-2 text-grey-20">
                 <li>
                   <LocalizedClientLink
-                    className="hover:text-ui-fg-base"
+                    className="hover:text-white"
                     href="/configure"
                   >
                     AI configurator
@@ -105,7 +105,7 @@ export default async function Footer() {
                 </li>
                 <li>
                   <LocalizedClientLink
-                    className="hover:text-ui-fg-base"
+                    className="hover:text-white"
                     href="/compare"
                   >
                     Compare systems
@@ -113,7 +113,7 @@ export default async function Footer() {
                 </li>
                 <li>
                   <LocalizedClientLink
-                    className="hover:text-ui-fg-base"
+                    className="hover:text-white"
                     href="/contact"
                   >
                     Request a quote
@@ -121,15 +121,15 @@ export default async function Footer() {
                 </li>
                 <li>
                   <LocalizedClientLink
-                    className="hover:text-ui-fg-base"
+                    className="hover:text-white"
                     href="/financing"
                   >
-                    Financing and PO terms
+                    Business buying options
                   </LocalizedClientLink>
                 </li>
                 <li>
                   <LocalizedClientLink
-                    className="hover:text-ui-fg-base"
+                    className="hover:text-white"
                     href="/trust"
                   >
                     Trust center
@@ -137,7 +137,7 @@ export default async function Footer() {
                 </li>
                 <li>
                   <LocalizedClientLink
-                    className="hover:text-ui-fg-base"
+                    className="hover:text-white"
                     href="/resources/enterprise-ai-procurement"
                   >
                     Procurement guide
@@ -147,18 +147,18 @@ export default async function Footer() {
             </div>
             {collections && collections.length > 0 ? (
               <div className="flex flex-col gap-y-2">
-                <span className="text-base-semi text-ui-fg-base">
+                <span className="text-base-semi text-white">
                   Collections
                 </span>
                 <ul
-                  className={clx("grid grid-cols-1 gap-2 text-ui-fg-subtle", {
+                  className={clx("grid grid-cols-1 gap-2 text-grey-20", {
                     "grid-cols-2": (collections?.length || 0) > 3,
                   })}
                 >
                   {collections?.slice(0, 6).map((c) => (
                     <li key={c.id}>
                       <LocalizedClientLink
-                        className="hover:text-ui-fg-base"
+                        className="hover:text-white"
                         href={`/collections/${c.handle}`}
                       >
                         {c.title}
@@ -169,12 +169,12 @@ export default async function Footer() {
               </div>
             ) : null}
             <div className="flex flex-col gap-y-2">
-              <span className="text-base-semi text-ui-fg-base">Solutions</span>
-              <ul className="grid grid-cols-1 gap-y-2 text-ui-fg-subtle">
+              <span className="text-base-semi text-white">Solutions</span>
+              <ul className="grid grid-cols-1 gap-y-2 text-grey-20">
                 {SOLUTIONS.map((s) => (
                   <li key={s.slug}>
                     <LocalizedClientLink
-                      className="hover:text-ui-fg-base"
+                      className="hover:text-white"
                       href={`/solutions/${s.slug}`}
                     >
                       {s.title}
@@ -184,24 +184,24 @@ export default async function Footer() {
               </ul>
             </div>
             <div className="flex flex-col gap-y-2">
-              <span className="text-base-semi text-ui-fg-base">Resources</span>
-              <ul className="grid grid-cols-1 gap-y-2 text-ui-fg-subtle">
+              <span className="text-base-semi text-white">Resources</span>
+              <ul className="grid grid-cols-1 gap-y-2 text-grey-20">
                 <li>
                   <LocalizedClientLink
-                    className="hover:text-ui-fg-base"
+                    className="hover:text-white"
                     href="/resources"
                   >
                     Resource Center
                   </LocalizedClientLink>
                 </li>
-                <li className="pt-2 text-xsmall-semi uppercase tracking-wide text-ui-fg-muted">
+                <li className="pt-2 text-xsmall-semi uppercase tracking-wide text-grey-40">
                   Buy with confidence
                 </li>
                 {footerResources.map((page) =>
                   page ? (
                     <li key={page.slug}>
                       <LocalizedClientLink
-                        className="hover:text-ui-fg-base"
+                        className="hover:text-white"
                         href={`/resources/${page.slug}`}
                       >
                         {page.navTitle}
@@ -212,11 +212,11 @@ export default async function Footer() {
               </ul>
             </div>
             <div className="flex flex-col gap-y-2">
-              <span className="text-base-semi text-ui-fg-base">Company</span>
-              <ul className="grid grid-cols-1 gap-y-2 text-ui-fg-subtle">
+              <span className="text-base-semi text-white">Company</span>
+              <ul className="grid grid-cols-1 gap-y-2 text-grey-20">
                 <li>
                   <LocalizedClientLink
-                    className="hover:text-ui-fg-base"
+                    className="hover:text-white"
                     href="/about"
                   >
                     About Us
@@ -224,7 +224,7 @@ export default async function Footer() {
                 </li>
                 <li>
                   <LocalizedClientLink
-                    className="hover:text-ui-fg-base"
+                    className="hover:text-white"
                     href="/trust"
                   >
                     Trust Center
@@ -232,7 +232,7 @@ export default async function Footer() {
                 </li>
                 <li>
                   <LocalizedClientLink
-                    className="hover:text-ui-fg-base"
+                    className="hover:text-white"
                     href="/blog"
                   >
                     Blog & Resources
@@ -240,7 +240,7 @@ export default async function Footer() {
                 </li>
                 <li>
                   <LocalizedClientLink
-                    className="hover:text-ui-fg-base"
+                    className="hover:text-white"
                     href="/financing"
                   >
                     Financing
@@ -248,7 +248,7 @@ export default async function Footer() {
                 </li>
                 <li>
                   <LocalizedClientLink
-                    className="hover:text-ui-fg-base"
+                    className="hover:text-white"
                     href="/contact"
                   >
                     Contact / Ask an Expert
@@ -258,7 +258,7 @@ export default async function Footer() {
             </div>
           </div>
         </div>
-        <div className="flex flex-col small:flex-row gap-3 w-full mt-10 pt-6 border-t border-ui-border-base justify-between text-ui-fg-muted">
+        <div className="flex flex-col small:flex-row gap-3 w-full mt-10 pt-6 border-t border-white/10 justify-between text-grey-30">
           <Text className="txt-compact-small">
             © {new Date().getFullYear()} VectraCompute. All rights reserved.
           </Text>
