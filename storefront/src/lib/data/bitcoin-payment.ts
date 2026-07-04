@@ -16,6 +16,17 @@ const DEFAULT_INSTRUCTIONS =
 const DEFAULT_QR_CODE_URL =
   "https://vectracompute-storefront.vercel.app/images/bitcoin-payment-qr.jpeg"
 
+const buildDefaultSettings = () =>
+  buildSettings({
+    walletAddress: "",
+    qrCodeImageUrl: process.env.BITCOIN_QR_CODE_URL || DEFAULT_QR_CODE_URL,
+    instructions: process.env.BITCOIN_PAYMENT_INSTRUCTIONS || DEFAULT_INSTRUCTIONS,
+    requiredConfirmations: Number(
+      process.env.BITCOIN_REQUIRED_CONFIRMATIONS || 2
+    ),
+    paymentExpiryMinutes: Number(process.env.BITCOIN_PAYMENT_EXPIRY || 30),
+  })
+
 const buildSettings = (input: {
   walletAddress: string
   qrCodeImageUrl?: string
@@ -72,7 +83,7 @@ export const getBitcoinPaymentSettings =
       .replace(/\/$/, "")
 
     if (!backendUrl) {
-      return null
+      return buildDefaultSettings()
     }
 
     try {
@@ -84,19 +95,15 @@ export const getBitcoinPaymentSettings =
       }
 
       const payload = (await response.json()) as BackendPaymentSettings
-      if (!payload.enabled && !payload.walletAddress && !payload.qrCodeImageUrl) {
-        return null
-      }
-
       return buildSettings({
         walletAddress: payload.walletAddress || "",
-        qrCodeImageUrl: payload.qrCodeImageUrl,
+        qrCodeImageUrl: payload.qrCodeImageUrl || DEFAULT_QR_CODE_URL,
         instructions: payload.instructions,
         requiredConfirmations: payload.requiredConfirmations,
         paymentExpiryMinutes: payload.paymentExpiryMinutes,
       })
     } catch (error) {
       console.error("Backend payment settings fetch failed", error)
-      return null
+      return buildDefaultSettings()
     }
   }
