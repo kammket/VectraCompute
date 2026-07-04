@@ -5,13 +5,14 @@ hardware infrastructure.
 
 The current production architecture is intentionally simple:
 
-- **Next.js storefront and admin** in `storefront/`
-- **Vercel** for frontend/app deployment
-- **Railway PostgreSQL** for backend data storage
+- **Next.js storefront and admin** in `storefront/`, deployed to Vercel
+- **Lightweight Node/TypeScript backend** in `backend/`, deployed to Railway
+- **Railway PostgreSQL** for order/admin data storage
 - **Built-in admin** at `/admin`
+- **AI hardware engineer chat** powered through the Railway backend
 
-The old Medusa backend remains in `backend/` as a reference, but it is not required
-for the current production deployment.
+Read [CLAUDE.md](./CLAUDE.md) before making agent-driven changes. It contains the
+current Vercel/Railway deployment split, env vars, key files, and known pitfalls.
 
 ## Local Development
 
@@ -42,8 +43,8 @@ Use [DEPLOYMENT.md](./DEPLOYMENT.md).
 
 Short version:
 
-1. Create Railway PostgreSQL.
-2. Copy Railway `DATABASE_URL`.
+1. Deploy `backend/` to Railway.
+2. Create/connect Railway PostgreSQL.
 3. Deploy `storefront/` to Vercel.
 4. Set Vercel env vars:
 
@@ -52,11 +53,14 @@ DATABASE_URL=<Railway Postgres URL>
 ADMIN_PASSWORD=<strong password>
 NEXT_PUBLIC_BASE_URL=https://your-vercel-domain.vercel.app
 NEXT_PUBLIC_DEFAULT_REGION=us
+NEXT_PUBLIC_AI_BACKEND_URL=https://your-railway-backend.up.railway.app
+AI_BACKEND_URL=https://your-railway-backend.up.railway.app
 BITCOIN_WALLET_ADDRESS=<optional BTC wallet>
 ```
 
-5. Redeploy Vercel.
-6. Log in at `/admin`.
+5. Set Railway backend env vars from [CLAUDE.md](./CLAUDE.md).
+6. Redeploy Railway, then redeploy Vercel.
+7. Log in at `/admin`.
 
 ## Current Admin Capabilities
 
