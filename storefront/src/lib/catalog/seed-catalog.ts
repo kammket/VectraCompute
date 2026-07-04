@@ -83,6 +83,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-X4-6000ADAX4-512-8T",
         "optionValue": "Quad RTX 6000 Ada 48GB / 512GB RAM / 8TB NVMe",
         "priceUsd": 17549
+      },
+      {
+        "title": "Quad RTX 6000 Ada 48GB / 1TB RAM / 16TB NVMe",
+        "sku": "VC-X4-6000ADAX4-512-8T-MAX",
+        "optionValue": "Quad RTX 6000 Ada 48GB / 1TB RAM / 16TB NVMe",
+        "priceUsd": 22814
       }
     ]
   },
@@ -105,6 +111,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-ITX-4090-64-2T",
         "optionValue": "RTX 4090 24GB / 64GB RAM / 2TB NVMe",
         "priceUsd": 2534
+      },
+      {
+        "title": "RTX 4090 24GB / 128GB RAM / 4TB NVMe",
+        "sku": "VC-ITX-4090-64-2T-MAX",
+        "optionValue": "RTX 4090 24GB / 128GB RAM / 4TB NVMe",
+        "priceUsd": 3294
       }
     ]
   },
@@ -127,6 +139,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-BWPRO-6000X2-512-8T",
         "optionValue": "Dual RTX PRO 6000 Blackwell 96GB / 512GB RAM / 8TB NVMe",
         "priceUsd": 18199
+      },
+      {
+        "title": "Dual RTX PRO 6000 Blackwell 96GB / 1TB RAM / 16TB NVMe",
+        "sku": "VC-BWPRO-6000X2-512-8T-MAX",
+        "optionValue": "Dual RTX PRO 6000 Blackwell 96GB / 1TB RAM / 16TB NVMe",
+        "priceUsd": 24569
       }
     ],
     "metadata": {
@@ -168,6 +186,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-SPARK-128-4T",
         "optionValue": "AI mini workstation / 128GB unified memory / 4TB NVMe",
         "priceUsd": 3509
+      },
+      {
+        "title": "AI mini workstation / 128GB unified memory / 8TB NVMe",
+        "sku": "VC-SPARK-128-4T-MAX",
+        "optionValue": "AI mini workstation / 128GB unified memory / 8TB NVMe",
+        "priceUsd": 4562
       }
     ],
     "metadata": {
@@ -209,6 +233,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-VRAM-B70X4-256-4T",
         "optionValue": "4x Arc Pro B70 32GB / 256GB RAM / 4TB NVMe",
         "priceUsd": 4549
+      },
+      {
+        "title": "4x Arc Pro B70 32GB / 512GB RAM / 8TB NVMe",
+        "sku": "VC-VRAM-B70X4-256-4T-MAX",
+        "optionValue": "4x Arc Pro B70 32GB / 512GB RAM / 8TB NVMe",
+        "priceUsd": 5914
       }
     ],
     "metadata": {
@@ -250,6 +280,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-5090AI-256-8T",
         "optionValue": "RTX 5090 32GB / 256GB RAM / 8TB NVMe",
         "priceUsd": 4874
+      },
+      {
+        "title": "RTX 5090 32GB / 512GB RAM / 16TB NVMe",
+        "sku": "VC-5090AI-256-8T-MAX",
+        "optionValue": "RTX 5090 32GB / 512GB RAM / 16TB NVMe",
+        "priceUsd": 6336
       }
     ],
     "metadata": {
@@ -291,6 +327,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-D5090-512-8T",
         "optionValue": "Dual RTX 5090 32GB / 512GB RAM / 8TB NVMe",
         "priceUsd": 9749
+      },
+      {
+        "title": "Dual RTX 5090 32GB / 1TB RAM / 16TB NVMe",
+        "sku": "VC-D5090-512-8T-MAX",
+        "optionValue": "Dual RTX 5090 32GB / 1TB RAM / 16TB NVMe",
+        "priceUsd": 12674
       }
     ],
     "metadata": {
@@ -332,6 +374,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-STUDIO-6000BW-512-8T",
         "optionValue": "RTX PRO 6000 Blackwell 96GB / 512GB ECC RAM / 8TB NVMe",
         "priceUsd": 12349
+      },
+      {
+        "title": "RTX PRO 6000 Blackwell 96GB / 512GB ECC RAM / 16TB NVMe",
+        "sku": "VC-STUDIO-6000BW-512-8T-MAX",
+        "optionValue": "RTX PRO 6000 Blackwell 96GB / 512GB ECC RAM / 16TB NVMe",
+        "priceUsd": 16054
       }
     ],
     "metadata": {
@@ -373,6 +421,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-BUDGETVRAM-128-512-8T",
         "optionValue": "4x 32GB Pro GPUs / 512GB RAM / 8TB NVMe",
         "priceUsd": 6174
+      },
+      {
+        "title": "4x 32GB Pro GPUs / 1TB RAM / 16TB NVMe",
+        "sku": "VC-BUDGETVRAM-128-512-8T-MAX",
+        "optionValue": "4x 32GB Pro GPUs / 1TB RAM / 16TB NVMe",
+        "priceUsd": 8026
       }
     ],
     "metadata": {
@@ -414,6 +468,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-R8-H100X8-1024-100G",
         "optionValue": "8x H100 80GB / 1TB RAM / 100GbE",
         "priceUsd": 110499
+      },
+      {
+        "title": "8x H100 80GB / 1TB RAM / 200GbE",
+        "sku": "VC-R8-H100X8-1024-100G-MAX",
+        "optionValue": "8x H100 80GB / 1TB RAM / 200GbE",
+        "priceUsd": 146899
       }
     ]
   },
@@ -426,10 +486,22 @@ export const CATALOG_PRODUCTS = [
     "optionTitle": "Configuration",
     "variants": [
       {
+        "title": "4x H200 141GB / 1TB RAM / 100GbE",
+        "sku": "VC-R8PRO-H200X4-1TB-100G",
+        "optionValue": "4x H200 141GB / 1TB RAM / 100GbE",
+        "priceUsd": 97499
+      },
+      {
         "title": "8x H200 141GB / 1TB RAM / 100GbE",
         "sku": "VC-R8PRO-H200X8-1024-100G",
         "optionValue": "8x H200 141GB / 1TB RAM / 100GbE",
         "priceUsd": 142999
+      },
+      {
+        "title": "8x H200 141GB / 2TB RAM / 400GbE",
+        "sku": "VC-R8PRO-H200X8-2TB-400G",
+        "optionValue": "8x H200 141GB / 2TB RAM / 400GbE",
+        "priceUsd": 194999
       }
     ]
   },
@@ -452,6 +524,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-R4-L40SX4-256-10G",
         "optionValue": "4x L40S 48GB / 256GB RAM / 10GbE",
         "priceUsd": 35749
+      },
+      {
+        "title": "4x L40S 48GB / 512GB RAM / 25GbE",
+        "sku": "VC-R4-L40SX4-256-10G-MAX",
+        "optionValue": "4x L40S 48GB / 512GB RAM / 25GbE",
+        "priceUsd": 46474
       }
     ]
   },
@@ -464,10 +542,22 @@ export const CATALOG_PRODUCTS = [
     "optionTitle": "Configuration",
     "variants": [
       {
+        "title": "4x H100 80GB Liquid-Cooled / 1TB RAM / 100GbE",
+        "sku": "VC-R8LIQ-H100X4-1TB-100G",
+        "optionValue": "4x H100 80GB Liquid-Cooled / 1TB RAM / 100GbE",
+        "priceUsd": 84499
+      },
+      {
         "title": "8x H100 80GB Liquid-Cooled / 1TB RAM / 100GbE",
         "sku": "VC-R8LIQ-H100X8-1024-100G",
         "optionValue": "8x H100 80GB Liquid-Cooled / 1TB RAM / 100GbE",
         "priceUsd": 123499
+      },
+      {
+        "title": "8x H100 80GB Liquid-Cooled / 2TB RAM / 400GbE",
+        "sku": "VC-R8LIQ-H100X8-2TB-400G",
+        "optionValue": "8x H100 80GB Liquid-Cooled / 2TB RAM / 400GbE",
+        "priceUsd": 168999
       }
     ]
   },
@@ -490,6 +580,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-REF-H100X8-1024-100G",
         "optionValue": "8x Refurb H100 80GB / 1TB RAM / 100GbE",
         "priceUsd": 90999
+      },
+      {
+        "title": "8x Refurb H100 80GB / 1TB RAM / 200GbE",
+        "sku": "VC-REF-H100X8-1024-100G-MAX",
+        "optionValue": "8x Refurb H100 80GB / 1TB RAM / 200GbE",
+        "priceUsd": 120574
       }
     ],
     "metadata": {
@@ -533,6 +629,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-L40S-INF-X4-512-25G",
         "optionValue": "4x L40S 48GB / 512GB RAM / 25GbE",
         "priceUsd": 40949
+      },
+      {
+        "title": "4x L40S 48GB / 1TB RAM / 100GbE",
+        "sku": "VC-L40S-INF-X4-512-25G-MAX",
+        "optionValue": "4x L40S 48GB / 1TB RAM / 100GbE",
+        "priceUsd": 53689
       }
     ],
     "metadata": {
@@ -576,6 +678,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-EDGE-L4X2-256-4T",
         "optionValue": "2x L4 24GB / 256GB RAM / 4TB NVMe",
         "priceUsd": 11699
+      },
+      {
+        "title": "2x L4 24GB / 512GB RAM / 8TB NVMe",
+        "sku": "VC-EDGE-L4X2-256-4T-MAX",
+        "optionValue": "2x L4 24GB / 512GB RAM / 8TB NVMe",
+        "priceUsd": 15209
       }
     ],
     "metadata": {
@@ -619,6 +727,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-LIQ-H200X8-2048-400G",
         "optionValue": "8x H200 141GB Liquid-Cooled / 2TB RAM / 400GbE",
         "priceUsd": 162499
+      },
+      {
+        "title": "8x H200 141GB Liquid-Cooled / 2TB RAM / 800GbE",
+        "sku": "VC-LIQ-H200X8-2048-400G-MAX",
+        "optionValue": "8x H200 141GB Liquid-Cooled / 2TB RAM / 800GbE",
+        "priceUsd": 221649
       }
     ],
     "metadata": {
@@ -662,6 +776,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-STORE-245T-200G",
         "optionValue": "245TB NVMe / EPYC / 512GB RAM / 200GbE",
         "priceUsd": 31849
+      },
+      {
+        "title": "245TB NVMe / EPYC / 1TB RAM / 400GbE",
+        "sku": "VC-STORE-245T-200G-MAX",
+        "optionValue": "245TB NVMe / EPYC / 1TB RAM / 400GbE",
+        "priceUsd": 41404
       }
     ],
     "metadata": {
@@ -704,6 +824,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-MEMMAX-L40SX4-2TB-100G",
         "optionValue": "4x L40S 48GB / 2TB RAM / 100GbE",
         "priceUsd": 53949
+      },
+      {
+        "title": "4x L40S 48GB / 2TB RAM / 200GbE",
+        "sku": "VC-MEMMAX-L40SX4-2TB-100G-MAX",
+        "optionValue": "4x L40S 48GB / 2TB RAM / 200GbE",
+        "priceUsd": 71239
       }
     ],
     "metadata": {
@@ -747,6 +873,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-FIELD-6000ADA-256-8T",
         "optionValue": "Portable RTX 6000 Ada 48GB / 256GB RAM / 8TB NVMe",
         "priceUsd": 11699
+      },
+      {
+        "title": "Portable RTX 6000 Ada 48GB / 512GB RAM / 16TB NVMe",
+        "sku": "VC-FIELD-6000ADA-256-8T-MAX",
+        "optionValue": "Portable RTX 6000 Ada 48GB / 512GB RAM / 16TB NVMe",
+        "priceUsd": 15209
       }
     ],
     "metadata": {
@@ -788,6 +920,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-CLUSTER-H100-4N-400G",
         "optionValue": "4-node H100 cluster / 400GbE fabric / rack kit",
         "priceUsd": 227499
+      },
+      {
+        "title": "4-node H100 cluster / 800GbE fabric / rack kit",
+        "sku": "VC-CLUSTER-H100-4N-400G-MAX",
+        "optionValue": "4-node H100 cluster / 800GbE fabric / rack kit",
+        "priceUsd": 345799
       }
     ],
     "metadata": {
@@ -830,6 +968,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-MI300X-X8-2TB-400G",
         "optionValue": "8x MI300X 192GB / 2TB RAM / 400GbE",
         "priceUsd": 175499
+      },
+      {
+        "title": "8x MI300X 192GB / 2TB RAM / 800GbE",
+        "sku": "VC-MI300X-X8-2TB-400G-MAX",
+        "optionValue": "8x MI300X 192GB / 2TB RAM / 800GbE",
+        "priceUsd": 234649
       }
     ],
     "metadata": {
@@ -873,6 +1017,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-RAG-L40S-256-60T",
         "optionValue": "L40S 48GB / 256GB RAM / 60TB NVMe",
         "priceUsd": 22749
+      },
+      {
+        "title": "L40S 48GB / 512GB RAM / 120TB NVMe",
+        "sku": "VC-RAG-L40S-256-60T-MAX",
+        "optionValue": "L40S 48GB / 512GB RAM / 120TB NVMe",
+        "priceUsd": 30029
       }
     ],
     "metadata": {
@@ -915,6 +1065,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-LOCAL-L40S-256-16T",
         "optionValue": "L40S 48GB / 256GB RAM / 16TB NVMe",
         "priceUsd": 16249
+      },
+      {
+        "title": "L40S 48GB / 512GB RAM / 30TB NVMe",
+        "sku": "VC-LOCAL-L40S-256-16T-MAX",
+        "optionValue": "L40S 48GB / 512GB RAM / 30TB NVMe",
+        "priceUsd": 23529
       }
     ],
     "metadata": {
@@ -957,6 +1113,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-RAG-LEGAL-L40S-512-120T",
         "optionValue": "L40S 48GB / 512GB RAM / 120TB NVMe",
         "priceUsd": 29249
+      },
+      {
+        "title": "L40S 48GB / 1TB RAM / 240TB NVMe",
+        "sku": "VC-RAG-LEGAL-L40S-512-120T-MAX",
+        "optionValue": "L40S 48GB / 1TB RAM / 240TB NVMe",
+        "priceUsd": 38349
       }
     ],
     "metadata": {
@@ -999,6 +1161,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-VECTOR-245T-1TB-200G",
         "optionValue": "245TB NVMe / 1TB RAM / 200GbE",
         "priceUsd": 42249
+      },
+      {
+        "title": "245TB NVMe / 1TB RAM / 400GbE",
+        "sku": "VC-VECTOR-245T-1TB-200G-MAX",
+        "optionValue": "245TB NVMe / 1TB RAM / 400GbE",
+        "priceUsd": 55899
       }
     ],
     "metadata": {
@@ -1041,6 +1209,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-REF-A100X8-1TB-100G",
         "optionValue": "8x Refurb A100 80GB / 1TB RAM / 100GbE",
         "priceUsd": 58499
+      },
+      {
+        "title": "8x Refurb A100 80GB / 1TB RAM / 200GbE",
+        "sku": "VC-REF-A100X8-1TB-100G-MAX",
+        "optionValue": "8x Refurb A100 80GB / 1TB RAM / 200GbE",
+        "priceUsd": 76699
       }
     ],
     "metadata": {
@@ -1084,6 +1258,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-REF-L40SX4-512-25G",
         "optionValue": "4x Refurb L40S 48GB / 512GB RAM / 25GbE",
         "priceUsd": 29249
+      },
+      {
+        "title": "4x Refurb L40S 48GB / 1TB RAM / 100GbE",
+        "sku": "VC-REF-L40SX4-512-25G-MAX",
+        "optionValue": "4x Refurb L40S 48GB / 1TB RAM / 100GbE",
+        "priceUsd": 38349
       }
     ],
     "metadata": {
@@ -1127,6 +1307,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-SPARK-GB10X2-256-8T",
         "optionValue": "Dual-unit AI mini bundle / 256GB unified memory aggregate",
         "priceUsd": 6369
+      },
+      {
+        "title": "Dual-unit AI mini bundle / 256GB unified memory aggregate / professional validation package",
+        "sku": "VC-SPARK-GB10X2-256-8T-MAX",
+        "optionValue": "Dual-unit AI mini bundle / 256GB unified memory aggregate / professional validation package",
+        "priceUsd": 8553
       }
     ],
     "metadata": {
@@ -1169,6 +1355,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-DGXSPARK-128-8T-DEV",
         "optionValue": "DGX Spark-class developer bundle / 128GB unified memory / 8TB NVMe",
         "priceUsd": 4549
+      },
+      {
+        "title": "DGX Spark-class developer bundle / 128GB unified memory / 16TB NVMe",
+        "sku": "VC-DGXSPARK-128-8T-DEV-MAX",
+        "optionValue": "DGX Spark-class developer bundle / 128GB unified memory / 16TB NVMe",
+        "priceUsd": 5914
       }
     ],
     "metadata": {
@@ -1211,6 +1403,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-RYZENAI395PRO-128-12T",
         "optionValue": "Ryzen AI Max+ 395 Pro / 128GB unified memory / 12TB NVMe / dual 10GbE",
         "priceUsd": 3574
+      },
+      {
+        "title": "Ryzen AI Max+ 395 Pro / 128GB unified memory / 14TB NVMe / dual 25GbE",
+        "sku": "VC-RYZENAI395PRO-128-12T-MAX",
+        "optionValue": "Ryzen AI Max+ 395 Pro / 128GB unified memory / 14TB NVMe / dual 25GbE",
+        "priceUsd": 4646
       }
     ],
     "metadata": {
@@ -1253,6 +1451,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-PANTHERAI-PRO-64-8T",
         "optionValue": "Core Ultra Panther Lake Pro / 64GB RAM / 8TB NVMe / 10GbE",
         "priceUsd": 2274
+      },
+      {
+        "title": "Core Ultra Panther Lake Pro / 128GB RAM / 16TB NVMe / 25GbE",
+        "sku": "VC-PANTHERAI-PRO-64-8T-MAX",
+        "optionValue": "Core Ultra Panther Lake Pro / 128GB RAM / 16TB NVMe / 25GbE",
+        "priceUsd": 2956
       }
     ],
     "metadata": {
@@ -1295,6 +1499,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-MI350X-X8-2TB-800G",
         "optionValue": "8x MI350X 288GB / 2TB RAM / 800GbE",
         "priceUsd": 292499
+      },
+      {
+        "title": "8x MI350X 288GB / 2TB RAM / 800GbE / expanded memory and deployment support",
+        "sku": "VC-MI350X-X8-2TB-800G-MAX",
+        "optionValue": "8x MI350X 288GB / 2TB RAM / 800GbE / expanded memory and deployment support",
+        "priceUsd": 392599
       }
     ],
     "metadata": {
@@ -1338,6 +1548,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-MI350P-X8-2TB-400G",
         "optionValue": "8x MI350P 144GB / 2TB RAM / 400GbE",
         "priceUsd": 214499
+      },
+      {
+        "title": "8x MI350P 144GB / 2TB RAM / 800GbE",
+        "sku": "VC-MI350P-X8-2TB-400G-MAX",
+        "optionValue": "8x MI350P 144GB / 2TB RAM / 800GbE",
+        "priceUsd": 287299
       }
     ],
     "metadata": {
@@ -1381,6 +1597,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-GAUDI3-X8-2TB",
         "optionValue": "8x Gaudi 3 / 2TB RAM / Ethernet fabric",
         "priceUsd": 110499
+      },
+      {
+        "title": "8x Gaudi 3 / 2TB RAM / Ethernet fabric / expanded memory and deployment support",
+        "sku": "VC-GAUDI3-X8-2TB-MAX",
+        "optionValue": "8x Gaudi 3 / 2TB RAM / Ethernet fabric / expanded memory and deployment support",
+        "priceUsd": 146899
       }
     ],
     "metadata": {
@@ -1424,6 +1646,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-REF-H200X8-2TB-400G",
         "optionValue": "8x Refurb H200 141GB / 2TB RAM / 400GbE",
         "priceUsd": 175499
+      },
+      {
+        "title": "8x Refurb H200 141GB / 2TB RAM / 800GbE",
+        "sku": "VC-REF-H200X8-2TB-400G-MAX",
+        "optionValue": "8x Refurb H200 141GB / 2TB RAM / 800GbE",
+        "priceUsd": 234649
       }
     ],
     "metadata": {
@@ -1467,6 +1695,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-B200-PILOT-RACK",
         "optionValue": "B200-class pilot rack quote package",
         "priceUsd": 32499
+      },
+      {
+        "title": "B200-class pilot rack quote package / expanded memory and deployment support",
+        "sku": "VC-B200-PILOT-RACK-MAX",
+        "optionValue": "B200-class pilot rack quote package / expanded memory and deployment support",
+        "priceUsd": 50699
       }
     ],
     "metadata": {
@@ -1509,6 +1743,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-HGXB200-X8-4TB-800G",
         "optionValue": "8x B200-class HGX / 4TB RAM / 800GbE",
         "priceUsd": 584999
+      },
+      {
+        "title": "8x B200-class HGX / 4TB RAM / 800GbE / expanded memory and deployment support",
+        "sku": "VC-HGXB200-X8-4TB-800G-MAX",
+        "optionValue": "8x B200-class HGX / 4TB RAM / 800GbE / expanded memory and deployment support",
+        "priceUsd": 766999
       }
     ],
     "metadata": {
@@ -1552,6 +1792,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-PRO5000BWX2-256-8T",
         "optionValue": "Dual RTX PRO 5000 Blackwell / 256GB RAM / 8TB NVMe",
         "priceUsd": 10399
+      },
+      {
+        "title": "Dual RTX PRO 5000 Blackwell / 512GB RAM / 16TB NVMe",
+        "sku": "VC-PRO5000BWX2-256-8T-MAX",
+        "optionValue": "Dual RTX PRO 5000 Blackwell / 512GB RAM / 16TB NVMe",
+        "priceUsd": 13584
       }
     ],
     "metadata": {
@@ -1594,6 +1840,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-PRO6000BW-MOB-192-8T",
         "optionValue": "RTX PRO 6000 Blackwell Mobile-class / 192GB RAM / 8TB NVMe",
         "priceUsd": 9749
+      },
+      {
+        "title": "RTX PRO 6000 Blackwell Mobile-class / 256GB RAM / 16TB NVMe",
+        "sku": "VC-PRO6000BW-MOB-192-8T-MAX",
+        "optionValue": "RTX PRO 6000 Blackwell Mobile-class / 256GB RAM / 16TB NVMe",
+        "priceUsd": 12674
       }
     ],
     "metadata": {
@@ -1636,6 +1888,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-PRO4500BW-128-4T",
         "optionValue": "RTX PRO 4500 Blackwell / 128GB RAM / 4TB NVMe",
         "priceUsd": 4549
+      },
+      {
+        "title": "RTX PRO 4500 Blackwell / 256GB RAM / 8TB NVMe",
+        "sku": "VC-PRO4500BW-128-4T-MAX",
+        "optionValue": "RTX PRO 4500 Blackwell / 256GB RAM / 8TB NVMe",
+        "priceUsd": 5914
       }
     ],
     "metadata": {
@@ -1678,6 +1936,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-B70-X4-256-8T",
         "optionValue": "4x Arc Pro B70 32GB / 256GB RAM / 8TB NVMe",
         "priceUsd": 5199
+      },
+      {
+        "title": "4x Arc Pro B70 32GB / 512GB RAM / 16TB NVMe",
+        "sku": "VC-B70-X4-256-8T-MAX",
+        "optionValue": "4x Arc Pro B70 32GB / 512GB RAM / 16TB NVMe",
+        "priceUsd": 6759
       }
     ],
     "metadata": {
@@ -1720,6 +1984,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-EDGE-INF-SFF-64-4T",
         "optionValue": "RTX 4000 SFF-class / 64GB RAM / 4TB NVMe",
         "priceUsd": 4549
+      },
+      {
+        "title": "L4 24GB / 256GB RAM / 16TB NVMe",
+        "sku": "VC-EDGE-INF-L4-128-8T-MAX",
+        "optionValue": "L4 24GB / 256GB RAM / 16TB NVMe",
+        "priceUsd": 11179
       }
     ],
     "metadata": {
@@ -1812,6 +2082,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-RACK-STARTER-4N",
         "optionValue": "4-node starter rack / 400GbE / shared NVMe",
         "priceUsd": 259999
+      },
+      {
+        "title": "4-node starter rack / 800GbE / shared NVMe",
+        "sku": "VC-RACK-STARTER-4N-MAX",
+        "optionValue": "4-node starter rack / 800GbE / shared NVMe",
+        "priceUsd": 382849
       }
     ],
     "metadata": {
@@ -1900,6 +2176,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-MEM-DDR5ECC-2TB",
         "optionValue": "2TB DDR5 ECC high-memory kit",
         "priceUsd": 8449
+      },
+      {
+        "title": "Complete 2TB DDR5 ECC high-memory kit / compatibility-reviewed package",
+        "sku": "VC-MEM-DDR5ECC-2TB-MAX",
+        "optionValue": "Complete 2TB DDR5 ECC high-memory kit / compatibility-reviewed package",
+        "priceUsd": 10984
       }
     ],
     "metadata": {
@@ -1986,6 +2268,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-H200NVL-X4-2TB-400G",
         "optionValue": "4x H200 NVL-class / 2TB RAM / 400GbE",
         "priceUsd": 136499
+      },
+      {
+        "title": "4x H200 NVL-class / 2TB RAM / 800GbE",
+        "sku": "VC-H200NVL-X4-2TB-400G-MAX",
+        "optionValue": "4x H200 NVL-class / 2TB RAM / 800GbE",
+        "priceUsd": 181999
       }
     ],
     "metadata": {
@@ -2029,6 +2317,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-GB300-NVL72-PILOT",
         "optionValue": "GB300 NVL72 pilot rack quote package",
         "priceUsd": 64999
+      },
+      {
+        "title": "GB300 NVL72 pilot rack quote package / expanded memory and deployment support",
+        "sku": "VC-GB300-NVL72-PILOT-MAX",
+        "optionValue": "GB300 NVL72 pilot rack quote package / expanded memory and deployment support",
+        "priceUsd": 103674
       }
     ],
     "metadata": {
@@ -2071,6 +2365,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-GB200-NVL72-PILOT",
         "optionValue": "GB200 NVL72 pilot rack quote package",
         "priceUsd": 64999
+      },
+      {
+        "title": "GB200 NVL72 pilot rack quote package / expanded memory and deployment support",
+        "sku": "VC-GB200-NVL72-PILOT-MAX",
+        "optionValue": "GB200 NVL72 pilot rack quote package / expanded memory and deployment support",
+        "priceUsd": 103674
       }
     ],
     "metadata": {
@@ -2113,6 +2413,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-RUBIN-READY-TOPOLOGY",
         "optionValue": "Next-gen AI cluster topology package",
         "priceUsd": 9749
+      },
+      {
+        "title": "Complete Next-gen AI cluster topology package / compatibility-reviewed package",
+        "sku": "VC-RUBIN-READY-TOPOLOGY-MAX",
+        "optionValue": "Complete Next-gen AI cluster topology package / compatibility-reviewed package",
+        "priceUsd": 12934
       }
     ],
     "metadata": {
@@ -2426,10 +2732,22 @@ export const CATALOG_PRODUCTS = [
     "optionTitle": "Configuration",
     "variants": [
       {
+        "title": "Core Ultra 9 / RTX 4070 Ti Super 16GB / 64GB RAM / 1TB NVMe",
+        "sku": "VC-CU9-4070TIS-64-1T",
+        "optionValue": "Core Ultra 9 / RTX 4070 Ti Super 16GB / 64GB RAM / 1TB NVMe",
+        "priceUsd": 1494
+      },
+      {
         "title": "Core Ultra 9 / RTX 4080 16GB / 64GB RAM / 1TB NVMe",
         "sku": "VC-CU9-4080-64-1T",
         "optionValue": "Core Ultra 9 / RTX 4080 16GB / 64GB RAM / 1TB NVMe",
         "priceUsd": 1819
+      },
+      {
+        "title": "Core Ultra 9 / RTX 5090 32GB / 128GB RAM / 2TB NVMe",
+        "sku": "VC-CU9-5090-128-2T",
+        "optionValue": "Core Ultra 9 / RTX 5090 32GB / 128GB RAM / 2TB NVMe",
+        "priceUsd": 3184
       }
     ]
   },
@@ -2442,10 +2760,22 @@ export const CATALOG_PRODUCTS = [
     "optionTitle": "Configuration",
     "variants": [
       {
+        "title": "Xeon w9 / RTX 5090 32GB / 128GB ECC RAM / 2TB NVMe",
+        "sku": "VC-XW9-5090-128-2T",
+        "optionValue": "Xeon w9 / RTX 5090 32GB / 128GB ECC RAM / 2TB NVMe",
+        "priceUsd": 5524
+      },
+      {
         "title": "Xeon w9-3495X / RTX 6000 Ada 48GB / 256GB RAM / 4TB NVMe",
         "sku": "VC-XW9-6000ADA-256-4T",
         "optionValue": "Xeon w9-3495X / RTX 6000 Ada 48GB / 256GB RAM / 4TB NVMe",
         "priceUsd": 8124
+      },
+      {
+        "title": "Xeon w9 / RTX PRO 6000 Blackwell 96GB / 512GB ECC RAM / 8TB NVMe",
+        "sku": "VC-XW9-RPRO6000-512-8T",
+        "optionValue": "Xeon w9 / RTX PRO 6000 Blackwell 96GB / 512GB ECC RAM / 8TB NVMe",
+        "priceUsd": 14299
       }
     ]
   },
@@ -2458,10 +2788,22 @@ export const CATALOG_PRODUCTS = [
     "optionTitle": "Configuration",
     "variants": [
       {
+        "title": "Threadripper PRO / RTX 5090 32GB / 128GB RAM / 2TB NVMe",
+        "sku": "VC-TRPRO-5090-128-2T",
+        "optionValue": "Threadripper PRO / RTX 5090 32GB / 128GB RAM / 2TB NVMe",
+        "priceUsd": 5849
+      },
+      {
         "title": "Threadripper PRO 7975WX / Dual RTX 4090 / 256GB RAM / 4TB NVMe",
         "sku": "VC-TRPRO-4090X2-256-4T",
         "optionValue": "Threadripper PRO 7975WX / Dual RTX 4090 / 256GB RAM / 4TB NVMe",
         "priceUsd": 9099
+      },
+      {
+        "title": "Threadripper PRO / Dual RTX 5090 / 512GB RAM / 8TB NVMe",
+        "sku": "VC-TRPRO-5090X2-512-8T",
+        "optionValue": "Threadripper PRO / Dual RTX 5090 / 512GB RAM / 8TB NVMe",
+        "priceUsd": 14299
       }
     ]
   },
@@ -2474,10 +2816,22 @@ export const CATALOG_PRODUCTS = [
     "optionTitle": "Configuration",
     "variants": [
       {
+        "title": "EPYC / RTX 5090 32GB / 256GB RAM / 4TB NVMe",
+        "sku": "VC-EPYCEDGE-5090-256-4T",
+        "optionValue": "EPYC / RTX 5090 32GB / 256GB RAM / 4TB NVMe",
+        "priceUsd": 7799
+      },
+      {
         "title": "EPYC 9354 / RTX 6000 Ada 48GB / 512GB RAM / 8TB NVMe",
         "sku": "VC-EPYCEDGE-6000ADA-512-8T",
         "optionValue": "EPYC 9354 / RTX 6000 Ada 48GB / 512GB RAM / 8TB NVMe",
         "priceUsd": 11699
+      },
+      {
+        "title": "EPYC / RTX PRO 6000 Blackwell 96GB / 1TB RAM / 16TB NVMe",
+        "sku": "VC-EPYCEDGE-RPRO6000-1TB-16T",
+        "optionValue": "EPYC / RTX PRO 6000 Blackwell 96GB / 1TB RAM / 16TB NVMe",
+        "priceUsd": 18199
       }
     ]
   },
@@ -2494,6 +2848,18 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-RYZ9C-4070TIS-32-1T",
         "optionValue": "Ryzen 9 9950X / RTX 4070 Ti Super 16GB / 32GB RAM / 1TB NVMe",
         "priceUsd": 1429
+      },
+      {
+        "title": "Ryzen 9 9950X / RTX 5080 16GB / 64GB RAM / 2TB NVMe",
+        "sku": "VC-RYZ9C-5080-64-2T",
+        "optionValue": "Ryzen 9 9950X / RTX 5080 16GB / 64GB RAM / 2TB NVMe",
+        "priceUsd": 2079
+      },
+      {
+        "title": "Ryzen 9 9950X / RTX 5090 32GB / 96GB RAM / 4TB NVMe",
+        "sku": "VC-RYZ9C-5090-96-4T",
+        "optionValue": "Ryzen 9 9950X / RTX 5090 32GB / 96GB RAM / 4TB NVMe",
+        "priceUsd": 3184
       }
     ]
   },
@@ -2528,10 +2894,16 @@ export const CATALOG_PRODUCTS = [
     "optionTitle": "Type",
     "variants": [
       {
-        "title": "Standard",
+        "title": "Standard 360mm AIO kit",
         "sku": "VC-COOL-360AIO",
-        "optionValue": "Standard",
+        "optionValue": "Standard 360mm AIO kit",
         "priceUsd": 253
+      },
+      {
+        "title": "High-airflow 420mm AIO kit",
+        "sku": "VC-COOL-420AIO",
+        "optionValue": "High-airflow 420mm AIO kit",
+        "priceUsd": 389
       }
     ]
   },
@@ -2544,10 +2916,16 @@ export const CATALOG_PRODUCTS = [
     "optionTitle": "Type",
     "variants": [
       {
-        "title": "Standard",
-        "sku": "VC-NVME-X4CARD",
-        "optionValue": "Standard",
+        "title": "PCIe 4.0 x4 NVMe expansion card",
+        "sku": "VC-NVME-PCIE4-X4",
+        "optionValue": "PCIe 4.0 x4 NVMe expansion card",
         "priceUsd": 162
+      },
+      {
+        "title": "PCIe 5.0 x4 NVMe expansion card",
+        "sku": "VC-NVME-PCIE5-X4",
+        "optionValue": "PCIe 5.0 x4 NVMe expansion card",
+        "priceUsd": 253
       }
     ]
   },
@@ -2560,10 +2938,16 @@ export const CATALOG_PRODUCTS = [
     "optionTitle": "Type",
     "variants": [
       {
-        "title": "Standard",
-        "sku": "VC-RISER-PCIE5",
-        "optionValue": "Standard",
+        "title": "PCIe 5.0 riser cable / 200mm",
+        "sku": "VC-RISER-PCIE5-200",
+        "optionValue": "PCIe 5.0 riser cable / 200mm",
         "priceUsd": 58
+      },
+      {
+        "title": "PCIe 5.0 riser cable / 300mm shielded",
+        "sku": "VC-RISER-PCIE5-300",
+        "optionValue": "PCIe 5.0 riser cable / 300mm shielded",
+        "priceUsd": 84
       }
     ]
   },
@@ -2576,10 +2960,16 @@ export const CATALOG_PRODUCTS = [
     "optionTitle": "Type",
     "variants": [
       {
-        "title": "Standard",
+        "title": "4-post rack rail kit",
         "sku": "VC-RAIL-4POST",
-        "optionValue": "Standard",
+        "optionValue": "4-post rack rail kit",
         "priceUsd": 116
+      },
+      {
+        "title": "Heavy-duty 4-post rack rail kit",
+        "sku": "VC-RAIL-HD-4POST",
+        "optionValue": "Heavy-duty 4-post rack rail kit",
+        "priceUsd": 194
       }
     ]
   },
@@ -2602,6 +2992,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-GPU-RTXPRO6000BW-INSTALL",
         "optionValue": "GPU upgrade with installation and validation",
         "priceUsd": 6174
+      },
+      {
+        "title": "Complete GPU upgrade with installation and validation / compatibility-reviewed package",
+        "sku": "VC-GPU-RTXPRO6000BW-INSTALL-MAX",
+        "optionValue": "Complete GPU upgrade with installation and validation / compatibility-reviewed package",
+        "priceUsd": 8026
       }
     ],
     "metadata": {
@@ -2643,6 +3039,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-NET-100G-DUAL",
         "optionValue": "Dual-node 100GbE kit",
         "priceUsd": 1559
+      },
+      {
+        "title": "Dual-node 200GbE kit",
+        "sku": "VC-NET-100G-DUAL-MAX",
+        "optionValue": "Dual-node 200GbE kit",
+        "priceUsd": 2059
       }
     ],
     "metadata": {
@@ -2775,6 +3177,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-STORE-491T-400G",
         "optionValue": "491TB NVMe / EPYC / 1TB RAM / 400GbE",
         "priceUsd": 71499
+      },
+      {
+        "title": "492TB NVMe / EPYC / 1TB RAM / 800GbE",
+        "sku": "VC-STORE-491T-400G-MAX",
+        "optionValue": "492TB NVMe / EPYC / 1TB RAM / 800GbE",
+        "priceUsd": 92949
       }
     ],
     "metadata": {
@@ -2955,6 +3363,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-CAMERA-L4X2-32CAM",
         "optionValue": "2x L4 24GB / 256GB RAM / 32-camera pipeline",
         "priceUsd": 15599
+      },
+      {
+        "title": "2x L4 24GB / 512GB RAM / 32-camera pipeline",
+        "sku": "VC-CAMERA-L4X2-32CAM-MAX",
+        "optionValue": "2x L4 24GB / 512GB RAM / 32-camera pipeline",
+        "priceUsd": 20279
       }
     ],
     "metadata": {
@@ -3043,6 +3457,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-L4-APP-2GPU-256-8T",
         "optionValue": "Dual L4 24GB / 256GB RAM / 8TB NVMe",
         "priceUsd": 10399
+      },
+      {
+        "title": "Dual L4 24GB / 512GB RAM / 16TB NVMe",
+        "sku": "VC-L4-APP-2GPU-256-8T-MAX",
+        "optionValue": "Dual L4 24GB / 512GB RAM / 16TB NVMe",
+        "priceUsd": 13584
       }
     ],
     "metadata": {
@@ -3084,6 +3504,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-RACK-RTXPRO6000X4-1TB-16T",
         "optionValue": "4x RTX PRO 6000 Blackwell 96GB / 1TB RAM / 16TB NVMe",
         "priceUsd": 40949
+      },
+      {
+        "title": "4x RTX PRO 6000 Blackwell 96GB / 1TB RAM / 30TB NVMe",
+        "sku": "VC-RACK-RTXPRO6000X4-1TB-16T-MAX",
+        "optionValue": "4x RTX PRO 6000 Blackwell 96GB / 1TB RAM / 30TB NVMe",
+        "priceUsd": 54599
       }
     ],
     "metadata": {
@@ -3125,6 +3551,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-REF-H200NVL-X4-2TB-400G",
         "optionValue": "4x Refurb H200 NVL-class / 2TB RAM / 400GbE",
         "priceUsd": 90999
+      },
+      {
+        "title": "4x Refurb H200 NVL-class / 2TB RAM / 800GbE",
+        "sku": "VC-REF-H200NVL-X4-2TB-400G-MAX",
+        "optionValue": "4x Refurb H200 NVL-class / 2TB RAM / 800GbE",
+        "priceUsd": 120574
       }
     ],
     "metadata": {
@@ -3166,6 +3598,12 @@ export const CATALOG_PRODUCTS = [
         "sku": "VC-800G-SWITCH-4NODE",
         "optionValue": "800GbE switch planning + four-node cable kit",
         "priceUsd": 22749
+      },
+      {
+        "title": "Complete 800GbE switch planning + four-node cable kit / compatibility-reviewed package",
+        "sku": "VC-800G-SWITCH-4NODE-MAX",
+        "optionValue": "Complete 800GbE switch planning + four-node cable kit / compatibility-reviewed package",
+        "priceUsd": 30029
       }
     ],
     "metadata": {
