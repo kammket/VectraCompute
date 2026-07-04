@@ -241,7 +241,7 @@ const getStoreHref = (
   if (workload === "rag") params.set("workload", "rag")
   if (workload === "vision") params.set("workload", "vision")
   if (workload === "inference") params.set("workload", "inference")
-  if (workload === "data") params.set("query", "CPU workstation")
+  if (workload === "data") params.set("workload", "storage")
 
   if (modelSize === "frontier") {
     params.set("infrastructure", "next-gen-rack")
@@ -279,15 +279,27 @@ const quoteHref = ({
   constraints: string
   details?: string[]
 }) => {
+  const message = [
+    "I used the AI system selector and want an engineer to review this recommendation.",
+    `Workload: ${workload}`,
+    `Scale: ${scale}`,
+    `Budget: ${budget}`,
+    `Deployment: ${deployment}`,
+    constraints,
+    ...(details ?? []),
+  ].join("\n")
+
   const params = new URLSearchParams({
     workload,
     scale,
     budget,
+    deployment,
     constraints: [
       constraints,
       `Deployment: ${deployment}`,
       ...(details ?? []),
     ].join(". "),
+    message,
   })
 
   return `/contact?${params.toString()}`

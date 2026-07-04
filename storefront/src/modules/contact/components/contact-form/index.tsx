@@ -25,15 +25,25 @@ const SCALE_OPTIONS = [
   "Lab / department",
   "Production service",
   "Datacenter rack",
+  "Lab or production",
 ]
 
 const BUDGET_OPTIONS = [
   "Under $10k",
   "$10k - $25k",
+  "$10k - $50k",
   "$25k - $50k",
   "$50k - $100k",
   "$100k+",
+  "$50k+",
   "Need guidance",
+]
+
+const DEPLOYMENT_OPTIONS = [
+  "Office / desk-side",
+  "Shared lab",
+  "Rack / datacenter",
+  "Edge site",
 ]
 
 const ContactForm = () => {
@@ -44,6 +54,8 @@ const ContactForm = () => {
   const scaleParam = searchParams.get("scale") ?? ""
   const constraintsParam = searchParams.get("constraints") ?? ""
   const budgetParam = searchParams.get("budget") ?? ""
+  const deploymentParam = searchParams.get("deployment") ?? ""
+  const messageParam = searchParams.get("message") ?? ""
   const [state, formAction, isPending] = useActionState(
     submitContactForm,
     initialState
@@ -64,13 +76,19 @@ const ContactForm = () => {
     <form action={formAction} className="flex flex-col gap-5 max-w-2xl">
       <input type="hidden" name="product" value={product} />
       <input type="hidden" name="variant" value={variant} />
-      {(product || variant) && (
-        <div className="border border-ui-border-base rounded-large bg-grey-5 p-4">
-          <p className="text-base-semi mb-1">Quote context</p>
-          <p className="text-small-regular text-ui-fg-subtle">
-            {product}
-            {variant ? ` / ${variant}` : ""}
+      {(product || variant || workloadParam || scaleParam || budgetParam || deploymentParam || constraintsParam) && (
+        <div className="rounded-md border border-brand-200 bg-brand-50 p-4">
+          <p className="text-base-semi text-brand-950 mb-2">
+            Engineer review context
           </p>
+          <div className="grid grid-cols-1 gap-2 text-small-regular text-brand-900">
+            {product && <p>Product: {product}{variant ? ` / ${variant}` : ""}</p>}
+            {workloadParam && <p>Workload: {workloadParam}</p>}
+            {scaleParam && <p>Scale: {scaleParam}</p>}
+            {budgetParam && <p>Budget: {budgetParam}</p>}
+            {deploymentParam && <p>Deployment: {deploymentParam}</p>}
+            {constraintsParam && <p>Notes: {constraintsParam}</p>}
+          </div>
         </div>
       )}
       <div className="grid grid-cols-1 small:grid-cols-2 gap-4">
@@ -147,13 +165,30 @@ const ContactForm = () => {
           </select>
         </div>
         <div>
-          <Label htmlFor="gpuPreference">GPU preference</Label>
-          <Input
-            id="gpuPreference"
-            name="gpuPreference"
-            placeholder="RTX 5090, A100, H200, L40S, not sure..."
-          />
+          <Label htmlFor="deployment">Deployment location</Label>
+          <select
+            id="deployment"
+            name="deployment"
+            className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
+            defaultValue={deploymentParam}
+          >
+            <option value="" disabled>
+              Select deployment
+            </option>
+            {DEPLOYMENT_OPTIONS.map((option) => (
+              <option key={option}>{option}</option>
+            ))}
+          </select>
         </div>
+      </div>
+
+      <div>
+        <Label htmlFor="gpuPreference">GPU preference</Label>
+        <Input
+          id="gpuPreference"
+          name="gpuPreference"
+          placeholder="RTX 5090, A100, H200, L40S, not sure..."
+        />
       </div>
 
       <div className="grid grid-cols-1 small:grid-cols-2 gap-4">
@@ -211,6 +246,7 @@ const ContactForm = () => {
           name="message"
           required
           rows={6}
+          defaultValue={messageParam}
           className="flex w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
           placeholder="Tell us what you run today, what feels slow, and what success looks like after the upgrade."
         />

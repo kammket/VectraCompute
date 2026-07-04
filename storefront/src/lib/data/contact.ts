@@ -17,6 +17,7 @@ export async function submitContactForm(
   const workload = formData.get("workload")?.toString().trim()
   const scale = formData.get("scale")?.toString().trim()
   const budget = formData.get("budget")?.toString().trim()
+  const deployment = formData.get("deployment")?.toString().trim()
   const gpuPreference = formData.get("gpuPreference")?.toString().trim()
   const model = formData.get("model")?.toString().trim()
   const timeline = formData.get("timeline")?.toString().trim()
@@ -36,6 +37,7 @@ export async function submitContactForm(
       workload ? `Workload: ${workload}` : null,
       scale ? `Scale: ${scale}` : null,
       budget ? `Budget: ${budget}` : null,
+      deployment ? `Deployment: ${deployment}` : null,
       gpuPreference ? `GPU preference: ${gpuPreference}` : null,
       model ? `Model / framework: ${model}` : null,
       timeline ? `Timeline: ${timeline}` : null,
