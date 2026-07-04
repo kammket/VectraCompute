@@ -51,15 +51,17 @@ async function query<T extends QueryResultRow>(
     return { rows: [] as T[] }
   }
 
-  await client.connect()
+  // connect() must be inside the try: an unreachable DATABASE_URL otherwise
+  // throws unhandled and takes down every page that renders reviews.
   try {
+    await client.connect()
     const result = await client.query<T>(sql, params)
     return { rows: result.rows as T[] }
   } catch (error) {
     console.error("VectraCompute review query failed", error)
     return { rows: [] as T[] }
   } finally {
-    await client.end()
+    await client.end().catch(() => {})
   }
 }
 

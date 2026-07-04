@@ -58,15 +58,17 @@ async function query<T>(sql: string, params: unknown[] = []) {
     return { rows: [] as T[] }
   }
 
-  await client.connect()
+  // connect() must be inside the try: an unreachable DATABASE_URL otherwise
+  // throws unhandled and crashes whatever page triggered the query.
   try {
+    await client.connect()
     const result = await client.query<T>(sql, params)
     return result
   } catch (error) {
     console.error("VectraCompute product database query failed", error)
     return { rows: [] as T[] }
   } finally {
-    await client.end()
+    await client.end().catch(() => {})
   }
 }
 
