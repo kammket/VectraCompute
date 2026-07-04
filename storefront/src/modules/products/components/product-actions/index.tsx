@@ -43,6 +43,8 @@ export default function ProductActions({
 
   const [options, setOptions] = useState<Record<string, string | undefined>>({})
   const [isAdding, setIsAdding] = useState(false)
+  const [justAdded, setJustAdded] = useState(false)
+  const addedTimer = useRef<number | undefined>(undefined)
   const countryCode = useParams().countryCode as string
 
   // If there is only 1 variant, preselect the options
@@ -130,6 +132,7 @@ export default function ProductActions({
     if (!selectedVariant?.id) return null
 
     setIsAdding(true)
+    setJustAdded(false)
 
     await addToCart({
       variantId: selectedVariant.id,
@@ -138,6 +141,9 @@ export default function ProductActions({
     })
 
     setIsAdding(false)
+    setJustAdded(true)
+    window.clearTimeout(addedTimer.current)
+    addedTimer.current = window.setTimeout(() => setJustAdded(false), 6000)
   }
 
   return (
@@ -203,8 +209,28 @@ export default function ProductActions({
             ? "Select configuration"
             : !inStock || !isValidVariant
             ? "Out of stock"
+            : justAdded
+            ? "Added to cart ✓"
             : "Add to cart"}
         </Button>
+        {justAdded && (
+          <div
+            role="status"
+            className="flex items-center justify-between gap-3 rounded-md border border-emerald-200 bg-emerald-50 px-3 py-2.5"
+          >
+            <span className="text-small-regular text-emerald-900">
+              {selectedVariant?.title
+                ? `${selectedVariant.title} is in your cart.`
+                : "Added to your cart."}
+            </span>
+            <LocalizedClientLink
+              href="/cart"
+              className="shrink-0 text-small-semi text-emerald-800 underline hover:text-emerald-900"
+            >
+              View cart
+            </LocalizedClientLink>
+          </div>
+        )}
         <LocalizedClientLink
           href={`/contact?product=${encodeURIComponent(product.title)}${
             selectedVariant?.title

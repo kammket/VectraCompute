@@ -67,11 +67,11 @@ export default async function Nav() {
               </LocalizedClientLink>
               <LocalizedClientLink
                 className="hidden h-9 items-center gap-1.5 rounded-md border border-ui-border-base bg-white px-3 text-small-semi text-ui-fg-base transition hover:border-brand-300 hover:text-brand-700 medium:inline-flex"
-                href="/account"
+                href="/order/status"
                 data-testid="nav-account-link"
               >
                 <User />
-                Account
+                Track order
               </LocalizedClientLink>
               <LocalizedClientLink
                 className="hidden h-10 items-center gap-2 rounded-md bg-brand-600 px-4 text-small-semi text-white shadow-sm transition hover:bg-brand-700 small:inline-flex"

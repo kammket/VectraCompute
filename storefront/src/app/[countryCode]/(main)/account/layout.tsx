@@ -1,20 +1,16 @@
-import { retrieveCustomer } from "@lib/data/customer"
-// TODO: Re-add Toaster component when needed
-import AccountLayout from "@modules/account/templates/account-layout"
+import { redirect } from "next/navigation"
 
+// The password-based customer account system was part of the retired Medusa
+// backend; its sign-in form can no longer authenticate anyone. Until a real
+// account system exists, every /account URL forwards to order tracking, which
+// is the working "where is my stuff" feature (order # + checkout email).
 export default async function AccountPageLayout({
-  dashboard,
-  login,
+  params,
 }: {
   dashboard?: React.ReactNode
   login?: React.ReactNode
+  params: Promise<{ countryCode: string }>
 }) {
-  const customer = await retrieveCustomer().catch(() => null)
-
-  return (
-    <AccountLayout customer={customer}>
-      {customer ? dashboard : login}
-      {/* TODO: Re-add Toaster component when needed */}
-    </AccountLayout>
-  )
+  const { countryCode } = await params
+  redirect(`/${countryCode}/order/status`)
 }

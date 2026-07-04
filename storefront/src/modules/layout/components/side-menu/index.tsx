@@ -19,7 +19,7 @@ const SideMenuItems = {
   Blog: "/blog",
   About: "/about",
   Contact: "/contact",
-  Account: "/account",
+  "Track order": "/order/status",
 }
 
 // Mirrors the header's "Shop by category" dropdown so tablet/mobile users get

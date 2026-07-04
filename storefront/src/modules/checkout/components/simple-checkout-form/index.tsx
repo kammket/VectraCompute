@@ -2,6 +2,7 @@
 
 import { createSimpleOrder } from "@lib/data/simple-orders"
 import { Button, Heading, Text } from "@modules/common/components/ui"
+import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import { useActionState } from "react"
 
 const paymentOptions = [
@@ -110,6 +111,34 @@ export default function SimpleCheckoutForm() {
               </span>
             </label>
           ))}
+        </div>
+
+        {/* Set expectations at the moment of highest hesitation, before the
+            order is placed — not only on the confirmation page. */}
+        <div className="rounded-md border border-ui-border-base bg-grey-5 p-4">
+          <Text className="text-small-semi text-ui-fg-base">
+            What happens after you place the order
+          </Text>
+          <ol className="mt-2 grid gap-1.5 text-small-regular leading-6 text-ui-fg-subtle">
+            <li>
+              1. You get an order number and the exact BTC amount at a live
+              rate, locked for the payment window.
+            </li>
+            <li>
+              2. You send payment; our team verifies it on-chain — you can
+              watch each stage on the order tracking page.
+            </li>
+            <li>
+              3. Your system is built, burn-in tested, and shipped insured.
+              Most configurations ship 3–7 business days after confirmation.
+            </li>
+          </ol>
+          <LocalizedClientLink
+            href="/resources/how-bitcoin-payment-works"
+            className="mt-2 inline-block text-small-semi text-brand-700 underline hover:text-brand-800"
+          >
+            Read the full payment process
+          </LocalizedClientLink>
         </div>
       </div>
 
