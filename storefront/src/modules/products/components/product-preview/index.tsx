@@ -56,6 +56,7 @@ export default async function ProductPreview({
             fill
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
             className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+            unoptimized={image.startsWith("data:")}
           />
           {badge && (
             <span className="absolute left-3 top-3 rounded-md bg-brand-600 px-2.5 py-1 text-[11px] font-medium uppercase tracking-wide text-white shadow-sm">

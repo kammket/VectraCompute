@@ -58,6 +58,8 @@ const ImageOrPlaceholder = ({
       quality={50}
       sizes="(max-width: 576px) 280px, (max-width: 768px) 360px, (max-width: 992px) 480px, 800px"
       fill
+      // The optimizer can't proxy admin-uploaded data: URLs
+      unoptimized={image.startsWith("data:")}
     />
   ) : (
     <div className="w-full h-full absolute inset-0 flex items-center justify-center">

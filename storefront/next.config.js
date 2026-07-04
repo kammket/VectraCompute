@@ -25,11 +25,20 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    unoptimized: true,
+    // Optimization is on. Generated brand art is SVG, so SVG passthrough is
+    // explicitly allowed with a restrictive CSP; admin-uploaded data: URLs
+    // opt out per-image at the render sites (next/image can't proxy them).
+    dangerouslyAllowSVG: true,
+    contentDispositionType: "inline",
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     remotePatterns: [
       {
         protocol: "http",
         hostname: "localhost",
+      },
+      {
+        protocol: "https",
+        hostname: "*.public.blob.vercel-storage.com",
       },
       {
         protocol: "https",

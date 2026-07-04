@@ -88,14 +88,30 @@ const readText = (formData: FormData, key: string) =>
 const readNullableText = (formData: FormData, key: string) =>
   readText(formData, key) || null
 
-const fileToDataUrl = async (file: File) => {
+// With BLOB_READ_WRITE_TOKEN set (Vercel Blob), photos land in durable object
+// storage and only a URL is stored in Postgres. Without it, we fall back to
+// inline data URLs so uploads still work on a bare setup.
+const storeImage = async (file: File) => {
   if (!file.type.startsWith("image/")) {
     throw new Error("Uploaded product photo must be an image.")
   }
 
-  const maxBytes = 1024 * 1024 * 1.5
+  const maxBytes = 1024 * 1024 * (process.env.BLOB_READ_WRITE_TOKEN ? 8 : 1.5)
   if (file.size > maxBytes) {
-    throw new Error("Product photo must be smaller than 1.5MB.")
+    throw new Error("Product photo is too large.")
+  }
+
+  if (process.env.BLOB_READ_WRITE_TOKEN) {
+    try {
+      const { put } = await import("@vercel/blob")
+      const safeName = file.name.replace(/[^a-zA-Z0-9.-]+/g, "-").slice(-60)
+      const blob = await put(`products/${Date.now()}-${safeName}`, file, {
+        access: "public",
+      })
+      return blob.url
+    } catch (error) {
+      console.error("Vercel Blob upload failed, falling back to data URL", error)
+    }
   }
 
   const buffer = Buffer.from(await file.arrayBuffer())
@@ -108,7 +124,7 @@ const readImageUpload = async (formData: FormData) => {
     return null
   }
 
-  return fileToDataUrl(file)
+  return storeImage(file)
 }
 
 // Additional gallery photos: multiple files per submit, appended to whatever the
@@ -121,7 +137,7 @@ const readGalleryUploads = async (formData: FormData) => {
 
   const urls: string[] = []
   for (const file of files) {
-    urls.push(await fileToDataUrl(file))
+    urls.push(await storeImage(file))
   }
   return urls
 }

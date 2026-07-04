@@ -149,11 +149,14 @@ const CompareList = () => {
         </div>
       </div>
 
+      <p className="text-xs text-ui-fg-muted large:hidden">
+        Swipe sideways to compare — the spec column stays pinned.
+      </p>
       <div className="overflow-x-auto rounded-md border border-ui-border-base bg-white shadow-elevation-card-rest">
         <table className="min-w-[900px] w-full border-collapse text-left">
           <thead>
             <tr className="border-b border-ui-border-base bg-grey-5">
-              <th className="w-44 px-4 py-4 text-small-semi text-ui-fg-base">
+              <th className="sticky left-0 z-10 w-44 bg-grey-5 px-4 py-4 text-small-semi text-ui-fg-base shadow-[1px_0_0_0_#E5E7EB]">
                 Spec
               </th>
               {items.map((item) => (
@@ -178,7 +181,7 @@ const CompareList = () => {
           <tbody>
             {rows.map((row) => (
               <tr key={row.label} className="border-b border-ui-border-base">
-                <th className="bg-grey-5 px-4 py-4 text-small-semi text-ui-fg-base">
+                <th className="sticky left-0 z-10 bg-grey-5 px-4 py-4 text-small-semi text-ui-fg-base shadow-[1px_0_0_0_#E5E7EB]">
                   {row.label}
                 </th>
                 {items.map((item) => (
@@ -192,7 +195,7 @@ const CompareList = () => {
               </tr>
             ))}
             <tr>
-              <th className="bg-grey-5 px-4 py-4 text-small-semi text-ui-fg-base">
+              <th className="sticky left-0 z-10 bg-grey-5 px-4 py-4 text-small-semi text-ui-fg-base shadow-[1px_0_0_0_#E5E7EB]">
                 Actions
               </th>
               {items.map((item) => (

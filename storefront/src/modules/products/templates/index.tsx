@@ -137,6 +137,11 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
         aria-label="Product sections"
         className="sticky top-16 z-30 border-y border-ui-border-base bg-white/95 backdrop-blur"
       >
+        {/* Right-edge fade signals more items off-screen on touch widths */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-white to-transparent large:hidden"
+        />
         <div className="content-container flex items-center gap-1 overflow-x-auto py-2 text-small-semi text-ui-fg-subtle">
           {SECTION_NAV.map(([id, label]) => (
             <a

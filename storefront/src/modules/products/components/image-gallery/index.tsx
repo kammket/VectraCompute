@@ -41,6 +41,7 @@ const ImageGallery = ({ images, productTitle }: ImageGalleryProps) => {
                   alt={`${productTitle ?? "VectraCompute AI hardware"} image ${
                     index + 1
                   }`}
+                  unoptimized={image.url.startsWith("data:")}
                   fill
                   sizes={
                     index === 0

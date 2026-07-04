@@ -14,14 +14,26 @@ import { Locale } from "@lib/data/locales"
 const SideMenuItems = {
   Home: "/",
   Store: "/store",
-  Workstations: "/categories/ai-deep-learning-workstations",
-  "GPU Servers": "/categories/gpu-rack-servers",
-  Components: "/categories/components-accessories",
   Solutions: "/solutions",
+  Resources: "/resources",
   Blog: "/blog",
   About: "/about",
   Contact: "/contact",
   Account: "/account",
+}
+
+// Mirrors the header's "Shop by category" dropdown so tablet/mobile users get
+// the same catalog reach as desktop.
+const CategoryItems = {
+  "AI & Deep Learning Workstations": "/categories/ai-deep-learning-workstations",
+  "GPU Rack Servers": "/categories/gpu-rack-servers",
+  "Refurbished & Certified": "/categories/refurbished-certified",
+  "Storage & Memory": "/categories/storage-memory",
+  "Networking & Interconnect": "/categories/networking-interconnect",
+  "Power & Cooling": "/categories/power-cooling",
+  "Edge & Robotics": "/categories/edge-robotics",
+  "Workstations by CPU Platform": "/categories/workstations-by-cpu-platform",
+  "Components & Accessories": "/categories/components-accessories",
 }
 
 type SideMenuProps = {
@@ -78,22 +90,42 @@ const SideMenu = ({ regions, locales, currentLocale }: SideMenuProps) => {
                         <XMark />
                       </button>
                     </div>
-                    <ul className="flex flex-col gap-6 items-start justify-start">
-                      {Object.entries(SideMenuItems).map(([name, href]) => {
-                        return (
-                          <li key={name}>
-                            <LocalizedClientLink
-                              href={href}
-                              className="text-3xl leading-10 hover:text-ui-fg-disabled"
-                              onClick={close}
-                              data-testid={`${name.toLowerCase()}-link`}
-                            >
-                              {name}
-                            </LocalizedClientLink>
-                          </li>
-                        )
-                      })}
-                    </ul>
+                    <div className="flex-1 overflow-y-auto pr-1">
+                      <ul className="flex flex-col gap-4 items-start justify-start">
+                        {Object.entries(SideMenuItems).map(([name, href]) => {
+                          return (
+                            <li key={name}>
+                              <LocalizedClientLink
+                                href={href}
+                                className="text-2xl leading-9 hover:text-ui-fg-disabled"
+                                onClick={close}
+                                data-testid={`${name.toLowerCase()}-link`}
+                              >
+                                {name}
+                              </LocalizedClientLink>
+                            </li>
+                          )
+                        })}
+                      </ul>
+                      <p className="mt-8 mb-3 text-xs font-semibold uppercase tracking-widest text-white/50">
+                        Shop by category
+                      </p>
+                      <ul className="flex flex-col gap-2.5 items-start justify-start">
+                        {Object.entries(CategoryItems).map(([name, href]) => {
+                          return (
+                            <li key={name}>
+                              <LocalizedClientLink
+                                href={href}
+                                className="text-base leading-7 text-white/80 hover:text-white"
+                                onClick={close}
+                              >
+                                {name}
+                              </LocalizedClientLink>
+                            </li>
+                          )
+                        })}
+                      </ul>
+                    </div>
                     <div className="flex flex-col gap-y-6">
                       {!!locales?.length && (
                         <div

@@ -100,11 +100,16 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   }
 
   const seo = getProductSeo(product)
-  const image = seo.ogImage
-    ? seo.ogImage.startsWith("http")
-      ? seo.ogImage
-      : `${getBaseURL()}${seo.ogImage}`
-    : undefined
+  // Only emit an explicit og:image for real raster photos; SVGs are rejected
+  // by social scrapers, and omitting the field lets the file-based
+  // opengraph-image.tsx PNG take over.
+  const isRaster = (url: string) => !url.toLowerCase().endsWith(".svg")
+  const image =
+    seo.ogImage && isRaster(seo.ogImage)
+      ? seo.ogImage.startsWith("http")
+        ? seo.ogImage
+        : `${getBaseURL()}${seo.ogImage}`
+      : undefined
 
   return {
     title: seo.title,
@@ -117,7 +122,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
       title: seo.title,
       description: seo.description.slice(0, 160),
       type: "website",
-      images: image ? [image] : [],
+      ...(image ? { images: [image] } : {}),
     },
   }
 }
