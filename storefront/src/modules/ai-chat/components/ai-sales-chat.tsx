@@ -238,7 +238,7 @@ export default function AiSalesChat() {
   return (
     <div className="fixed bottom-5 right-5 z-50 flex max-w-[calc(100vw-2.5rem)] flex-col items-end">
       {open && (
-        <div className="mb-3 flex h-[680px] w-[420px] max-w-full flex-col overflow-hidden rounded border border-grey-80 bg-grey-90 shadow-2xl shadow-grey-90/30">
+        <div className="mb-3 flex h-[min(680px,calc(100dvh-7rem))] w-[420px] max-w-full flex-col overflow-hidden rounded border border-grey-80 bg-grey-90 shadow-2xl shadow-grey-90/30">
           <div className="border-b border-grey-80 bg-grey-90 px-4 py-3">
             <div className="flex items-start justify-between gap-3">
               <div>

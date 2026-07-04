@@ -74,7 +74,7 @@ export default async function Nav() {
                 Account
               </LocalizedClientLink>
               <LocalizedClientLink
-                className="hidden h-9 items-center gap-2 rounded-md bg-brand-600 px-4 text-small-semi text-white shadow-sm transition hover:bg-brand-700 small:inline-flex"
+                className="hidden h-10 items-center gap-2 rounded-md bg-brand-600 px-4 text-small-semi text-white shadow-sm transition hover:bg-brand-700 small:inline-flex"
                 href="/contact"
               >
                 <ServerStack />

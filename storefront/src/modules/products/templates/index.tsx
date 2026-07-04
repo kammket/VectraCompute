@@ -142,7 +142,7 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
             <a
               key={id}
               href={`#${id}`}
-              className="shrink-0 rounded-md px-3 py-1.5 transition-colors hover:bg-grey-5 hover:text-ui-fg-base"
+              className="shrink-0 rounded-md px-3 py-2.5 transition-colors hover:bg-grey-5 hover:text-ui-fg-base large:py-1.5"
             >
               {label}
             </a>

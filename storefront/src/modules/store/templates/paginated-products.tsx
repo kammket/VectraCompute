@@ -130,7 +130,7 @@ export default async function PaginatedProducts({
         </div>
       )}
       <ul
-        className="grid grid-cols-1 xsmall:grid-cols-2 w-full small:grid-cols-2 medium:grid-cols-3 gap-6"
+        className="grid grid-cols-1 w-full small:grid-cols-2 medium:grid-cols-3 gap-6"
         data-testid="products-list"
       >
         {products.map((p) => {

@@ -5,7 +5,7 @@ import Image from "next/image"
 
 const Hero = () => {
   return (
-    <section className="min-h-[720px] w-full border-b border-grey-80 relative bg-grey-90 overflow-hidden">
+    <section className="w-full border-b border-grey-80 relative bg-grey-90 overflow-hidden large:min-h-[720px]">
       <Image
         src="/images/gpu-hero-opt.png"
         alt="GPU server rack with accelerator hardware for AI training and inference"
@@ -17,7 +17,7 @@ const Hero = () => {
       <div className="absolute inset-0 bg-gradient-to-r from-grey-90 via-grey-90/86 to-grey-90/28" />
       <div className="absolute inset-0 bg-gradient-to-b from-grey-90/10 via-grey-90/15 to-grey-90" />
       <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-grey-90 to-transparent" />
-      <div className="content-container relative z-10 min-h-[720px] grid grid-cols-1 large:grid-cols-[minmax(0,1fr)_440px] items-center gap-10 py-20">
+      <div className="content-container relative z-10 grid grid-cols-1 large:grid-cols-[minmax(0,1fr)_440px] items-center gap-10 py-12 large:min-h-[720px] large:py-20">
         <div className="max-w-3xl">
           <div className="mb-5 inline-flex flex-wrap items-center gap-2 rounded-md border border-white/15 bg-white/10 px-3 py-2 backdrop-blur">
             <span className="h-2 w-2 rounded-full bg-brand-200" />
@@ -74,7 +74,8 @@ const Hero = () => {
             ))}
           </div>
         </div>
-        <div className="grid grid-cols-1 gap-3 rounded-md border border-white/15 bg-white/10 p-5 backdrop-blur">
+        {/* Supplementary panel: desktop only, so phones reach products in one scroll */}
+        <div className="hidden grid-cols-1 gap-3 rounded-md border border-white/15 bg-white/10 p-5 backdrop-blur large:grid">
           <Text className="text-small-semi uppercase tracking-wide text-brand-100">
             Buying confidence
           </Text>
