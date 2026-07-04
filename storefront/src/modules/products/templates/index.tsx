@@ -95,53 +95,124 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
         <div className="flex flex-col gap-8">
           <ProductQuickAnswers product={product} />
 
-          <div className="grid grid-cols-1 large:grid-cols-[minmax(0,1fr)_360px] gap-8 items-start">
-            <div className="flex flex-col gap-8">
-              <div>
-                <div className="mb-4">
-                  <p className="text-small-semi uppercase text-brand-700">
-                    Buyer decision
+          <section className="overflow-hidden rounded-md border border-grey-80 bg-white shadow-elevation-card-rest">
+            <div className="border-b border-grey-80 bg-grey-90 p-5 text-white small:p-6">
+              <div className="grid grid-cols-1 gap-5 large:grid-cols-[minmax(0,1fr)_360px] large:items-end">
+                <div>
+                  <p className="text-small-semi uppercase tracking-wide text-brand-200">
+                    Technical decision hub
                   </p>
-                  <h2 className="text-2xl font-semibold text-ui-fg-base">
-                    Decide if this product fits your workload
+                  <h2 className="mt-2 text-2xl font-semibold text-white">
+                    Review fit, compatibility, specifications, and trust in the
+                    right order.
                   </h2>
-                </div>
-                <ProductDecisionSummary product={product} />
-              </div>
-
-              <div>
-                <div className="mb-4">
-                  <p className="text-small-semi uppercase text-blue-700">
-                    Compatibility
+                  <p className="mt-3 max-w-3xl text-small-regular leading-6 text-grey-20">
+                    This section is arranged for serious AI hardware buyers:
+                    first confirm whether the product fits the workload, then
+                    validate deployment requirements, compare configurations,
+                    and review support before ordering.
                   </p>
-                  <h2 className="text-2xl font-semibold text-ui-fg-base">
-                    Check compatibility before ordering
-                  </h2>
                 </div>
-                <ProductFitAssistant product={product} />
-              </div>
-
-              <div>
-                <div className="mb-4">
-                  <p className="text-small-semi uppercase text-emerald-700">
-                    Technical review
-                  </p>
-                  <h2 className="text-2xl font-semibold text-ui-fg-base">
-                    Review technical detail and configurations
-                  </h2>
-                </div>
-                <div className="flex flex-col gap-8">
-                  <AiBuyerGuide product={product} />
-                  <ProductSpecs product={product} />
+                <div className="grid grid-cols-2 gap-2 text-small-semi">
+                  {[
+                    ["01", "Fit"],
+                    ["02", "Compatibility"],
+                    ["03", "Specs"],
+                    ["04", "Trust"],
+                  ].map(([number, label]) => (
+                    <a
+                      key={number}
+                      href={
+                        number === "01"
+                          ? "#buyer-summary"
+                          : number === "02"
+                          ? "#fit-and-compatibility"
+                          : number === "03"
+                          ? "#technical-details"
+                          : "#purchase-confidence"
+                      }
+                      className="rounded-md border border-white/15 bg-white/10 px-3 py-2 text-white hover:bg-white/15"
+                    >
+                      <span className="mr-2 text-brand-200">{number}</span>
+                      {label}
+                    </a>
+                  ))}
                 </div>
               </div>
             </div>
-            <div className="flex flex-col gap-8 large:sticky large:top-24">
-              <ProductBuyingConfidence product={product} />
-              <ManagedSpecs product={product} />
-              <ProductAssurances product={product} />
+
+            <div className="grid grid-cols-1 gap-0 large:grid-cols-[260px_minmax(0,1fr)]">
+              <aside className="border-b border-ui-border-base bg-grey-5 p-5 large:sticky large:top-24 large:self-start large:border-b-0 large:border-r small:p-6">
+                <p className="text-small-semi uppercase text-brand-700">
+                  Review steps
+                </p>
+                <div className="mt-4 grid grid-cols-1 gap-3">
+                  {[
+                    [
+                      "01",
+                      "Workload fit",
+                      "Confirm this is the right class of hardware.",
+                      "#buyer-summary",
+                    ],
+                    [
+                      "02",
+                      "Compatibility",
+                      "Check power, cooling, software, network, and limits.",
+                      "#fit-and-compatibility",
+                    ],
+                    [
+                      "03",
+                      "Configuration",
+                      "Compare SKU, price, components, and technical specs.",
+                      "#technical-details",
+                    ],
+                    [
+                      "04",
+                      "Trust proof",
+                      "Review warranty, validation, support, and handoff.",
+                      "#purchase-confidence",
+                    ],
+                  ].map(([number, title, body, href]) => (
+                    <a
+                      key={number}
+                      href={href}
+                      className="group grid grid-cols-[34px_1fr] gap-3 rounded-md border border-ui-border-base bg-white p-3 hover:border-brand-300"
+                    >
+                      <span className="flex h-8 w-8 items-center justify-center rounded-md bg-grey-90 text-small-semi text-white group-hover:bg-brand-600">
+                        {number}
+                      </span>
+                      <span>
+                        <span className="block text-small-semi text-ui-fg-base">
+                          {title}
+                        </span>
+                        <span className="mt-1 block text-xs leading-5 text-ui-fg-subtle">
+                          {body}
+                        </span>
+                      </span>
+                    </a>
+                  ))}
+                </div>
+              </aside>
+
+              <div className="p-5 small:p-6">
+                <div className="grid grid-cols-1 gap-8">
+                  <ProductDecisionSummary product={product} />
+                  <ProductFitAssistant product={product} />
+                  <div className="grid grid-cols-1 gap-8">
+                    <AiBuyerGuide product={product} />
+                    <ProductSpecs product={product} />
+                  </div>
+                  <div className="grid grid-cols-1 gap-8 large:grid-cols-[minmax(0,1fr)_360px] large:items-start">
+                    <ProductBuyingConfidence product={product} />
+                    <div className="flex flex-col gap-8">
+                      <ManagedSpecs product={product} />
+                      <ProductAssurances product={product} />
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
+          </section>
         </div>
       </div>
       <section className="bg-slate-950 text-white">

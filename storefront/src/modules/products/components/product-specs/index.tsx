@@ -29,18 +29,23 @@ const ProductSpecs = ({ product }: Props) => {
       className="rounded-md border border-blue-100 bg-white p-5 small:p-6 scroll-mt-28"
     >
       <div className="grid grid-cols-1 gap-6">
-        <div>
-          <Text className="text-small-semi uppercase text-blue-700 mb-2">
-            Configure
-          </Text>
-          <Heading level="h2" className="text-xl mb-2">
-            {isSystem ? "Available configurations" : "Available options"}
-          </Heading>
-          <Text className="text-ui-fg-subtle text-small-regular leading-6">
-            {isSystem
-              ? "Every configuration is built to order and stress-tested before it ships. Select your configuration in the product panel to add it to cart."
-              : "Choose the option that fits your build."}
-          </Text>
+        <div className="grid grid-cols-1 gap-4 medium:grid-cols-[72px_minmax(0,1fr)]">
+          <div className="flex h-14 w-14 items-center justify-center rounded-md bg-blue-700 text-xl font-semibold text-white">
+            03
+          </div>
+          <div>
+            <Text className="text-small-semi uppercase text-blue-700 mb-2">
+              Priority three: configuration
+            </Text>
+            <Heading level="h2" className="text-xl mb-2">
+              {isSystem ? "Compare available configurations" : "Compare available options"}
+            </Heading>
+            <Text className="text-ui-fg-subtle text-small-regular leading-6">
+              {isSystem
+                ? "Use this table to compare SKU, major components, and price before selecting the configuration in the product panel."
+                : "Choose the option that fits your build and compatibility requirements."}
+            </Text>
+          </div>
         </div>
 
         <div className="overflow-x-auto rounded-md border border-blue-100 bg-white">

@@ -266,13 +266,16 @@ const ProductFitAssistant = ({
       className="rounded-md border border-blue-100 bg-blue-50 p-5 small:p-6 scroll-mt-28"
     >
       <div className="grid grid-cols-1 gap-6">
-        <div className="flex flex-col gap-4 medium:flex-row medium:items-start medium:justify-between">
+        <div className="grid grid-cols-1 gap-4 medium:grid-cols-[72px_minmax(0,1fr)_150px] medium:items-start">
+          <div className="flex h-14 w-14 items-center justify-center rounded-md bg-blue-700 text-xl font-semibold text-white">
+            02
+          </div>
           <div>
             <Text className="text-small-semi uppercase text-blue-700 mb-2">
-              Fit and compatibility
+              Priority two: compatibility
             </Text>
             <Heading level="h2" className="text-xl mb-2">
-              Can this solve your problem?
+              Check the technical requirements before ordering
             </Heading>
             <Text className="text-small-regular text-ui-fg-subtle leading-6">
               Use this product-specific check to confirm workload fit,
@@ -280,7 +283,7 @@ const ProductFitAssistant = ({
               before ordering.
             </Text>
           </div>
-          <div className="rounded-md border border-blue-200 bg-white p-4 medium:w-36">
+          <div className="rounded-md border border-blue-200 bg-white p-4">
             <Text className="text-small-semi text-blue-800">
               Readiness score
             </Text>
@@ -311,7 +314,7 @@ const ProductFitAssistant = ({
         <div className="grid grid-cols-1 large:grid-cols-2 gap-5">
           <div className="rounded-md border border-blue-100 bg-white p-5">
             <Heading level="h3" className="text-base mb-4">
-              Compatibility answers
+              Required compatibility answers
             </Heading>
             <div className="grid grid-cols-1 gap-3 text-small-regular">
               {[
@@ -350,7 +353,7 @@ const ProductFitAssistant = ({
 
           <div className="rounded-md border border-blue-100 bg-white p-5">
             <Heading level="h3" className="text-base mb-4">
-              Before you buy
+              Questions to answer first
             </Heading>
             <ul className="grid grid-cols-1 gap-2 text-small-regular text-ui-fg-subtle">
               {[

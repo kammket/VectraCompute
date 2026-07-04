@@ -58,29 +58,34 @@ const ProductBuyingConfidence = ({
       className="rounded-md border border-emerald-100 bg-emerald-50 p-5 small:p-6 scroll-mt-28"
     >
       <div className="grid grid-cols-1 gap-6">
-        <div>
-          <Text className="text-small-semi uppercase text-emerald-700 mb-2">
-            Buyer confidence
-          </Text>
-          <Heading level="h2" className="text-xl mb-2">
-            What to confirm before ordering
-          </Heading>
-          <Text className="text-small-regular text-emerald-950/75 leading-6 mb-5">
-            The details below are product-specific, so technical buyers can
-            check deployment fit, risk, support, and procurement readiness
-            before they commit.
-          </Text>
-          <LocalizedClientLink
-            href={`/contact?product=${encodeURIComponent(
-              product.title
-            )}&constraints=${encodeURIComponent(
-              `Review quote for ${product.title}`
-            )}`}
-          >
-            <Button variant="secondary" className="w-full small:w-auto">
-              Request a reviewed quote
-            </Button>
-          </LocalizedClientLink>
+        <div className="grid grid-cols-1 gap-4 medium:grid-cols-[72px_minmax(0,1fr)]">
+          <div className="flex h-14 w-14 items-center justify-center rounded-md bg-emerald-700 text-xl font-semibold text-white">
+            04
+          </div>
+          <div>
+            <Text className="text-small-semi uppercase text-emerald-700 mb-2">
+              Priority four: trust proof
+            </Text>
+            <Heading level="h2" className="text-xl mb-2">
+              Confirm validation, support, and buyer confidence
+            </Heading>
+            <Text className="text-small-regular text-emerald-950/75 leading-6 mb-5">
+              The details below are product-specific, so technical buyers can
+              check deployment fit, risk, support, warranty, and operational
+              readiness before they commit.
+            </Text>
+            <LocalizedClientLink
+              href={`/contact?product=${encodeURIComponent(
+                product.title
+              )}&constraints=${encodeURIComponent(
+                `Review quote for ${product.title}`
+              )}`}
+            >
+              <Button variant="secondary" className="w-full small:w-auto">
+                Request reviewed quote
+              </Button>
+            </LocalizedClientLink>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 gap-5">
@@ -106,7 +111,7 @@ const ProductBuyingConfidence = ({
           <div className="grid grid-cols-1 gap-4">
             <div className="rounded-md border border-emerald-100 bg-white p-5">
               <Heading level="h3" className="text-base mb-3">
-                Buyer requirements
+                Buyer requirements to confirm
               </Heading>
               <ul className="grid grid-cols-1 gap-2 text-small-regular text-ui-fg-subtle mb-5">
                 {profile.requirements.map((item) => (
@@ -117,7 +122,7 @@ const ProductBuyingConfidence = ({
                 ))}
               </ul>
               <Heading level="h3" className="text-base mb-3">
-                Validation and included support
+                Validation and support proof
               </Heading>
               <div className="flex flex-wrap gap-2 mb-5">
                 {certifications.map((item) => (

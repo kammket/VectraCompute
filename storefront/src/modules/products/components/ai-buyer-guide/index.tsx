@@ -18,10 +18,10 @@ const AiBuyerGuide = ({ product }: Props) => {
       <div className="grid grid-cols-1 gap-6">
         <div>
           <Text className="text-small-semi uppercase text-emerald-700 mb-2">
-            AI hardware fit
+            Technical know-how
           </Text>
           <Heading level="h2" className="text-xl mb-3">
-            {profile.fit}
+            What this hardware is technically built to do
           </Heading>
           <Text className="text-ui-fg-subtle max-w-3xl mb-6 leading-7">
             {profile.modelFit}
@@ -40,7 +40,10 @@ const AiBuyerGuide = ({ product }: Props) => {
               </Heading>
               <ul className="flex flex-col gap-2 text-small-regular text-ui-fg-subtle">
                 {profile.workloads.map((item) => (
-                  <li key={item}>{item}</li>
+                  <li key={item} className="flex gap-2">
+                    <span className="mt-2 size-1.5 shrink-0 rounded-full bg-emerald-600" />
+                    <span>{item}</span>
+                  </li>
                 ))}
               </ul>
             </div>
@@ -50,7 +53,10 @@ const AiBuyerGuide = ({ product }: Props) => {
               </Heading>
               <ul className="flex flex-col gap-2 text-small-regular text-ui-fg-subtle">
                 {profile.platform.map((item) => (
-                  <li key={item}>{item}</li>
+                  <li key={item} className="flex gap-2">
+                    <span className="mt-2 size-1.5 shrink-0 rounded-full bg-emerald-600" />
+                    <span>{item}</span>
+                  </li>
                 ))}
               </ul>
             </div>
@@ -60,7 +66,10 @@ const AiBuyerGuide = ({ product }: Props) => {
               </Heading>
               <ul className="flex flex-col gap-2 text-small-regular text-ui-fg-subtle">
                 {profile.operations.map((item) => (
-                  <li key={item}>{item}</li>
+                  <li key={item} className="flex gap-2">
+                    <span className="mt-2 size-1.5 shrink-0 rounded-full bg-emerald-600" />
+                    <span>{item}</span>
+                  </li>
                 ))}
               </ul>
             </div>
@@ -72,12 +81,17 @@ const AiBuyerGuide = ({ product }: Props) => {
             Validation checklist
           </Heading>
           <div className="flex flex-col gap-4 mb-6">
-            {profile.validation.map(([name, detail]) => (
-              <div key={name}>
+            {profile.validation.map(([name, detail], index) => (
+              <div key={name} className="grid grid-cols-[28px_1fr] gap-3">
+                <span className="flex h-7 w-7 items-center justify-center rounded-md bg-white text-small-semi text-emerald-700">
+                  {index + 1}
+                </span>
+                <div>
                 <Text className="text-base-semi">{name}</Text>
                 <Text className="text-small-regular text-ui-fg-subtle">
                   {detail}
                 </Text>
+                </div>
               </div>
             ))}
           </div>

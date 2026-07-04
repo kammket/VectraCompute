@@ -28,31 +28,41 @@ const ProductDecisionSummary = ({
   return (
     <section
       id="buyer-summary"
-      className="rounded-md border border-slate-200 bg-white p-5 small:p-6 scroll-mt-28"
+      className="rounded-md border border-slate-200 bg-white p-5 scroll-mt-28 small:p-6"
     >
       <div className="grid grid-cols-1 gap-6">
-        <div>
-          <Text className="text-small-semi uppercase text-slate-700 mb-2">
-            Buyer summary
-          </Text>
-          <Heading level="h2" className="text-xl mb-2">
-            Best for {getBestFor(product)}
-          </Heading>
-          <Text className="text-small-regular text-ui-fg-subtle leading-6">
-            Use this page to confirm the exact workload fit, technical
-            requirements, validation checks, and support path for this product
-            before ordering or quote approval.
-          </Text>
+        <div className="grid grid-cols-1 gap-4 medium:grid-cols-[72px_minmax(0,1fr)]">
+          <div className="flex h-14 w-14 items-center justify-center rounded-md bg-grey-90 text-xl font-semibold text-white">
+            01
+          </div>
+          <div>
+            <Text className="text-small-semi uppercase text-slate-700 mb-2">
+              Priority one: workload fit
+            </Text>
+            <Heading level="h2" className="text-xl mb-2">
+              Best for {getBestFor(product)}
+            </Heading>
+            <Text className="text-small-regular text-ui-fg-subtle leading-6">
+              Start here before looking at configuration details. This summary
+              explains whether the product is the right class of hardware for
+              your model, users, deployment environment, and buying risk.
+            </Text>
+          </div>
         </div>
         <div className="grid grid-cols-1 medium:grid-cols-3 gap-4">
-          {profile.summaryCards.map(([title, body]) => (
+          {profile.summaryCards.map(([title, body], index) => (
             <div
               key={title}
               className="rounded-md border border-slate-200 bg-slate-50 p-4"
             >
-              <Heading level="h3" className="text-base mb-2">
-                {title}
-              </Heading>
+              <div className="mb-2 flex items-center gap-2">
+                <span className="flex h-7 w-7 items-center justify-center rounded-md bg-white text-small-semi text-slate-700">
+                  {index + 1}
+                </span>
+                <Heading level="h3" className="text-base">
+                  {title}
+                </Heading>
+              </div>
               <Text className="text-small-regular text-ui-fg-subtle leading-6">
                 {body}
               </Text>
