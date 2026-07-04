@@ -2,7 +2,6 @@ import { Metadata } from "next"
 import {
   ArrowRightMini,
   CheckCircle,
-  CreditCard,
   Server,
   ShieldCheck,
 } from "@medusajs/icons"
@@ -19,7 +18,7 @@ type Props = {
 export const metadata: Metadata = {
   title: "Trust Center | VectraCompute AI Hardware Validation & Support",
   description:
-    "Learn how VectraCompute builds buyer trust with AI hardware validation, compatibility review, warranty terms, refurbished grading, secure checkout, procurement support, and engineer-led guidance.",
+    "Learn how VectraCompute builds buyer trust with AI hardware validation, compatibility review, warranty terms, refurbished grading, clear order review, procurement support, and engineer-led guidance.",
 }
 
 const TRUST_AREAS = [
@@ -34,9 +33,9 @@ const TRUST_AREAS = [
     icon: Server,
   },
   {
-    title: "Secure checkout",
-    body: "Checkout keeps the order process simple while reinforcing shipping, payment, warranty, and support expectations before the buyer places an order.",
-    icon: CreditCard,
+    title: "Clear order review",
+    body: "The order path keeps high-value hardware requests simple while reinforcing shipping, warranty, validation, and support expectations before the buyer submits an order.",
+    icon: CheckCircle,
   },
   {
     title: "Engineer support",
@@ -103,7 +102,7 @@ const CONFIDENCE_STEPS = [
   {
     step: "2",
     title: "Confirm technical compatibility",
-    body: "Before checkout, buyers should know whether the system fits CUDA, ROCm, OpenVINO, PyTorch, vLLM, Triton, Docker, operating system, networking, power, cooling, and upgrade requirements.",
+    body: "Before ordering, buyers should know whether the system fits CUDA, ROCm, OpenVINO, PyTorch, vLLM, Triton, Docker, operating system, networking, power, cooling, and upgrade requirements.",
     links: [
       {
         label: "CUDA vs ROCm vs OpenVINO",
@@ -130,7 +129,7 @@ const CONFIDENCE_STEPS = [
   {
     step: "4",
     title: "Understand order handling",
-    body: "After checkout, the order should move through admin review, payment or PO coordination, parts confirmation, assembly, burn-in, shipping, and deployment handoff instead of disappearing into a generic order queue.",
+    body: "After ordering, the request should move through admin review, parts confirmation, assembly, burn-in, shipping, and deployment handoff instead of disappearing into a generic order queue.",
     links: [
       {
         label: "After-order process",
@@ -155,9 +154,9 @@ const CONFIDENCE_FAQ = [
   },
   {
     question:
-      "Can business buyers request a quote instead of checking out directly?",
+      "Can business buyers request a quote before ordering directly?",
     answer:
-      "Yes. Buyers can request quote review for compatibility, procurement approval, payment terms, purchase orders, deployment requirements, warranty expectations, and lead-time confirmation.",
+      "Yes. Buyers can request quote review for compatibility, procurement approval, deployment requirements, warranty expectations, support level, and lead-time confirmation.",
   },
 ]
 
@@ -202,7 +201,7 @@ export default async function TrustPage(props: Props) {
         <PremiumPageHeader
           eyebrow="Trust center"
           title="Buy AI hardware with clear proof, fit, and support"
-          description="This trust center organizes the questions serious AI buyers ask before purchase: will the hardware fit my workload, will the software stack run, what is validated, what happens after checkout, and who helps if deployment gets technical?"
+          description="This trust center organizes the questions serious AI buyers ask before purchase: will the hardware fit my workload, will the software stack run, what is validated, what happens after ordering, and who helps if deployment gets technical?"
           actions={[
             { label: "Use configurator", href: "/configure" },
             { label: "Request quote review", href: "/contact" },
@@ -316,7 +315,7 @@ export default async function TrustPage(props: Props) {
               Buyer confidence links
             </Heading>
             <Text className="text-small-regular text-ui-fg-subtle leading-6 mb-5">
-              Use these pages when you want a clear answer before checkout. They
+              Use these pages when you want a clear answer before ordering. They
               are arranged by the questions buyers usually ask first.
             </Text>
             <div className="grid grid-cols-1 gap-3">

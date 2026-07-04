@@ -55,17 +55,17 @@ export default async function TrendingAiHardware({
   }
 
   return (
-    <section className="bg-grey-5 border-y border-ui-border-base">
+    <section className="bg-white border-y border-ui-border-base">
       <div className="content-container py-14">
         <div className="grid grid-cols-1 large:grid-cols-[340px_minmax(0,1fr)] gap-8 items-start">
-          <div className="rounded-md border border-ui-border-base bg-white p-6 shadow-elevation-card-rest">
-            <Text className="text-small-semi uppercase text-brand-600 mb-2">
+          <div className="large:sticky large:top-24 rounded-md border border-grey-80 bg-grey-90 p-6 text-white shadow-elevation-card-rest">
+            <Text className="text-small-semi uppercase text-brand-200 mb-2">
               Trending AI hardware
             </Text>
-            <Heading level="h2" className="text-2xl mb-3">
+            <Heading level="h2" className="text-2xl mb-3 text-white">
               New infrastructure buyers are searching for now
             </Heading>
-            <Text className="text-small-regular text-ui-fg-subtle leading-6 mb-5">
+            <Text className="text-small-regular text-grey-20 leading-6 mb-5">
               Beyond GPUs, AI teams are buying cooling, storage, networking,
               private RAG systems, and edge inference kits. These products are
               organized around those high-intent searches.
@@ -74,14 +74,17 @@ export default async function TrendingAiHardware({
               {TRENDING_SIGNALS.map((signal) => (
                 <div
                   key={signal}
-                  className="rounded-md border border-ui-border-base bg-grey-5 px-3 py-2 text-small-semi text-ui-fg-base"
+                  className="rounded-md border border-white/15 bg-white/10 px-3 py-2 text-small-semi text-white"
                 >
                   {signal}
                 </div>
               ))}
             </div>
             <LocalizedClientLink href="/resources/trending-ai-hardware">
-              <Button variant="secondary" className="w-full justify-center">
+              <Button
+                variant="secondary"
+                className="w-full justify-center border-white/20 bg-white/10 text-white hover:bg-white/15"
+              >
                 Read the trend guide
               </Button>
             </LocalizedClientLink>

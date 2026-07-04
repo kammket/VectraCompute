@@ -25,16 +25,17 @@ export const PremiumPageHeader = ({
   highlights = [],
 }: PremiumPageHeaderProps) => {
   return (
-    <section className="rounded-md border border-ui-border-base bg-white p-6 small:p-8 shadow-elevation-card-rest">
+    <section className="relative overflow-hidden rounded-md border border-grey-80 bg-grey-90 p-6 text-white shadow-elevation-card-rest small:p-8">
+      <div className="absolute inset-y-0 right-0 w-1/2 bg-[radial-gradient(circle_at_top_right,rgba(56,189,248,0.22),transparent_42%),linear-gradient(135deg,transparent,rgba(255,255,255,0.05))]" />
       <div className="grid grid-cols-1 large:grid-cols-[minmax(0,1fr)_360px] gap-8 items-start">
-        <div>
-          <Text className="text-small-semi uppercase tracking-wide text-brand-600 mb-3">
+        <div className="relative z-10">
+          <Text className="text-small-semi uppercase tracking-wide text-brand-200 mb-3">
             {eyebrow}
           </Text>
-          <Heading level="h1" className="text-3xl leading-tight mb-4">
+          <Heading level="h1" className="text-3xl leading-tight mb-4 text-white">
             {title}
           </Heading>
-          <Text className="text-base-regular text-ui-fg-subtle leading-7 max-w-3xl">
+          <Text className="text-base-regular text-grey-20 leading-7 max-w-3xl">
             {description}
           </Text>
           {actions.length > 0 && (
@@ -45,8 +46,8 @@ export const PremiumPageHeader = ({
                   href={action.href}
                   className={
                     index === 0
-                      ? "inline-flex h-10 items-center gap-2 rounded-md bg-brand-600 px-4 text-small-semi text-white hover:bg-brand-700"
-                      : "inline-flex h-10 items-center gap-2 rounded-md border border-ui-border-base px-4 text-small-semi text-ui-fg-base hover:bg-grey-5"
+                      ? "inline-flex h-10 items-center gap-2 rounded-md bg-brand-500 px-4 text-small-semi text-white hover:bg-brand-600"
+                      : "inline-flex h-10 items-center gap-2 rounded-md border border-white/20 bg-white/10 px-4 text-small-semi text-white hover:bg-white/15"
                   }
                 >
                   {action.label}
@@ -57,7 +58,7 @@ export const PremiumPageHeader = ({
           )}
         </div>
         {highlights.length > 0 && (
-          <div className="grid grid-cols-1 gap-3">
+          <div className="relative z-10 grid grid-cols-1 gap-3">
             {highlights.map((item, index) => {
               const Icon =
                 index === 0 ? ShieldCheck : index === 1 ? Server : CheckCircle
@@ -65,12 +66,12 @@ export const PremiumPageHeader = ({
               return (
                 <div
                   key={item}
-                  className="grid grid-cols-[36px_1fr] items-center gap-3 rounded-md border border-ui-border-base bg-grey-5 p-3"
+                  className="grid grid-cols-[36px_1fr] items-center gap-3 rounded-md border border-white/15 bg-white/10 p-3 backdrop-blur"
                 >
-                  <span className="flex h-9 w-9 items-center justify-center rounded-md bg-white text-brand-600">
+                  <span className="flex h-9 w-9 items-center justify-center rounded-md bg-white text-brand-700">
                     <Icon />
                   </span>
-                  <Text className="text-small-semi text-ui-fg-base">
+                  <Text className="text-small-semi text-white">
                     {item}
                   </Text>
                 </div>

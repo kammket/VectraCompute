@@ -1,6 +1,5 @@
 import {
   ArrowRightMini,
-  CreditCard,
   Server,
   ShieldCheck,
   SparklesMini,
@@ -13,7 +12,7 @@ const BUYER_SCRIPTS = [
     audience: "ML engineers",
     title: "Validate the stack before it lands",
     script:
-      "Confirm GPU memory, CUDA, driver branch, framework versions, NVMe scratch space, and thermal behavior before checkout.",
+      "Confirm GPU memory, CUDA, driver branch, framework versions, NVMe scratch space, and thermal behavior before ordering.",
     href: "/resources/best-ai-workstation-for-llm-fine-tuning",
     cta: "LLM workstation guide",
   },
@@ -21,7 +20,7 @@ const BUYER_SCRIPTS = [
     audience: "Procurement teams",
     title: "Approve with clear technical evidence",
     script:
-      "Use SKUs, warranty terms, lead time, invoice support, configuration notes, and validation details to move approvals faster.",
+      "Use SKUs, warranty terms, lead time, approval support, configuration notes, and validation details to move reviews faster.",
     href: "/resources/enterprise-ai-procurement",
     cta: "Procurement guide",
   },
@@ -67,7 +66,7 @@ const TargetedBuyerScripts = () => {
                 index === 0
                   ? ShieldCheck
                   : index === 1
-                  ? CreditCard
+                  ? SparklesMini
                   : index === 2
                   ? Server
                   : SparklesMini

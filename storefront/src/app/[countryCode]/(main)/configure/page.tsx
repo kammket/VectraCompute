@@ -32,7 +32,7 @@ const BUYER_CHECKLIST = [
   },
   {
     title: "Procurement path",
-    body: "Business buyers often need SKU, warranty, lead time, quote, invoice, PO, and support details before approval.",
+    body: "Business buyers often need SKU, warranty, lead time, quote, procurement reference, and support details before approval.",
   },
 ]
 
@@ -88,7 +88,7 @@ export default function ConfigurePage() {
               What buyers need to know
             </Text>
             <Heading level="h2" className="text-2xl mb-5">
-              Bring these details before checkout or quote approval
+              Bring these details before ordering or quote approval
             </Heading>
             <div className="grid grid-cols-1 small:grid-cols-2 gap-4">
               {BUYER_CHECKLIST.map((item) => (

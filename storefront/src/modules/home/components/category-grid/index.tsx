@@ -17,7 +17,8 @@ const CategoryGrid = async () => {
   }
 
   return (
-    <section className="content-container py-14">
+    <section className="bg-grey-5">
+      <div className="content-container py-14">
       <div className="flex flex-col medium:flex-row medium:items-end medium:justify-between gap-4 mb-8">
         <div>
           <Text className="text-small-semi uppercase text-brand-600 mb-2">
@@ -37,7 +38,7 @@ const CategoryGrid = async () => {
           <LocalizedClientLink
             key={c.id}
             href={`/categories/${c.handle}`}
-            className="group block overflow-hidden rounded-md border border-ui-border-base bg-white transition-shadow hover:shadow-elevation-card-hover"
+            className="group block overflow-hidden rounded-md border border-ui-border-base bg-white shadow-elevation-card-rest transition hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-elevation-card-hover"
           >
             <div className="relative aspect-[1200/630] w-full overflow-hidden">
               <Image
@@ -48,7 +49,7 @@ const CategoryGrid = async () => {
                 className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
               />
             </div>
-            <div className="p-4 min-h-[128px]">
+            <div className="p-4 min-h-[150px]">
               <div className="flex items-start justify-between gap-3 mb-1">
                 <Heading level="h3" className="text-base">
                   {c.name}
@@ -62,9 +63,13 @@ const CategoryGrid = async () => {
                   {c.description}
                 </Text>
               )}
+              <Text className="mt-4 text-small-semi text-brand-700">
+                Browse systems
+              </Text>
             </div>
           </LocalizedClientLink>
         ))}
+      </div>
       </div>
     </section>
   )

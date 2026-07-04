@@ -54,7 +54,7 @@ const BUYER_PATHS = [
 
 const CONFIDENCE_PATHS = [
   {
-    title: "Check compatibility before checkout",
+    title: "Check compatibility before ordering",
     body: "Use a practical checklist for model fit, software stack, power, cooling, network, storage, warranty, and support.",
     href: "/resources/ai-hardware-compatibility-checklist",
   },
@@ -138,7 +138,7 @@ export default function ResourcesPage() {
         <section className="mb-10 rounded-md border border-ui-border-base bg-white p-6 small:p-8">
           <div className="mb-5 max-w-3xl">
             <Text className="text-small-semi uppercase text-brand-600 mb-2">
-              Confidence before checkout
+              Confidence before ordering
             </Text>
             <Heading level="h2" className="text-2xl mb-3">
               Clear answers before customers spend serious budget

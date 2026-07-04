@@ -47,7 +47,21 @@ const StoreTemplate = ({
             "Warranty and quote support",
           ]}
         />
-        <div className="mt-8 rounded-md border border-ui-border-base bg-white p-5 shadow-elevation-card-rest">
+        <div className="mt-8 rounded-md border border-brand-200 bg-brand-50 p-5 shadow-elevation-card-rest">
+          <div className="mb-4 grid grid-cols-1 gap-2 medium:grid-cols-[minmax(0,1fr)_320px] medium:items-end">
+            <div>
+              <p className="text-small-semi uppercase text-brand-700">
+                Product finder
+              </p>
+              <h2 className="mt-1 text-xl-semi text-brand-950">
+                Search by GPU, workload, SKU, capacity, or system type
+              </h2>
+            </div>
+            <p className="text-small-regular leading-6 text-brand-800">
+              Try direct buyer terms like RTX 5090, H200 NVL, A100 server, RAG
+              appliance, NVMe storage, or 800GbE networking.
+            </p>
+          </div>
           <ProductSearch initialQuery={query} />
         </div>
         <StoreBuyingPaths />
@@ -59,11 +73,11 @@ const StoreTemplate = ({
             <div className="rounded-md border border-ui-border-base bg-white p-4 shadow-elevation-card-rest">
               <RefinementList sortBy={sort} />
             </div>
-            <div className="rounded-md border border-brand-200 bg-brand-50 p-4">
-              <p className="text-base-semi text-brand-900">
-                Need a validated quote?
+            <div className="rounded-md border border-grey-80 bg-grey-90 p-4 text-white">
+              <p className="text-base-semi text-white">
+                Need engineering review?
               </p>
-              <p className="mt-2 text-small-regular leading-6 text-brand-800">
+              <p className="mt-2 text-small-regular leading-6 text-grey-20">
                 Share your GPU, power, rack, workload, and budget requirements.
                 An engineer can recommend the right system before you buy.
               </p>
@@ -75,9 +89,9 @@ const StoreTemplate = ({
                       )}`
                     : ""
                 }`}
-                className="mt-4 inline-flex h-9 items-center rounded-md bg-brand-600 px-3 text-small-semi text-white hover:bg-brand-700"
+                className="mt-4 inline-flex h-9 items-center rounded-md bg-brand-500 px-3 text-small-semi text-white hover:bg-brand-600"
               >
-                Request quote
+                Request review
               </a>
             </div>
           </aside>
