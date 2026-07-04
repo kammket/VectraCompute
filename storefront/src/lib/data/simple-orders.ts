@@ -1,6 +1,7 @@
 "use server"
 
 import { clearCart, retrieveCart } from "@lib/data/cart"
+import { sendOrderConfirmationEmail } from "@lib/util/order-email"
 import { HttpTypes } from "@medusajs/types"
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
@@ -261,17 +262,19 @@ export async function createSimpleOrder(
 
   const id = `ord_${crypto.randomUUID().replace(/-/g, "").slice(0, 18)}`
   let createdOrderId = id
+  let createdDisplayId: number | string | null = null
 
   try {
     await ensureCommerceTables()
 
-    await query(
+    const inserted = await query<{ display_id: number }>(
       `
         insert into vectra_orders (
           id, email, customer_name, phone, company, address, payment_method,
           bitcoin_txid, notes, status, currency_code, subtotal, total, items
         )
         values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)
+        returning display_id
       `,
       [
         id,
@@ -297,6 +300,7 @@ export async function createSimpleOrder(
         cart.items,
       ]
     )
+    createdDisplayId = inserted.rows[0]?.display_id ?? null
   } catch (error) {
     console.error(
       "Direct Vercel order storage failed, trying Railway backend fallback",
@@ -321,6 +325,7 @@ export async function createSimpleOrder(
       }
 
       createdOrderId = remoteOrder.id
+      createdDisplayId = remoteOrder.display_id ?? null
     } catch (backendError) {
       console.error("Failed to create VectraCompute order", backendError)
       return {
@@ -328,6 +333,23 @@ export async function createSimpleOrder(
           "Order storage is not connected. Check DATABASE_URL in Vercel or Railway backend order storage, then redeploy and try again.",
       }
     }
+  }
+
+  // Best-effort confirmation email; a mail failure must never fail checkout.
+  try {
+    await sendOrderConfirmationEmail({
+      to: email,
+      customerName,
+      displayId: createdDisplayId,
+      totalText: new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: (cart.currency_code || "usd").toUpperCase(),
+        maximumFractionDigits: 0,
+      }).format(Number(cart.total ?? 0)),
+      baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
+    })
+  } catch (emailError) {
+    console.error("Order confirmation email failed", emailError)
   }
 
   await clearCart()

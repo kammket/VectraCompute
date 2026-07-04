@@ -20,6 +20,20 @@ const FAQ_BY_HANDLE: Record<string, QA[]> = {
       a: "Every system ships with Ubuntu, NVIDIA drivers, CUDA, cuDNN, Docker, and the common PyTorch/TensorFlow stack pre-installed and validated, after a 24-hour burn-in test.",
     },
   ],
+  "refurbished-certified": [
+    {
+      q: "How are refurbished GPU servers validated?",
+      a: "Every refurbished system runs the same 24-hour burn-in and CUDA validation as a new build, including sustained full-GPU load and thermal checks. A system that does not pass identical criteria is not sold.",
+    },
+    {
+      q: "What warranty do refurbished systems carry?",
+      a: "Refurbished systems ship with warranty coverage and the same lifetime technical support as new builds. The exact term is listed on each product page, so you can compare it line by line before ordering.",
+    },
+    {
+      q: "When does refurbished make more sense than new?",
+      a: "When your workload fits previous-generation hardware — an A100 or L40S still handles most fine-tuning and inference — the price difference usually outweighs the newer architecture. For frontier-scale training or maximum VRAM per node, new H200/B200-class systems are the better fit.",
+    },
+  ],
   "gpu-rack-servers": [
     {
       q: "When should I move from a workstation to a GPU rack server?",

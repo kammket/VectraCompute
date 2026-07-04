@@ -22,11 +22,41 @@ const CATEGORY_DETAILS: Record<string, { id: string; handle: string; description
     description:
       "AI workstations grouped by Intel, AMD Ryzen, Threadripper PRO, Xeon W, and EPYC platform requirements.",
   },
+  "Refurbished & Certified": {
+    id: "cat_refurbished_certified",
+    handle: "refurbished-certified",
+    description:
+      "Validated refurbished GPU servers — H100, H200, A100, and L40S systems that pass the same burn-in and CUDA validation as new builds, at a lower price.",
+  },
+  "Storage & Memory": {
+    id: "cat_storage_memory",
+    handle: "storage-memory",
+    description:
+      "NVMe storage servers, dataset expansion kits, ECC DDR5 memory kits, and expansion cards sized for AI training data and checkpoints.",
+  },
+  "Networking & Interconnect": {
+    id: "cat_networking_interconnect",
+    handle: "networking-interconnect",
+    description:
+      "100GbE to 800GbE AI fabric kits, switches, and cabling bundles for multi-node training and shared storage fabrics.",
+  },
+  "Power & Cooling": {
+    id: "cat_power_cooling",
+    handle: "power-cooling",
+    description:
+      "Rack PDUs, UPS battery backup, liquid cooling loops, CDUs, and redundant power supplies matched to GPU server loads.",
+  },
+  "Edge & Robotics": {
+    id: "cat_edge_robotics",
+    handle: "edge-robotics",
+    description:
+      "Jetson and NPU kits, compact inference servers, and camera/vision AI appliances for deployment outside the data center.",
+  },
   "Components & Accessories": {
     id: "cat_components_accessories",
     handle: "components-accessories",
     description:
-      "AI hardware upgrades including GPUs, NVMe storage, networking, power, cooling, risers, memory, and rack accessories.",
+      "AI hardware upgrades including GPUs, risers, rack rails, spare parts, and upgrade bundles.",
   },
 }
 

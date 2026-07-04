@@ -487,7 +487,7 @@ export const PRODUCT_CATALOG: BackendCatalogProduct[] = [
   {
     "handle": "vectrarack-refurb-h100",
     "title": "VectraRack Refurb H100",
-    "category": "GPU Rack Servers",
+    "category": "Refurbished & Certified",
     "description": "Validated refurbished H100 GPU server for research groups, universities, and startups that need serious training capacity with clearer budget control. Every unit is inspected, stress-tested, and documented before fulfillment.",
     "bestFor": "University labs, research clusters, budget training, private AI infrastructure",
     "condition": "Validated refurbished",
@@ -549,7 +549,7 @@ export const PRODUCT_CATALOG: BackendCatalogProduct[] = [
   {
     "handle": "vectraedge-l4-micro-server",
     "title": "VectraEdge L4 Micro Server",
-    "category": "GPU Rack Servers",
+    "category": "Edge & Robotics",
     "description": "Low-power edge inference server for branch deployments, computer vision, small model serving, and private AI appliances where rack space, heat, and power are constrained.",
     "bestFor": "Edge inference, computer vision, private AI appliances, branch deployments",
     "condition": "New",
@@ -611,7 +611,7 @@ export const PRODUCT_CATALOG: BackendCatalogProduct[] = [
   {
     "handle": "vectrastore-nvme-ai-data-node",
     "title": "VectraStore NVMe AI Data Node",
-    "category": "GPU Rack Servers",
+    "category": "Storage & Memory",
     "description": "High-speed NVMe storage server for AI datasets, model checkpoints, vector databases, RAG indexes, and shared training storage. Built for buyers searching for AI storage servers and NVMe data lake hardware.",
     "bestFor": "AI datasets, model checkpoints, RAG storage, vector databases, shared GPU cluster storage",
     "condition": "New",
@@ -890,7 +890,7 @@ export const PRODUCT_CATALOG: BackendCatalogProduct[] = [
   {
     "handle": "vectrarack-refurb-a100-server",
     "title": "VectraRack Refurb A100 Server",
-    "category": "GPU Rack Servers",
+    "category": "Refurbished & Certified",
     "description": "Validated refurbished A100 GPU server for universities, startups, research labs, and buyers searching for used A100 servers with stress testing, warranty notes, and budget control.",
     "bestFor": "University labs, AI research, budget training, batch inference, refurbished GPU clusters",
     "condition": "Validated refurbished",
@@ -921,7 +921,7 @@ export const PRODUCT_CATALOG: BackendCatalogProduct[] = [
   {
     "handle": "vectrarack-refurb-l40s-inference-server",
     "title": "VectraRack Refurb L40S Inference Server",
-    "category": "GPU Rack Servers",
+    "category": "Refurbished & Certified",
     "description": "Validated refurbished L40S inference server for production model serving, computer vision, generative media, and buyers searching for lower-cost AI inference servers.",
     "bestFor": "Production inference, visual AI, computer vision, generative media, refurbished AI hardware",
     "condition": "Validated refurbished",
@@ -1169,7 +1169,7 @@ export const PRODUCT_CATALOG: BackendCatalogProduct[] = [
   {
     "handle": "vectrarack-refurb-h200-server",
     "title": "VectraRack Refurb H200 Server",
-    "category": "GPU Rack Servers",
+    "category": "Refurbished & Certified",
     "description": "Validated refurbished H200-class GPU server for enterprises and labs that need very large HBM memory for LLM inference, long-context workloads, RAG, and training refresh projects with stronger budget control than new flagship systems.",
     "bestFor": "LLM inference, long-context AI, RAG, training refresh, validated refurbished GPU infrastructure",
     "condition": "Validated refurbished",
@@ -1386,7 +1386,7 @@ export const PRODUCT_CATALOG: BackendCatalogProduct[] = [
   {
     "handle": "vectraedge-ai-inference-appliance",
     "title": "VectraEdge AI Inference Appliance",
-    "category": "GPU Rack Servers",
+    "category": "Edge & Robotics",
     "description": "Compact edge AI inference appliance for factories, retail sites, hospitals, campuses, and branch offices that need private local model serving, camera analytics, or RAG endpoints close to the data source.",
     "bestFor": "Edge inference, branch AI, camera analytics, private local AI, industrial AI deployments",
     "condition": "New",
@@ -1417,7 +1417,7 @@ export const PRODUCT_CATALOG: BackendCatalogProduct[] = [
   {
     "handle": "vectralease-refurbished-ai-server-bundle",
     "title": "VectraLease Refurbished AI Server Bundle",
-    "category": "GPU Rack Servers",
+    "category": "Refurbished & Certified",
     "description": "Refurbished AI server bundle for buyers who want validated used GPU hardware with warranty options, deployment help, and leasing or PO support instead of paying full new-system pricing upfront.",
     "bestFor": "Budget AI infrastructure, startups, labs, universities, refurbished GPU clusters, lease-friendly AI servers",
     "condition": "Validated refurbished",
@@ -1479,7 +1479,7 @@ export const PRODUCT_CATALOG: BackendCatalogProduct[] = [
   {
     "handle": "vectramem-1tb-ddr5-ecc-ai-memory-kit",
     "title": "VectraMem 1TB DDR5 ECC AI Memory Kit",
-    "category": "Components & Accessories",
+    "category": "Storage & Memory",
     "description": "1TB DDR5 ECC memory upgrade kit for AI servers, RAG systems, vector databases, CPU-assisted inference, dataset preprocessing, and buyers searching for high-memory AI server upgrades.",
     "bestFor": "RAG servers, vector databases, high-memory inference, dataset preprocessing, CPU-assisted AI workloads",
     "condition": "New",
@@ -1510,7 +1510,7 @@ export const PRODUCT_CATALOG: BackendCatalogProduct[] = [
   {
     "handle": "vectramem-2tb-rag-inference-memory-kit",
     "title": "VectraMem 2TB RAG Inference Memory Kit",
-    "category": "Components & Accessories",
+    "category": "Storage & Memory",
     "description": "2TB-class high-memory server upgrade for enterprise RAG, long-context LLM serving, embedding pipelines, graph/vector databases, and AI applications where CPU memory capacity matters as much as GPU VRAM.",
     "bestFor": "Enterprise RAG, long-context LLM serving, graph databases, vector search, embedding pipelines",
     "condition": "New",
@@ -1541,7 +1541,7 @@ export const PRODUCT_CATALOG: BackendCatalogProduct[] = [
   {
     "handle": "vectrastore-120tb-nvme-dataset-expansion-kit",
     "title": "VectraStore 120TB NVMe Dataset Expansion Kit",
-    "category": "Components & Accessories",
+    "category": "Storage & Memory",
     "description": "120TB NVMe expansion kit for AI datasets, model checkpoints, vector indexes, embeddings, image/video corpora, and teams upgrading existing GPU servers with fast local training or inference storage.",
     "bestFor": "AI datasets, model checkpoints, embeddings, RAG indexes, video AI corpora, local GPU server storage",
     "condition": "New",
@@ -1696,7 +1696,7 @@ export const PRODUCT_CATALOG: BackendCatalogProduct[] = [
   {
     "handle": "vectrapower-60kw-ai-rack-pdu-kit",
     "title": "VectraPower 60kW AI Rack PDU Kit",
-    "category": "Components & Accessories",
+    "category": "Power & Cooling",
     "description": "AI rack power distribution kit for high-density GPU servers, H200/B200-class deployments, liquid-cooled racks, and buyers who need metered PDUs, cabling review, redundancy planning, and power readiness before installing AI hardware.",
     "bestFor": "High-density GPU racks, AI data center power readiness, H200/B200 deployments, liquid-cooled racks",
     "condition": "New",
@@ -1727,7 +1727,7 @@ export const PRODUCT_CATALOG: BackendCatalogProduct[] = [
   {
     "handle": "vectracool-cdu-liquid-cooling-package",
     "title": "VectraCool CDU Liquid Cooling Package",
-    "category": "Components & Accessories",
+    "category": "Power & Cooling",
     "description": "CDU and direct-to-chip liquid cooling readiness package for dense GPU racks, GB300/B200/H200-class systems, facility loop planning, leak testing, coolant path review, and deployment documentation.",
     "bestFor": "Liquid-cooled AI racks, high-density GPU servers, GB300/B200/H200 deployments, facility cooling upgrades",
     "condition": "New and quote-dependent",
@@ -1789,7 +1789,7 @@ export const PRODUCT_CATALOG: BackendCatalogProduct[] = [
   {
     "handle": "vectrajetson-thor-robotics-ai-kit",
     "title": "VectraJetson Thor Robotics AI Kit",
-    "category": "Components & Accessories",
+    "category": "Edge & Robotics",
     "description": "Jetson Thor-class robotics AI kit for physical AI, humanoid robotics, autonomous machines, industrial automation, sensor fusion, local VLA inference, and buyers searching for NVIDIA Jetson Thor edge AI hardware.",
     "bestFor": "Physical AI, humanoid robotics, autonomous machines, sensor fusion, robotics perception, edge inference",
     "condition": "New",
@@ -1820,7 +1820,7 @@ export const PRODUCT_CATALOG: BackendCatalogProduct[] = [
   {
     "handle": "vectrahailo-edge-npu-gateway",
     "title": "VectraHailo Edge NPU Gateway",
-    "category": "Components & Accessories",
+    "category": "Edge & Robotics",
     "description": "Hailo-class edge NPU gateway for low-power computer vision, generative edge AI pilots, smart cameras, retail analytics, industrial inspection, and buyers searching for efficient AI accelerators outside traditional GPU servers.",
     "bestFor": "Low-power vision AI, smart cameras, retail analytics, industrial inspection, edge AI pilots",
     "condition": "New",
@@ -2037,7 +2037,7 @@ export const PRODUCT_CATALOG: BackendCatalogProduct[] = [
   {
     "handle": "vectra-redundant-psu",
     "title": "Vectra Redundant PSU",
-    "category": "Components & Accessories",
+    "category": "Power & Cooling",
     "description": "80+ Titanium redundant power supply for VectraRack servers and high-draw multi-GPU workstations. Hot-swappable in the rack-mount chassis.",
     "bestFor": "",
     "condition": "Built to order",
@@ -2062,7 +2062,7 @@ export const PRODUCT_CATALOG: BackendCatalogProduct[] = [
   {
     "handle": "vectra-liquid-cooling-kit",
     "title": "Vectra Liquid Cooling Kit",
-    "category": "Components & Accessories",
+    "category": "Power & Cooling",
     "description": "360mm AIO loop covering both CPU and GPU on supported VectraForge chassis. Drop-in upgrade kit for quieter, cooler sustained workloads.",
     "bestFor": "",
     "condition": "Built to order",
@@ -2087,7 +2087,7 @@ export const PRODUCT_CATALOG: BackendCatalogProduct[] = [
   {
     "handle": "vectra-nvme-expansion-card",
     "title": "Vectra NVMe Expansion Card",
-    "category": "Components & Accessories",
+    "category": "Storage & Memory",
     "description": "PCIe 5.0 quad M.2 expansion card for adding up to 4 additional NVMe drives to any VectraForge or VectraRack system with a free x16 slot.",
     "bestFor": "",
     "condition": "Built to order",
@@ -2193,7 +2193,7 @@ export const PRODUCT_CATALOG: BackendCatalogProduct[] = [
   {
     "handle": "vectra-100gbe-ai-fabric-kit",
     "title": "Vectra 100GbE AI Fabric Kit",
-    "category": "Components & Accessories",
+    "category": "Networking & Interconnect",
     "description": "Networking upgrade kit for multi-node AI training, shared storage, and fast model-serving backplanes. Includes NIC, DAC/cabling options, and configuration guidance for compatible VectraRack systems.",
     "bestFor": "Multi-node training, shared storage, GPU clusters, production inference",
     "condition": "New",
@@ -2224,7 +2224,7 @@ export const PRODUCT_CATALOG: BackendCatalogProduct[] = [
   {
     "handle": "vectra-400gbe-ai-fabric-kit",
     "title": "Vectra 400GbE AI Fabric Kit",
-    "category": "Components & Accessories",
+    "category": "Networking & Interconnect",
     "description": "400GbE AI networking kit for GPU clusters, multi-node training, shared NVMe storage, and buyers searching for high-speed AI fabric upgrades beyond 100GbE.",
     "bestFor": "GPU clusters, multi-node training, shared NVMe storage, high-speed inference fabrics",
     "condition": "New",
@@ -2255,7 +2255,7 @@ export const PRODUCT_CATALOG: BackendCatalogProduct[] = [
   {
     "handle": "vectra-800gbe-ai-fabric-kit",
     "title": "Vectra 800GbE AI Fabric Kit",
-    "category": "Components & Accessories",
+    "category": "Networking & Interconnect",
     "description": "800GbE AI networking kit for high-density GPU clusters, next-generation training fabrics, shared NVMe storage, and buyers searching for ultra-high-speed AI cluster networking.",
     "bestFor": "High-density GPU clusters, next-generation training fabrics, shared NVMe storage, ultra-fast AI networking",
     "condition": "New",
@@ -2286,7 +2286,7 @@ export const PRODUCT_CATALOG: BackendCatalogProduct[] = [
   {
     "handle": "vectrastore-500tb-nvme-ai-storage-server",
     "title": "VectraStore 500TB NVMe AI Storage Server",
-    "category": "GPU Rack Servers",
+    "category": "Storage & Memory",
     "description": "500TB-class NVMe AI storage server for large datasets, model checkpoints, RAG indexes, embeddings, vector databases, shared GPU cluster storage, and buyers searching for high-capacity AI data infrastructure.",
     "bestFor": "Large AI datasets, model checkpoints, RAG indexes, vector databases, shared GPU cluster storage",
     "condition": "New",
@@ -2317,7 +2317,7 @@ export const PRODUCT_CATALOG: BackendCatalogProduct[] = [
   {
     "handle": "vectrarack-cooling-readiness-kit",
     "title": "VectraRack Cooling Readiness Kit",
-    "category": "Components & Accessories",
+    "category": "Power & Cooling",
     "description": "AI rack cooling readiness kit for GPU servers, liquid-cooled nodes, high-density AI racks, direct-to-chip planning, airflow review, and buyers preparing facilities for AI infrastructure.",
     "bestFor": "AI server cooling, high-density racks, liquid cooling readiness, direct-to-chip planning, facility review",
     "condition": "New",
@@ -2348,7 +2348,7 @@ export const PRODUCT_CATALOG: BackendCatalogProduct[] = [
   {
     "handle": "vectraedge-vision-ai-kit",
     "title": "VectraEdge Vision AI Kit",
-    "category": "Components & Accessories",
+    "category": "Edge & Robotics",
     "description": "Edge AI accelerator kit for computer vision, cameras, robotics, manufacturing inspection, retail analytics, and buyers searching for edge AI hardware or vision AI accelerator kits.",
     "bestFor": "Computer vision, AI cameras, robotics, inspection, low-power inference",
     "condition": "New",
@@ -2379,7 +2379,7 @@ export const PRODUCT_CATALOG: BackendCatalogProduct[] = [
   {
     "handle": "vectraedge-robotics-ai-kit",
     "title": "VectraEdge Robotics AI Kit",
-    "category": "Components & Accessories",
+    "category": "Edge & Robotics",
     "description": "Edge AI robotics kit for mobile robots, autonomous machines, lab automation, perception workloads, sensor fusion, and buyers searching for robotics AI hardware for local inference.",
     "bestFor": "Robotics perception, mobile robots, sensor fusion, lab automation, local edge inference",
     "condition": "New",
@@ -2410,7 +2410,7 @@ export const PRODUCT_CATALOG: BackendCatalogProduct[] = [
   {
     "handle": "vectraedge-camera-ai-server",
     "title": "VectraEdge Camera AI Server",
-    "category": "GPU Rack Servers",
+    "category": "Edge & Robotics",
     "description": "Camera AI server for multi-camera computer vision, manufacturing inspection, retail analytics, security analytics, traffic monitoring, and buyers searching for AI camera inference hardware.",
     "bestFor": "Computer vision, multi-camera inference, manufacturing inspection, retail analytics, security analytics",
     "condition": "New",
@@ -2472,7 +2472,7 @@ export const PRODUCT_CATALOG: BackendCatalogProduct[] = [
   {
     "handle": "vectraedge-l4-inference-appliance",
     "title": "VectraEdge L4 Inference Appliance",
-    "category": "GPU Rack Servers",
+    "category": "Edge & Robotics",
     "description": "Compact NVIDIA L4-class inference appliance for buyers searching for low-power AI inference hardware, video analytics, RAG endpoints, small private LLM serving, and computer vision deployments without a full training server.",
     "bestFor": "Low-power inference, computer vision, RAG endpoints, video analytics, private AI APIs",
     "condition": "New",
@@ -2534,7 +2534,7 @@ export const PRODUCT_CATALOG: BackendCatalogProduct[] = [
   {
     "handle": "vectrarack-refurb-h200-nvl-inference-pair",
     "title": "VectraRack Refurb H200 NVL Inference Pair",
-    "category": "GPU Rack Servers",
+    "category": "Refurbished & Certified",
     "description": "Validated refurbished H200 NVL-class inference pair for long-context LLM serving, memory-heavy RAG, private AI endpoints, and buyers looking for high-memory GPU inference with stronger budget control.",
     "bestFor": "Long-context LLM serving, private AI endpoints, RAG at scale, high-memory inference",
     "condition": "Validated refurbished",
@@ -2565,7 +2565,7 @@ export const PRODUCT_CATALOG: BackendCatalogProduct[] = [
   {
     "handle": "vectra-800gbe-ai-switch-starter-bundle",
     "title": "Vectra 800GbE AI Switch Starter Bundle",
-    "category": "Components & Accessories",
+    "category": "Networking & Interconnect",
     "description": "800GbE AI switch starter bundle for buyers building next-generation GPU clusters, shared NVMe fabrics, B200/GB300-class racks, and high-throughput distributed training networks.",
     "bestFor": "Next-gen AI racks, GPU cluster networking, shared NVMe fabrics, distributed training, AI factory planning",
     "condition": "New",
@@ -2590,6 +2590,68 @@ export const PRODUCT_CATALOG: BackendCatalogProduct[] = [
         "sku": "VC-800G-SWITCH-4NODE-MAX",
         "optionValue": "Complete 800GbE switch planning + four-node cable kit / compatibility-reviewed package",
         "priceUsd": 30029
+      }
+    ]
+  },
+  {
+    "handle": "vectrapower-rack-ups-battery-backup",
+    "title": "VectraPower Rack UPS Battery Backup",
+    "category": "Power & Cooling",
+    "description": "Rack-mount online double-conversion UPS sizing for AI workstations, GPU servers, and inference nodes. Protects long training runs and checkpoint writes against outages and brownouts.",
+    "bestFor": "Protecting training runs, GPU servers, inference nodes, and checkpoint integrity from power events",
+    "condition": "New",
+    "warranty": "Manufacturer warranty plus deployment support option",
+    "leadTime": "Ships in 5-12 business days after load review",
+    "specs": [],
+    "variants": [
+      {
+        "title": "3kVA online rack UPS / workstation & node protection",
+        "sku": "VC-PWR-UPS-3KVA",
+        "optionValue": "3kVA online rack UPS / workstation & node protection",
+        "priceUsd": 1299
+      },
+      {
+        "title": "6kVA online rack UPS / multi-node protection",
+        "sku": "VC-PWR-UPS-6KVA",
+        "optionValue": "6kVA online rack UPS / multi-node protection",
+        "priceUsd": 2899
+      },
+      {
+        "title": "10kVA lithium-ion rack UPS / rack protection with runtime review",
+        "sku": "VC-PWR-UPS-10KVA-LI",
+        "optionValue": "10kVA lithium-ion rack UPS / rack protection with runtime review",
+        "priceUsd": 5849
+      }
+    ]
+  },
+  {
+    "handle": "vectra-server-spare-parts-kit",
+    "title": "Vectra Server Spare Parts Kit",
+    "category": "Components & Accessories",
+    "description": "Matched spare-parts kits for VectraRack and VectraForge systems: hot-swap PSU, fan trays, NVMe caddies, and cable sets from the same validated part list as the original build.",
+    "bestFor": "On-site spares for production GPU servers, minimizing downtime during training runs",
+    "condition": "New",
+    "warranty": "1-year parts warranty",
+    "leadTime": "Ships in 3-7 business days",
+    "specs": [],
+    "variants": [
+      {
+        "title": "Spare PSU kit / matched hot-swap unit",
+        "sku": "VC-SPARE-PSU",
+        "optionValue": "Spare PSU kit / matched hot-swap unit",
+        "priceUsd": 519
+      },
+      {
+        "title": "Fan tray + NVMe caddy kit",
+        "sku": "VC-SPARE-FAN-CADDY",
+        "optionValue": "Fan tray + NVMe caddy kit",
+        "priceUsd": 389
+      },
+      {
+        "title": "Complete on-site spares kit / PSU + fans + caddies + cables",
+        "sku": "VC-SPARE-FULL",
+        "optionValue": "Complete on-site spares kit / PSU + fans + caddies + cables",
+        "priceUsd": 1039
       }
     ]
   }

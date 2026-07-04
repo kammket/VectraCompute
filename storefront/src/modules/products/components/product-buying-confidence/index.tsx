@@ -14,12 +14,6 @@ const ProductBuyingConfidence = ({
   product: HttpTypes.StoreProduct
 }) => {
   const profile = getProductProfile(product)
-  const rating = getMetadataString(product, "rating", "Engineering reviewed")
-  const reviewCount = getMetadataString(
-    product,
-    "review_count",
-    "configuration QA"
-  )
   const leadTime = getMetadataString(
     product,
     "lead_time",
@@ -91,7 +85,7 @@ const ProductBuyingConfidence = ({
         <div className="grid grid-cols-1 gap-5">
           <div className="grid grid-cols-1 small:grid-cols-2 gap-3">
             {[
-              ["Buyer proof", `${rating} / ${reviewCount}`],
+              ["Validation", "Burn-in tested + engineering reviewed"],
               ["Lead time", leadTime],
               ["Warranty", warranty],
               ["Returns", returns],

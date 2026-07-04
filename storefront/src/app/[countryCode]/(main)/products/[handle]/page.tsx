@@ -1,6 +1,7 @@
 import { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { listProducts } from "@lib/data/products"
+import { getReviewSummary } from "@lib/data/reviews"
 import { getRegion, listRegions } from "@lib/data/regions"
 import { getBaseURL } from "@lib/util/env"
 import {
@@ -146,8 +147,9 @@ export default async function ProductPage(props: Props) {
 
   const seo = getProductSeo(pricedProduct)
   const category = pricedProduct.categories?.[0]
+  const reviewSummary = await getReviewSummary(params.handle)
   const jsonLd = [
-    getProductJsonLd(pricedProduct, params.countryCode),
+    getProductJsonLd(pricedProduct, params.countryCode, reviewSummary),
     getBreadcrumbJsonLd(params.countryCode, [
       { name: "Home", path: "/" },
       { name: "Store", path: "/store" },

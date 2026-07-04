@@ -70,6 +70,55 @@ function ProductFields({
             placeholder="https://..."
           />
         </label>
+
+        <div className="grid gap-2 rounded-md border border-ui-border-base bg-grey-5 p-3">
+          <p className="text-small-semi">Gallery photos</p>
+          {override?.gallery_images?.length ? (
+            <div className="grid grid-cols-2 gap-2">
+              {override.gallery_images.map((url, index) => (
+                <label
+                  key={`${index}-${url.slice(0, 24)}`}
+                  className="group relative block cursor-pointer overflow-hidden rounded-md border border-ui-border-base"
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={url}
+                    alt={`Gallery photo ${index + 1}`}
+                    className="aspect-square w-full object-cover"
+                  />
+                  <span className="absolute inset-x-0 bottom-0 flex items-center gap-1.5 bg-black/60 px-2 py-1 text-[11px] text-white">
+                    <input
+                      type="checkbox"
+                      name="remove_gallery"
+                      value={index}
+                      className="h-3.5 w-3.5"
+                    />
+                    Remove
+                  </span>
+                </label>
+              ))}
+            </div>
+          ) : (
+            <p className="text-xs text-ui-fg-muted">
+              No extra photos yet. The main photo above is shown first; add more
+              angles below.
+            </p>
+          )}
+          <label className="grid gap-1 text-small-regular">
+            Add photos (select multiple)
+            <input
+              name="gallery_files"
+              type="file"
+              accept="image/*"
+              multiple
+              className="checkout-input"
+            />
+          </label>
+          <p className="text-[11px] leading-4 text-ui-fg-muted">
+            Up to 8 gallery photos, max 1.5MB each. Tick “Remove” on a photo and
+            save to delete it.
+          </p>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 gap-3 small:grid-cols-2">

@@ -1,21 +1,21 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600" role="img" aria-label="Vectra Threadripper Pro">
   <defs>
-    <linearGradient id="bg2nbhj4" x1="0" y1="0" x2="1" y2="1">
+    <linearGradient id="bg5b1szw" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#1A0B20"/>
       <stop offset="1" stop-color="#6D28D9"/>
     </linearGradient>
-    <radialGradient id="glow2nbhj4" cx="0.5" cy="0.45" r="0.6">
+    <radialGradient id="glow5b1szw" cx="0.5" cy="0.45" r="0.6">
       <stop offset="0" stop-color="#A78BFA" stop-opacity="0.25"/>
       <stop offset="1" stop-color="#A78BFA" stop-opacity="0"/>
     </radialGradient>
-    <pattern id="dots2nbhj4" width="26" height="26" patternUnits="userSpaceOnUse">
+    <pattern id="dots5b1szw" width="26" height="26" patternUnits="userSpaceOnUse">
       <circle cx="2" cy="2" r="1.4" fill="#FFFFFF" opacity="0.05"/>
     </pattern>
   </defs>
-  <rect width="800" height="600" fill="url(#bg2nbhj4)"/>
-  <rect width="800" height="600" fill="url(#dots2nbhj4)"/>
-  <rect width="800" height="600" fill="url(#glow2nbhj4)"/>
-
+  <rect width="800" height="600" fill="url(#bg5b1szw)"/>
+  <rect width="800" height="600" fill="url(#dots5b1szw)"/>
+  <rect width="800" height="600" fill="url(#glow5b1szw)"/>
+  
         <rect x="320" y="230" width="160" height="160" rx="14" fill="#0F172A" stroke="#A78BFA" stroke-width="3"/>
         <rect x="352" y="262" width="96" height="96" rx="8" fill="#A78BFA" opacity="0.8"/>
         <text x="400" y="318" text-anchor="middle" font-family="Inter, sans-serif" font-size="26" font-weight="700" fill="#0B1220">VC</text>

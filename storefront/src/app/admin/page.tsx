@@ -73,7 +73,7 @@ export default async function AdminPage() {
           </div>
         </div>
 
-        <div className="mt-6 grid grid-cols-1 gap-4 small:grid-cols-2">
+        <div className="mt-6 grid grid-cols-1 gap-4 small:grid-cols-3">
           <AdminCard
             href="/admin/orders"
             title="Orders"
@@ -82,7 +82,12 @@ export default async function AdminPage() {
           <AdminCard
             href="/admin/products"
             title="Products"
-            text="Update product titles, descriptions, prices, image URLs, and active status."
+            text="Update titles, descriptions, prices, and manage multiple product photos per product."
+          />
+          <AdminCard
+            href="/admin/reviews"
+            title="Reviews"
+            text="Moderate customer reviews. Verified purchases publish automatically; approve the rest."
           />
         </div>
       </div>

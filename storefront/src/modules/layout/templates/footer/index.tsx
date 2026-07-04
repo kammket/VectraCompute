@@ -143,6 +143,22 @@ export default async function Footer() {
                     Procurement guide
                   </LocalizedClientLink>
                 </li>
+                <li>
+                  <LocalizedClientLink
+                    className="hover:text-white"
+                    href="/order/status"
+                  >
+                    Track your order
+                  </LocalizedClientLink>
+                </li>
+                <li>
+                  <LocalizedClientLink
+                    className="hover:text-white"
+                    href="/resources/how-bitcoin-payment-works"
+                  >
+                    How payment works
+                  </LocalizedClientLink>
+                </li>
               </ul>
             </div>
             {collections && collections.length > 0 ? (

@@ -122,7 +122,10 @@ export const listProductsWithSort = async ({
     pageParam: 0,
     queryParams: {
       ...queryParams,
-      limit: 100,
+      // Search/filters run over the full catalog in memory; keep this above
+      // the catalog size (85 products as of mid-2026) or filters silently miss
+      // whatever falls past the limit.
+      limit: 300,
     },
     countryCode,
   })
@@ -197,6 +200,17 @@ const getSearchableProductText = (product: HttpTypes.StoreProduct) => {
     .toLowerCase()
 }
 
+// GPU and condition match the full product text (GPU names live in variant
+// titles). Workload, infrastructure, and form factor match a NARROW text
+// (title, handle, subtitle, category, best-for) — matching those against full
+// descriptions made e.g. "power / cooling" hit 65 of 85 products because
+// nearly every description mentions cooling.
+const NARROW_MATCH_KEYS = new Set<keyof ProductFilterValue>([
+  "workload",
+  "infrastructure",
+  "formFactor",
+])
+
 const FILTER_TERMS: Record<
   keyof ProductFilterValue,
   Record<string, string[]>
@@ -212,53 +226,62 @@ const FILTER_TERMS: Record<
     "l40s-l4": ["l40s", "l4"],
   },
   workload: {
-    "local-llm": ["local llm", "llm", "model serving", "vllm"],
-    training: ["training", "fine-tuning", "fine tuning", "cuda"],
+    "local-llm": ["local llm", "llm", "vram lab", "model serving", "vllm"],
+    training: ["training", "fine-tuning", "fine tuning", "fine-tune"],
     inference: ["inference", "serving", "endpoint"],
-    rag: ["rag", "document", "vector search", "embeddings"],
-    vision: ["vision", "camera", "computer vision", "inspection"],
-    storage: ["storage", "nvme", "vector database", "vector db"],
+    rag: ["rag", "document ai", "vector search", "embeddings", "knowledge"],
+    vision: ["vision", "camera", "video analytics", "inspection"],
+    storage: [
+      "storage",
+      "data node",
+      "dataset",
+      "vector database",
+      "vector db",
+      "nvme expansion",
+    ],
     "robotics-edge": [
       "robotics",
       "physical ai",
-      "edge ai",
+      "edge",
       "jetson",
       "hailo",
       "sensor fusion",
     ],
     "power-cooling": [
-      "power",
-      "cooling",
       "pdu",
       "cdu",
+      "ups",
+      "battery backup",
+      "power distribution",
       "liquid cooling",
+      "cooling kit",
       "direct-to-chip",
+      "vectrapower",
+      "vectracool",
     ],
-    monitoring: ["monitoring", "alerts", "uptime", "dashboard", "operations"],
+    monitoring: ["monitoring", "observability", "ai ops", "uptime"],
   },
   infrastructure: {
     "memory-storage": [
+      "memory",
       "ddr5",
-      "ecc",
-      "memory kit",
-      "1tb",
-      "2tb",
-      "nvme",
-      "dataset",
-      "checkpoint",
       "storage",
+      "data node",
+      "dataset",
+      "nvme expansion",
       "vector database",
     ],
     "power-cooling": [
       "pdu",
-      "60kw",
-      "30kw",
-      "power distribution",
       "cdu",
+      "ups",
+      "battery backup",
+      "power distribution",
       "liquid cooling",
+      "cooling kit",
       "direct-to-chip",
-      "facility",
-      "cooling",
+      "vectrapower",
+      "vectracool",
     ],
     "edge-robotics": [
       "jetson",
@@ -267,7 +290,7 @@ const FILTER_TERMS: Record<
       "npu",
       "robotics",
       "physical ai",
-      "edge ai",
+      "edge",
       "video analytics",
     ],
     "inference-ops": [
@@ -276,56 +299,97 @@ const FILTER_TERMS: Record<
       "vllm",
       "triton",
       "monitoring",
-      "private ai",
-      "endpoint",
       "serving",
+      "endpoint",
     ],
     "next-gen-rack": [
       "gb300",
+      "gb200",
       "nvl72",
       "b200",
       "blackwell ultra",
       "rubin",
-      "next-gen",
       "800gbe",
       "ai factory",
     ],
   },
   condition: {
-    new: ['condition":"new', 'condition":"built to order', "built to order"],
-    refurbished: ["refurbished", "refurb", "validated refurbished"],
+    // "new" is handled as NOT refurbished in the matcher, so the two options
+    // partition the catalog instead of overlapping.
+    new: [],
+    refurbished: ["refurbished", "refurb"],
   },
   formFactor: {
-    workstation: ["workstation", "desktop"],
-    "rack-server": ["rack server", "gpu rack", "server", "rack"],
-    appliance: ["appliance"],
-    component: ["component", "kit", "fabric", "cooling", "accessories"],
+    // Category names carry the reliable signal here — they all appear in the
+    // narrow text. Refurb/storage rack systems moved to their own categories,
+    // so title cues ("vectrarack", "storage server") keep them findable as
+    // rack servers too.
+    workstation: ["workstation"],
+    "rack-server": ["rack server", "vectrarack", "storage server", "data node"],
+    appliance: ["appliance", "ai mini", "supercomputer", "micro server"],
+    component: [
+      "components & accessories",
+      "networking & interconnect",
+      "storage & memory",
+      "power & cooling",
+      "kit",
+      "expansion card",
+      "gateway",
+    ],
   },
   budget: {},
+}
+
+const REFURB_TERMS = ["refurb"]
+
+const getNarrowProductText = (product: HttpTypes.StoreProduct) => {
+  const metadata = product.metadata as Record<string, unknown> | null | undefined
+  const bestFor = typeof metadata?.best_for === "string" ? metadata.best_for : ""
+  const categories = product.categories
+    ?.map((category) => category.name)
+    .join(" ")
+
+  return [product.title, product.handle, product.subtitle, categories, bestFor]
+    .filter(Boolean)
+    .join(" ")
+    .toLowerCase()
+}
+
+const matchesFilterTerm = (
+  product: HttpTypes.StoreProduct,
+  key: keyof ProductFilterValue,
+  value: string
+): boolean => {
+  if (key === "budget") {
+    return productMatchesBudget(product, value)
+  }
+
+  const fullText = getSearchableProductText(product)
+
+  if (key === "condition") {
+    const isRefurb = REFURB_TERMS.some((term) => fullText.includes(term))
+    return value === "refurbished" ? isRefurb : !isRefurb
+  }
+
+  const terms = FILTER_TERMS[key]?.[value] ?? []
+  if (!terms.length) {
+    return true
+  }
+
+  const text = NARROW_MATCH_KEYS.has(key)
+    ? getNarrowProductText(product)
+    : fullText
+
+  return terms.some((term) => text.includes(term))
 }
 
 const productMatchesFilters = (
   product: HttpTypes.StoreProduct,
   filters: ProductFilterValue
-) => {
-  const searchableText = getSearchableProductText(product)
-
-  return (Object.entries(filters) as [keyof ProductFilterValue, string][])
+) =>
+  (Object.entries(filters) as [keyof ProductFilterValue, string][])
     .filter(([, value]) => Boolean(value))
-    .every(([key, value]) => {
-      if (key === "budget") {
-        return productMatchesBudget(product, value)
-      }
-
-      const terms = FILTER_TERMS[key]?.[value] ?? []
-
-      if (!terms.length) {
-        return true
-      }
-
-      return terms.some((term) => searchableText.includes(term))
-    })
-}
+    .every(([key, value]) => matchesFilterTerm(product, key, value))
 
 const getProductsWithClosestFilterMatches = (
   products: HttpTypes.StoreProduct[],
@@ -349,25 +413,14 @@ const getProductsWithClosestFilterMatches = (
 const getFilterMatchScore = (
   product: HttpTypes.StoreProduct,
   filters: ProductFilterValue
-) => {
-  const searchableText = getSearchableProductText(product)
-
-  return (Object.entries(filters) as [keyof ProductFilterValue, string][])
+) =>
+  (Object.entries(filters) as [keyof ProductFilterValue, string][])
     .filter(([, value]) => Boolean(value))
-    .reduce((score, [key, value]) => {
-      if (key === "budget") {
-        return productMatchesBudget(product, value) ? score + 1 : score
-      }
-
-      const terms = FILTER_TERMS[key]?.[value] ?? []
-
-      if (terms.some((term) => searchableText.includes(term))) {
-        return score + 1
-      }
-
-      return score
-    }, 0)
-}
+    .reduce(
+      (score, [key, value]) =>
+        matchesFilterTerm(product, key, value) ? score + 1 : score,
+      0
+    )
 
 const productMatchesBudget = (
   product: HttpTypes.StoreProduct,

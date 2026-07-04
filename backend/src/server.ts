@@ -12,6 +12,23 @@ type ChatMessage = {
   content: string
 }
 
+type GrokToolCall = {
+  id: string
+  type: "function"
+  function: { name: string; arguments: string }
+}
+
+type GrokMessage =
+  | { role: "system" | "user"; content: string }
+  | { role: "assistant"; content: string | null; tool_calls?: GrokToolCall[] }
+  | { role: "tool"; tool_call_id: string; content: string }
+
+type AgentSideEffects = {
+  suggestedProducts: BackendCatalogProduct[]
+  createdOrder: Record<string, unknown> | null
+  capturedLead: boolean
+}
+
 type AiOrderRequest = {
   productHandle: string
   variantSku?: string
@@ -196,6 +213,58 @@ const createStoredOrder = async (order: CommerceOrderRequest) => {
   return result.rows[0]
 }
 
+const ensureLeadsTable = async () => {
+  const db = getPool()
+  if (!db) {
+    throw new Error("DATABASE_URL is required.")
+  }
+
+  await db.query(`
+    create table if not exists vectra_leads (
+      id text primary key,
+      name text,
+      email text not null,
+      topic text,
+      message text not null,
+      created_at timestamptz not null default now()
+    )
+  `)
+}
+
+const storeLead = async (lead: {
+  name?: string
+  email: string
+  topic?: string
+  message: string
+}) => {
+  await ensureLeadsTable()
+  const db = getPool()
+  if (!db) {
+    throw new Error("DATABASE_URL is required.")
+  }
+
+  const id = `lead_${randomUUID().replace(/-/g, "").slice(0, 18)}`
+  await db.query(
+    "insert into vectra_leads (id, name, email, topic, message) values ($1,$2,$3,$4,$5)",
+    [id, lead.name?.trim() || null, lead.email.trim(), lead.topic?.trim() || null, lead.message.trim()]
+  )
+  return id
+}
+
+const findOrderStatus = async (displayId: number, email: string) => {
+  await ensureCommerceTables()
+  const db = getPool()
+  if (!db) {
+    throw new Error("DATABASE_URL is required.")
+  }
+
+  const result = await db.query(
+    "select display_id, status, total, currency_code, created_at, updated_at from vectra_orders where display_id = $1 and lower(email) = $2 limit 1",
+    [displayId, email.trim().toLowerCase()]
+  )
+  return result.rows[0] ?? null
+}
+
 const money = (amount: number) =>
   new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -314,78 +383,421 @@ const fallbackAnswer = (message: string, products: BackendCatalogProduct[]) => {
   return `${lead}\n\n${recommendations}\n\nTell me your workload, model size, number of users, preferred budget, and delivery country, and I will narrow this down.`
 }
 
-const callGrok = async (messages: ChatMessage[], products: BackendCatalogProduct[]) => {
+const AGENT_TOOLS = [
+  {
+    type: "function",
+    function: {
+      name: "search_products",
+      description:
+        "Search the live VectraCompute catalog. Use for any product recommendation so prices and availability are real, never from memory.",
+      parameters: {
+        type: "object",
+        properties: {
+          query: {
+            type: "string",
+            description:
+              "Search terms: GPU model, workload, category, budget hints, e.g. 'RTX 5090 local LLM' or 'H200 rack server'",
+          },
+          max_price_usd: {
+            type: "number",
+            description: "Optional budget ceiling in USD; filters out configurations above it",
+          },
+          limit: { type: "number", description: "Max results, default 5" },
+        },
+        required: ["query"],
+      },
+    },
+  },
+  {
+    type: "function",
+    function: {
+      name: "get_product_details",
+      description:
+        "Fetch full details for one product by handle: description, specs, every configuration with SKU and exact price, warranty, lead time.",
+      parameters: {
+        type: "object",
+        properties: {
+          handle: { type: "string", description: "Product handle, e.g. 'vectraforge-x1'" },
+        },
+        required: ["handle"],
+      },
+    },
+  },
+  {
+    type: "function",
+    function: {
+      name: "get_order_status",
+      description:
+        "Look up the status of an existing order. Requires the order number AND the checkout email; both must match.",
+      parameters: {
+        type: "object",
+        properties: {
+          display_id: { type: "number", description: "Order number, e.g. 12" },
+          email: { type: "string", description: "Email used at checkout" },
+        },
+        required: ["display_id", "email"],
+      },
+    },
+  },
+  {
+    type: "function",
+    function: {
+      name: "get_payment_instructions",
+      description:
+        "Get the current Bitcoin payment instructions: wallet address, required confirmations, expiry window, and a live BTC estimate for a USD total.",
+      parameters: {
+        type: "object",
+        properties: {
+          total_usd: { type: "number", description: "Order total in USD for the BTC estimate" },
+        },
+        required: [],
+      },
+    },
+  },
+  {
+    type: "function",
+    function: {
+      name: "create_order",
+      description:
+        "Place an order for one product configuration. ONLY call after you have shown the customer a full summary (product, configuration, exact price, delivery address) and they explicitly confirmed with words like 'yes, place the order'. Set confirmed=true only in that case.",
+      parameters: {
+        type: "object",
+        properties: {
+          product_handle: { type: "string" },
+          variant_sku: { type: "string", description: "SKU of the chosen configuration" },
+          customer_name: { type: "string" },
+          email: { type: "string" },
+          phone: { type: "string" },
+          company: { type: "string" },
+          address1: { type: "string" },
+          address2: { type: "string" },
+          city: { type: "string" },
+          province: { type: "string" },
+          postal_code: { type: "string" },
+          country_code: { type: "string", description: "2-letter country code, default us" },
+          notes: { type: "string" },
+          confirmed: {
+            type: "boolean",
+            description:
+              "true ONLY if the customer explicitly confirmed the exact summary you showed them",
+          },
+        },
+        required: [
+          "product_handle",
+          "customer_name",
+          "email",
+          "phone",
+          "address1",
+          "city",
+          "confirmed",
+        ],
+      },
+    },
+  },
+  {
+    type: "function",
+    function: {
+      name: "capture_lead",
+      description:
+        "Save a follow-up request for the human team when the customer needs something you cannot do (custom quote, financing, bulk order, unsupported question). Always collect an email first.",
+      parameters: {
+        type: "object",
+        properties: {
+          name: { type: "string" },
+          email: { type: "string" },
+          topic: { type: "string", description: "Short topic, e.g. 'bulk quote 4x H200 server'" },
+          message: { type: "string", description: "What the customer needs, in their words" },
+        },
+        required: ["email", "message"],
+      },
+    },
+  },
+] as const
+
+const transcriptFromMessages = (messages: ChatMessage[], limit = 4000) => {
+  const text = messages
+    .slice(-12)
+    .map((message) => `${message.role}: ${message.content}`)
+    .join("\n")
+  return text.length > limit ? `${text.slice(0, limit)}…` : text
+}
+
+const executeTool = async (
+  name: string,
+  rawArgs: string,
+  conversation: ChatMessage[],
+  effects: AgentSideEffects
+): Promise<Record<string, unknown>> => {
+  let args: Record<string, unknown> = {}
+  try {
+    args = rawArgs ? JSON.parse(rawArgs) : {}
+  } catch {
+    return { error: "Tool arguments were not valid JSON." }
+  }
+
+  switch (name) {
+    case "search_products": {
+      const query = String(args.query ?? "")
+      const maxPrice = Number(args.max_price_usd) || null
+      const limit = Math.min(Number(args.limit) || 5, 8)
+      let products = findProducts(query, limit * 2)
+      if (maxPrice) {
+        products = products.filter((product) =>
+          product.variants.some((variant) => variant.priceUsd <= maxPrice)
+        )
+      }
+      products = products.slice(0, limit)
+      effects.suggestedProducts = products
+      return { results: products.map(summarizeProduct), count: products.length }
+    }
+
+    case "get_product_details": {
+      const product = PRODUCT_CATALOG.find((item) => item.handle === args.handle)
+      if (!product) {
+        return { error: `No product with handle '${String(args.handle)}'.` }
+      }
+      return {
+        ...summarizeProduct(product),
+        description: product.description,
+        specs: product.specs,
+      }
+    }
+
+    case "get_order_status": {
+      const displayId = Number(args.display_id)
+      const email = String(args.email ?? "")
+      if (!Number.isFinite(displayId) || !email) {
+        return { error: "Both display_id and email are required." }
+      }
+      try {
+        const row = await findOrderStatus(displayId, email)
+        if (!row) {
+          return {
+            found: false,
+            note: "No order matches that number and email. Ask the customer to double-check both.",
+          }
+        }
+        return {
+          found: true,
+          order_number: row.display_id,
+          status: row.status,
+          total: money(Number(row.total)),
+          placed_at: row.created_at,
+          last_update: row.updated_at,
+          tracking_page: "/us/order/status",
+        }
+      } catch {
+        return { error: "Order storage is unavailable right now." }
+      }
+    }
+
+    case "get_payment_instructions": {
+      const settings = getPaymentSettings()
+      const totalUsd = Number(args.total_usd) || 0
+      const btcEstimate = totalUsd > 0 ? await getBtcEstimate(totalUsd) : null
+      return {
+        enabled: settings.enabled,
+        walletAddress: settings.walletAddress || "Not configured yet",
+        requiredConfirmations: settings.requiredConfirmations,
+        paymentExpiryMinutes: settings.paymentExpiryMinutes,
+        instructions: settings.instructions,
+        btcEstimate,
+      }
+    }
+
+    case "create_order": {
+      if (args.confirmed !== true) {
+        return {
+          error:
+            "Order NOT created. Show the customer a full summary (product, configuration, exact price, delivery address) and get an explicit 'yes' first, then call again with confirmed=true.",
+        }
+      }
+
+      const orderRequest: AiOrderRequest = {
+        productHandle: String(args.product_handle ?? ""),
+        variantSku: args.variant_sku ? String(args.variant_sku) : undefined,
+        customerName: String(args.customer_name ?? ""),
+        email: String(args.email ?? ""),
+        phone: String(args.phone ?? ""),
+        company: args.company ? String(args.company) : undefined,
+        address1: String(args.address1 ?? ""),
+        address2: args.address2 ? String(args.address2) : undefined,
+        city: String(args.city ?? ""),
+        province: args.province ? String(args.province) : undefined,
+        postalCode: args.postal_code ? String(args.postal_code) : undefined,
+        countryCode: args.country_code ? String(args.country_code) : undefined,
+        notes: args.notes ? String(args.notes) : undefined,
+      }
+
+      const validationError = validateOrder(orderRequest)
+      if (validationError) {
+        return { error: `Order not created: ${validationError}` }
+      }
+
+      const product = PRODUCT_CATALOG.find(
+        (item) => item.handle === orderRequest.productHandle
+      )
+      if (!product) {
+        return { error: "Order not created: product handle not found. Search the catalog first." }
+      }
+
+      const variant =
+        product.variants.find((item) => item.sku === orderRequest.variantSku) ||
+        product.variants[0]
+
+      try {
+        const created = await persistAiOrder(orderRequest, product, variant, [
+          "Created by VectraCompute AI sales engineer (chat).",
+          `Conversation transcript:\n${transcriptFromMessages(conversation)}`,
+        ])
+        effects.createdOrder = created
+        return created
+      } catch (error) {
+        console.error("AI tool order creation failed", error)
+        return { error: "Order storage is not connected; the order was not saved." }
+      }
+    }
+
+    case "capture_lead": {
+      const email = String(args.email ?? "")
+      const message = String(args.message ?? "")
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || !message.trim()) {
+        return { error: "A valid email and a message are required." }
+      }
+      try {
+        const id = await storeLead({
+          name: args.name ? String(args.name) : undefined,
+          email,
+          topic: args.topic ? String(args.topic) : undefined,
+          message,
+        })
+        effects.capturedLead = true
+        return { saved: true, lead_id: id, note: "The team will follow up by email." }
+      } catch (error) {
+        console.error("Lead capture failed", error)
+        return { error: "Could not save the lead right now. Apologize and share the contact page /us/contact." }
+      }
+    }
+
+    default:
+      return { error: `Unknown tool '${name}'.` }
+  }
+}
+
+const AGENT_SYSTEM_PROMPT = `
+You are VectraCompute's senior AI hardware sales engineer. You can consult, recommend, check orders, and place orders end-to-end.
+
+Consult flow: qualify the buyer before recommending — workload (training / fine-tuning / inference / rendering), model sizes, number of users, budget, power and space constraints, timeline. Then use search_products and present 2-3 concrete options with exact prices and links.
+
+Hard rules:
+- Only recommend products returned by your tools. Never invent products, prices, discounts, stock, or payment addresses.
+- Before create_order: show a full order summary (product, configuration, exact price, delivery address) and wait for an explicit yes. Never set confirmed=true without it.
+- Payment is Bitcoin, manually verified by the team before dispatch. Use get_payment_instructions for wallet details; never type a wallet address from memory.
+- After an order is created, give the customer their order number and point them to the tracking page at /us/order/status.
+- If you cannot help (custom builds, financing, bulk quotes, complaints), collect an email and use capture_lead, then confirm the team will follow up.
+- Keep answers concise, technical, and honest. If a question is outside AI hardware, politely steer back.
+`.trim()
+
+const callGrokAgent = async (
+  messages: ChatMessage[],
+  effects: AgentSideEffects
+): Promise<string> => {
   const apiKey = process.env.XAI_API_KEY
 
   if (!apiKey) {
-    return fallbackAnswer(messages.at(-1)?.content || "", products)
+    return fallbackAnswer(messages.at(-1)?.content || "", effects.suggestedProducts)
   }
 
-  const productContext = products
-    .map((product) => {
-      const variants = product.variants
-        .map((variant) => `${variant.title} (${variant.sku}) ${money(variant.priceUsd)}`)
-        .join("; ")
-      return `${product.title}: ${product.category}. Best for: ${product.bestFor}. ${product.condition}. ${product.warranty}. Variants: ${variants}. URL: /us/products/${product.handle}`
+  const conversation: GrokMessage[] = [
+    { role: "system", content: AGENT_SYSTEM_PROMPT },
+    ...messages.slice(-10).map((message) => ({
+      role: message.role === "assistant" ? ("assistant" as const) : ("user" as const),
+      content: message.content,
+    })),
+  ]
+
+  for (let iteration = 0; iteration < 6; iteration++) {
+    const response = await fetch(XAI_API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({
+        model: process.env.XAI_MODEL || DEFAULT_MODEL,
+        temperature: 0.3,
+        messages: conversation,
+        tools: AGENT_TOOLS,
+        tool_choice: "auto",
+      }),
     })
-    .join("\n")
 
-  const systemPrompt = `
-You are VectraCompute's senior AI hardware sales engineer.
-Answer engineering questions clearly and commercially, recommend only products from the provided catalog context, and never invent availability, discounts, payment addresses, or hidden policies.
-Ask practical qualification questions: workload, model size, VRAM need, number of users, data size, deployment location, power/cooling, budget, and timeline.
-If the user wants to buy, explain that you can collect delivery details in chat, save the order, then show Bitcoin payment details. Payment is manually confirmed by the VectraCompute team before dispatch.
-Keep responses concise, confident, and trustworthy.
+    if (!response.ok) {
+      const detail = await response.text()
+      console.error("xAI request failed", response.status, detail.slice(0, 500))
+      return fallbackAnswer(messages.at(-1)?.content || "", effects.suggestedProducts)
+    }
 
-Relevant catalog:
-${productContext}
-`.trim()
+    const payload = (await response.json()) as {
+      choices?: {
+        message?: { content?: string | null; tool_calls?: GrokToolCall[] }
+      }[]
+    }
 
-  const response = await fetch(XAI_API_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${apiKey}`,
-    },
-    body: JSON.stringify({
-      model: process.env.XAI_MODEL || DEFAULT_MODEL,
-      temperature: 0.35,
-      messages: [
-        { role: "system", content: systemPrompt },
-        ...messages.slice(-8).map((message) => ({
-          role: message.role,
-          content: message.content,
-        })),
-      ],
-    }),
-  })
+    const message = payload.choices?.[0]?.message
+    const toolCalls = message?.tool_calls
 
-  if (!response.ok) {
-    const detail = await response.text()
-    console.error("xAI request failed", response.status, detail.slice(0, 500))
-    return fallbackAnswer(messages.at(-1)?.content || "", products)
+    if (!toolCalls?.length) {
+      return (
+        message?.content ||
+        fallbackAnswer(messages.at(-1)?.content || "", effects.suggestedProducts)
+      )
+    }
+
+    conversation.push({
+      role: "assistant",
+      content: message?.content ?? null,
+      tool_calls: toolCalls,
+    })
+
+    for (const toolCall of toolCalls) {
+      const result = await executeTool(
+        toolCall.function.name,
+        toolCall.function.arguments,
+        messages,
+        effects
+      )
+      conversation.push({
+        role: "tool",
+        tool_call_id: toolCall.id,
+        content: JSON.stringify(result),
+      })
+    }
   }
 
-  const payload = (await response.json()) as {
-    choices?: { message?: { content?: string } }[]
-  }
-
-  return (
-    payload.choices?.[0]?.message?.content ||
-    fallbackAnswer(messages.at(-1)?.content || "", products)
-  )
+  return "I gathered the details but hit my step limit — please rephrase or ask me to continue."
 }
 
 const handleAiChat = async (req: IncomingMessage, res: ServerResponse) => {
   const body = await readJson<{ messages?: ChatMessage[] }>(req)
   const messages = Array.isArray(body.messages) ? body.messages : []
   const latestMessage = messages.at(-1)?.content || ""
-  const matchedProducts = findProducts(latestMessage || "AI workstation GPU server", 6)
-  const assistant = await callGrok(messages, matchedProducts)
+
+  // Seed suggestions from the raw query; the agent's own search_products calls
+  // overwrite these with whatever it actually recommended.
+  const effects: AgentSideEffects = {
+    suggestedProducts: findProducts(latestMessage || "AI workstation GPU server", 6),
+    createdOrder: null,
+    capturedLead: false,
+  }
+
+  const assistant = await callGrokAgent(messages, effects)
 
   sendJson(req, res, 200, {
     assistant,
-    suggestedProducts: matchedProducts.slice(0, 4).map(summarizeProduct),
+    suggestedProducts: effects.suggestedProducts.slice(0, 4).map(summarizeProduct),
+    order: effects.createdOrder,
+    leadCaptured: effects.capturedLead,
     checkout: wantsCheckout(latestMessage)
       ? {
           enabled: true,
@@ -445,25 +857,12 @@ const validateCommerceOrder = (order: CommerceOrderRequest) => {
   return null
 }
 
-const handleAiOrder = async (req: IncomingMessage, res: ServerResponse) => {
-  const body = await readJson<AiOrderRequest>(req)
-  const validationError = validateOrder(body)
-
-  if (validationError) {
-    sendJson(req, res, 400, { error: validationError })
-    return
-  }
-
-  const product = PRODUCT_CATALOG.find((item) => item.handle === body.productHandle)
-
-  if (!product) {
-    sendJson(req, res, 404, { error: "Selected product was not found." })
-    return
-  }
-
-  const variant =
-    product.variants.find((item) => item.sku === body.variantSku) ||
-    product.variants[0]
+const persistAiOrder = async (
+  body: AiOrderRequest,
+  product: BackendCatalogProduct,
+  variant: BackendCatalogProduct["variants"][number],
+  noteLines: string[]
+) => {
   const orderId = `ord_ai_${randomUUID().replace(/-/g, "").slice(0, 18)}`
   const total = variant.priceUsd
   const address = {
@@ -492,43 +891,35 @@ const handleAiOrder = async (req: IncomingMessage, res: ServerResponse) => {
     },
   }
 
-  try {
-    await createStoredOrder({
-      id: orderId,
-      email: body.email,
-      customerName: body.customerName,
-      phone: body.phone,
-      company: body.company || null,
-      address,
-      paymentMethod: "bitcoin",
-      bitcoinTxid: null,
-      notes: [
-        "Created by VectraCompute AI sales engineer.",
-        body.notes?.trim() ? `Customer notes: ${body.notes.trim()}` : "",
-      ]
-        .filter(Boolean)
-        .join("\n"),
-      status: "awaiting_payment",
-      currencyCode: "usd",
-      subtotal: total,
-      total,
-      items: [item],
-    })
-  } catch (error) {
-    console.error("AI order creation failed", error)
-    sendJson(req, res, 500, {
-      error:
-        "Order storage is not connected. Add DATABASE_URL to the Railway backend and retry.",
-    })
-    return
-  }
+  const stored = await createStoredOrder({
+    id: orderId,
+    email: body.email,
+    customerName: body.customerName,
+    phone: body.phone,
+    company: body.company || null,
+    address,
+    paymentMethod: "bitcoin",
+    bitcoinTxid: null,
+    notes: [
+      ...noteLines,
+      body.notes?.trim() ? `Customer notes: ${body.notes.trim()}` : "",
+    ]
+      .filter(Boolean)
+      .join("\n"),
+    status: "awaiting_payment",
+    currencyCode: "usd",
+    subtotal: total,
+    total,
+    items: [item],
+  })
 
   const btcEstimate = await getBtcEstimate(total)
   const payment = getPaymentSettings()
 
-  sendJson(req, res, 201, {
+  return {
     order: {
       id: orderId,
+      display_id: stored?.display_id,
       status: "awaiting_payment",
       product: summarizeProduct(product),
       selectedVariant: {
@@ -545,6 +936,7 @@ const handleAiOrder = async (req: IncomingMessage, res: ServerResponse) => {
       address,
       totalUsd: total,
       formattedTotal: money(total),
+      trackingPage: "/us/order/status",
       createdBy: "ai_chat",
     },
     payment: {
@@ -553,7 +945,41 @@ const handleAiOrder = async (req: IncomingMessage, res: ServerResponse) => {
       message:
         "Your order has been saved. Send the Bitcoin payment to the wallet shown. Our team will contact you after payment is confirmed.",
     },
-  })
+  }
+}
+
+const handleAiOrder = async (req: IncomingMessage, res: ServerResponse) => {
+  const body = await readJson<AiOrderRequest>(req)
+  const validationError = validateOrder(body)
+
+  if (validationError) {
+    sendJson(req, res, 400, { error: validationError })
+    return
+  }
+
+  const product = PRODUCT_CATALOG.find((item) => item.handle === body.productHandle)
+
+  if (!product) {
+    sendJson(req, res, 404, { error: "Selected product was not found." })
+    return
+  }
+
+  const variant =
+    product.variants.find((item) => item.sku === body.variantSku) ||
+    product.variants[0]
+
+  try {
+    const payload = await persistAiOrder(body, product, variant, [
+      "Created by VectraCompute AI sales engineer.",
+    ])
+    sendJson(req, res, 201, payload)
+  } catch (error) {
+    console.error("AI order creation failed", error)
+    sendJson(req, res, 500, {
+      error:
+        "Order storage is not connected. Add DATABASE_URL to the Railway backend and retry.",
+    })
+  }
 }
 
 const handleCreateCommerceOrder = async (
@@ -705,6 +1131,22 @@ const server = createServer(async (req, res) => {
 
     if (req.method === "GET" && url.pathname === "/api/orders") {
       await handleListCommerceOrders(req, res)
+      return
+    }
+
+    if (req.method === "GET" && url.pathname === "/api/leads") {
+      try {
+        await ensureLeadsTable()
+        const db = getPool()
+        if (!db) throw new Error("DATABASE_URL is required.")
+        const result = await db.query(
+          "select * from vectra_leads order by created_at desc limit 100"
+        )
+        sendJson(req, res, 200, { leads: result.rows })
+      } catch (error) {
+        console.error("Lead list failed", error)
+        sendJson(req, res, 500, { error: "Unable to list leads." })
+      }
       return
     }
 

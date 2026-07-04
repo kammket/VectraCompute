@@ -75,6 +75,8 @@
     "vectrarack-gb200-nvl72-ai-factory-rack",
     "vectrarubin-ai-cluster-readiness-package",
     "vectrapower-60kw-ai-rack-pdu-kit",
+    "vectrapower-rack-ups-battery-backup",
+    "vectra-server-spare-parts-kit",
     "vectracool-cdu-liquid-cooling-package",
     "vectraops-gpu-server-monitoring-appliance",
     "vectrajetson-thor-robotics-ai-kit",
@@ -84,6 +86,11 @@
   "categories": [
     "ai-deep-learning-workstations",
     "gpu-rack-servers",
+    "refurbished-certified",
+    "storage-memory",
+    "networking-interconnect",
+    "power-cooling",
+    "edge-robotics",
     "workstations-by-cpu-platform",
     "components-accessories"
   ]

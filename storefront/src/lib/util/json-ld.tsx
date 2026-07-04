@@ -71,12 +71,14 @@ export const getBreadcrumbJsonLd = (
 
 export const getProductJsonLd = (
   product: HttpTypes.StoreProduct,
-  countryCode: string
+  countryCode: string,
+  // Real, moderated review data only. Rating markup that isn't backed by
+  // on-page reviews is a structured-data violation, so catalog metadata is
+  // deliberately NOT used here.
+  reviewSummary?: { average: number; count: number }
 ) => {
   const seo = getProductSeo(product)
   const { cheapestPrice } = getProductPrice({ product })
-  const rating = getMetadataString(product, "rating")
-  const reviewCount = getMetadataString(product, "review_count")
   const condition = getMetadataString(product, "condition")
   const certifications = getMetadataList(product, "certifications")
   const bestFor = getMetadataList(product, "best_for")
@@ -192,11 +194,11 @@ export const getProductJsonLd = (
         : undefined,
     ].filter(Boolean),
     aggregateRating:
-      rating && reviewCount
+      reviewSummary && reviewSummary.count > 0
         ? {
             "@type": "AggregateRating",
-            ratingValue: rating,
-            reviewCount,
+            ratingValue: reviewSummary.average.toFixed(1),
+            reviewCount: reviewSummary.count,
           }
         : undefined,
     offers: cheapestPrice

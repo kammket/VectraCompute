@@ -16,7 +16,7 @@ const PRIMARY_LINKS = [
   { label: "Store", href: "/store" },
   { label: "Workstations", href: "/categories/ai-deep-learning-workstations" },
   { label: "GPU Servers", href: "/categories/gpu-rack-servers" },
-  { label: "Refurbished", href: "/store?condition=refurbished" },
+  { label: "Refurbished", href: "/categories/refurbished-certified" },
   { label: "Solutions", href: "/solutions" },
   { label: "Resources", href: "/resources" },
 ]

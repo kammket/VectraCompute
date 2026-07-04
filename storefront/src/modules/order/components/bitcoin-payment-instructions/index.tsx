@@ -173,6 +173,12 @@ const BitcoinPaymentInstructions = ({
                   {settings.manual.rateSourceNote}
                 </Text>
               )}
+              <a
+                href="/us/resources/how-bitcoin-payment-works"
+                className="mt-3 inline-block text-small-semi text-brand-700 underline hover:text-brand-800"
+              >
+                Read the full payment process, step by step
+              </a>
             </div>
           </div>
           <div className="rounded-md border border-slate-200 bg-white p-3 text-center">

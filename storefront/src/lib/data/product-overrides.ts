@@ -28,10 +28,13 @@ export type ProductOverrideRow = {
   condition: string | null
   lead_time: string | null
   support_level: string | null
+  gallery_images: string[] | null
   is_active: boolean
   is_custom: boolean
   updated_at: string
 }
+
+const MAX_GALLERY_IMAGES = 8
 
 const getDatabaseUrl = () => process.env.DATABASE_URL
 
@@ -83,12 +86,7 @@ const readText = (formData: FormData, key: string) =>
 const readNullableText = (formData: FormData, key: string) =>
   readText(formData, key) || null
 
-const readImageUpload = async (formData: FormData) => {
-  const file = formData.get("image_file")
-  if (!(file instanceof File) || file.size === 0) {
-    return null
-  }
-
+const fileToDataUrl = async (file: File) => {
   if (!file.type.startsWith("image/")) {
     throw new Error("Uploaded product photo must be an image.")
   }
@@ -100,6 +98,30 @@ const readImageUpload = async (formData: FormData) => {
 
   const buffer = Buffer.from(await file.arrayBuffer())
   return `data:${file.type};base64,${buffer.toString("base64")}`
+}
+
+const readImageUpload = async (formData: FormData) => {
+  const file = formData.get("image_file")
+  if (!(file instanceof File) || file.size === 0) {
+    return null
+  }
+
+  return fileToDataUrl(file)
+}
+
+// Additional gallery photos: multiple files per submit, appended to whatever the
+// product already has (minus any the admin ticked for removal), capped at
+// MAX_GALLERY_IMAGES so a product page stays fast.
+const readGalleryUploads = async (formData: FormData) => {
+  const files = formData
+    .getAll("gallery_files")
+    .filter((file): file is File => file instanceof File && file.size > 0)
+
+  const urls: string[] = []
+  for (const file of files) {
+    urls.push(await fileToDataUrl(file))
+  }
+  return urls
 }
 
 export async function ensureProductOverrideTable() {
@@ -131,7 +153,8 @@ export async function ensureProductOverrideTable() {
       add column if not exists condition text,
       add column if not exists lead_time text,
       add column if not exists support_level text,
-      add column if not exists is_custom boolean not null default false
+      add column if not exists is_custom boolean not null default false,
+      add column if not exists gallery_images jsonb
   `)
 }
 
@@ -197,6 +220,10 @@ const rowToProduct = (row: ProductOverrideRow): HttpTypes.StoreProduct | null =>
 
   const category = resolveCategory(row.category)
   const image = row.image_url?.trim() || null
+  const gallery = Array.isArray(row.gallery_images) ? row.gallery_images : []
+  const allImages = [image, ...gallery].filter((url): url is string =>
+    Boolean(url)
+  )
   const variant = buildVariant(row, handle)
   const optionTitle = row.option_title || "Configuration"
   const optionValue = row.option_value || "Standard reviewed build"
@@ -210,8 +237,11 @@ const rowToProduct = (row: ProductOverrideRow): HttpTypes.StoreProduct | null =>
       row.description ||
       `${title} from VectraCompute is configured for AI workloads, reviewed before fulfillment, and supported after delivery.`,
     status: "published",
-    thumbnail: image,
-    images: image ? [{ id: `img_${handle}_admin_1`, url: image }] : [],
+    thumbnail: allImages[0] ?? null,
+    images: allImages.map((url, index) => ({
+      id: `img_${handle}_admin_${index + 1}`,
+      url,
+    })),
     metadata: {
       seo_title: row.seo_title || undefined,
       seo_description: row.seo_description || undefined,
@@ -266,6 +296,12 @@ const applyOverrideToProduct = (
       ? Number(override.price_usd)
       : null
   const image = override.image_url || product.thumbnail
+  const gallery = Array.isArray(override.gallery_images)
+    ? override.gallery_images
+    : []
+  const overrideImages = [override.image_url, ...gallery].filter(
+    (url): url is string => Boolean(url)
+  )
   const category = resolveCategory(override.category)
 
   return {
@@ -274,7 +310,12 @@ const applyOverrideToProduct = (
     subtitle: override.subtitle || product.subtitle,
     description: override.description || product.description,
     thumbnail: image,
-    images: image ? [{ id: `override_${product.handle}`, url: image }] : product.images,
+    images: overrideImages.length
+      ? overrideImages.map((url, index) => ({
+          id: `override_${product.handle}_${index + 1}`,
+          url,
+        }))
+      : product.images,
     categories: override.category && category ? [category] : product.categories,
     category_ids:
       override.category && category ? [category.id] : product.category_ids,
@@ -369,13 +410,35 @@ export async function saveProductOverride(formData: FormData) {
   const priceValue = readText(formData, "price_usd")
   const isActive = formData.get("is_active") === "on"
   let imageUpload: string | null = null
+  let galleryUploads: string[] = []
   try {
     imageUpload = await readImageUpload(formData)
+    galleryUploads = await readGalleryUploads(formData)
   } catch (error) {
     console.error("Failed to read uploaded product photo", error)
     return
   }
   const imageUrl = imageUpload || readNullableText(formData, "image_url")
+
+  // Gallery = current stored photos, minus any the admin ticked for removal,
+  // plus newly uploaded ones. Indexes refer to the currently stored array.
+  const removedIndexes = new Set(
+    formData
+      .getAll("remove_gallery")
+      .map((value) => Number(value))
+      .filter((value) => Number.isInteger(value))
+  )
+  const existing = await query<{ gallery_images: string[] | null }>(
+    "select gallery_images from vectra_product_overrides where handle = $1 limit 1",
+    [handle]
+  )
+  const currentGallery = Array.isArray(existing.rows[0]?.gallery_images)
+    ? (existing.rows[0]!.gallery_images as string[])
+    : []
+  const nextGallery = [
+    ...currentGallery.filter((_, index) => !removedIndexes.has(index)),
+    ...galleryUploads,
+  ].slice(0, MAX_GALLERY_IMAGES)
   const isCustom =
     formData.get("is_custom") === "true" ||
     !localProducts.some((product) => product.handle === handle)
@@ -388,9 +451,9 @@ export async function saveProductOverride(formData: FormData) {
             handle, title, subtitle, description, category, image_url, price_usd,
             sku, option_title, option_value, seo_title, seo_description,
             seo_keywords, best_for, specs, warranty, condition, lead_time,
-            support_level, is_active, is_custom, updated_at
+            support_level, is_active, is_custom, gallery_images, updated_at
           )
-        values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,now())
+        values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,now())
         on conflict (handle) do update set
           title = excluded.title,
           subtitle = excluded.subtitle,
@@ -412,6 +475,7 @@ export async function saveProductOverride(formData: FormData) {
           support_level = excluded.support_level,
           is_active = excluded.is_active,
           is_custom = excluded.is_custom,
+          gallery_images = excluded.gallery_images,
           updated_at = now()
       `,
       [
@@ -436,6 +500,7 @@ export async function saveProductOverride(formData: FormData) {
         readNullableText(formData, "support_level"),
         isActive,
         isCustom,
+        JSON.stringify(nextGallery),
       ]
     )
   } catch (error) {

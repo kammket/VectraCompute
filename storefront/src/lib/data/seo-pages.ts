@@ -1168,6 +1168,67 @@ export const SEO_PAGES: SeoPage[] = [
       },
     ],
   },
+  {
+    slug: "how-bitcoin-payment-works",
+    title: "How Bitcoin Payment Works at VectraCompute",
+    navTitle: "How Payment Works",
+    description:
+      "Exactly what happens after you place a Bitcoin order: confirmation counts, verification steps, what you receive as proof, and when fulfillment starts.",
+    intro:
+      "Paying for hardware in Bitcoin raises fair questions, so here is the entire process, step by step, with nothing hidden. Every order is manually verified by our team, and you can watch each stage on the order tracking page.",
+    sections: [
+      {
+        title: "Step 1 — Place the order and get your payment details",
+        body: "When you place an order, it is saved immediately with a unique order number, and the confirmation page shows the exact BTC amount (converted at a live BTC/USD rate), the receiving wallet address with copy buttons, the payment window, and the number of network confirmations we require. Nothing is charged automatically; you stay in control of the send.",
+        links: [{ label: "Track an existing order", href: "/order/status" }],
+      },
+      {
+        title: "Step 2 — Send BTC and keep your transaction ID",
+        body: "Send the exact amount shown from any wallet. Save your transaction ID (TXID) — it is your receipt on the public blockchain and lets our team match the payment to your order quickly. If the payment window lapses before you send, nothing is lost: contact us and we re-quote the BTC amount at the current rate.",
+      },
+      {
+        title: "Step 3 — Verification you can watch",
+        body: "Your order moves to 'payment review' once payment is detected, and to 'confirmed' after the required network confirmations are verified by our team. Each change is visible in real time on the order tracking page using just your order number and checkout email. Build and burn-in testing start only after confirmation, so your order is never in limbo silently.",
+        links: [
+          { label: "Order tracking page", href: "/order/status" },
+          {
+            label: "What happens after ordering",
+            href: "/resources/what-happens-after-ordering-ai-hardware",
+          },
+        ],
+      },
+      {
+        title: "Why manual verification instead of an automatic processor",
+        body: "Manual review lets us verify the exact amount and confirmation depth on-chain before releasing a build slot, which protects both sides on high-value hardware orders. It also means a human has looked at your order before your system enters the build queue — the same team you can reach if anything looks off.",
+        links: [
+          { label: "Warranty & support terms", href: "/resources/warranty-support" },
+          { label: "Contact the team", href: "/contact" },
+        ],
+      },
+    ],
+    faq: [
+      {
+        question: "What proof do I have after sending Bitcoin?",
+        answer:
+          "Your transaction ID on the public blockchain, your order number, and the live status trail on the order tracking page. The blockchain record is independent of us and cannot be altered.",
+      },
+      {
+        question: "What if I send slightly the wrong amount?",
+        answer:
+          "Contact us with your order number and TXID. Small underpayments can be topped up; overpayments are refunded to your wallet or credited, your choice.",
+      },
+      {
+        question: "What if the BTC price moves after I get my quote?",
+        answer:
+          "The BTC amount is locked for the payment window shown on your confirmation page. If the window lapses, we simply re-quote at the current rate — you never absorb silent slippage.",
+      },
+      {
+        question: "When does my hardware actually ship?",
+        answer:
+          "After payment verification, your system is built, burn-in tested, and shipped — the status page shows each stage. Most configurations ship within 3–7 business days of confirmation.",
+      },
+    ],
+  },
 ]
 
 export const getSeoPage = (slug: string) =>

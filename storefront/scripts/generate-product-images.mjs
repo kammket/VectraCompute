@@ -625,6 +625,18 @@ const PRODUCTS = [
     "component",
   ],
   [
+    "vectrapower-rack-ups-battery-backup",
+    "VectraPower Rack UPS",
+    "3kVA-10kVA battery backup",
+    "component",
+  ],
+  [
+    "vectra-server-spare-parts-kit",
+    "Vectra Spare Parts Kit",
+    "PSU, fans & caddy spares",
+    "component",
+  ],
+  [
     "vectracool-cdu-liquid-cooling-package",
     "VectraCool CDU Package",
     "Direct-to-chip rack cooling",
@@ -670,6 +682,36 @@ const CATEGORIES = [
     "server",
   ],
   [
+    "refurbished-certified",
+    "Refurbished & Certified",
+    "Validated H100, H200, A100, L40S",
+    "server",
+  ],
+  [
+    "storage-memory",
+    "Storage & Memory",
+    "NVMe storage & ECC DDR5 kits",
+    "component",
+  ],
+  [
+    "networking-interconnect",
+    "Networking & Interconnect",
+    "100GbE to 800GbE AI fabrics",
+    "component",
+  ],
+  [
+    "power-cooling",
+    "Power & Cooling",
+    "PDUs, UPS, liquid cooling",
+    "component",
+  ],
+  [
+    "edge-robotics",
+    "Edge & Robotics",
+    "Jetson, NPU & vision systems",
+    "component",
+  ],
+  [
     "workstations-by-cpu-platform",
     "Workstations by CPU Platform",
     "Intel & AMD platforms",
@@ -678,7 +720,7 @@ const CATEGORIES = [
   [
     "components-accessories",
     "Components & Accessories",
-    "PSUs, cooling, expansion",
+    "GPUs, spares & upgrades",
     "component",
   ],
 ]

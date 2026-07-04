@@ -1,21 +1,21 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600" role="img" aria-label="RTX PRO 6000 Mobile">
   <defs>
-    <linearGradient id="bgoaqhum" x1="0" y1="0" x2="1" y2="1">
+    <linearGradient id="bgkwotlr" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#0B1220"/>
       <stop offset="1" stop-color="#1E3A8A"/>
     </linearGradient>
-    <radialGradient id="glowoaqhum" cx="0.5" cy="0.45" r="0.6">
+    <radialGradient id="glowkwotlr" cx="0.5" cy="0.45" r="0.6">
       <stop offset="0" stop-color="#60A5FA" stop-opacity="0.25"/>
       <stop offset="1" stop-color="#60A5FA" stop-opacity="0"/>
     </radialGradient>
-    <pattern id="dotsoaqhum" width="26" height="26" patternUnits="userSpaceOnUse">
+    <pattern id="dotskwotlr" width="26" height="26" patternUnits="userSpaceOnUse">
       <circle cx="2" cy="2" r="1.4" fill="#FFFFFF" opacity="0.05"/>
     </pattern>
   </defs>
-  <rect width="800" height="600" fill="url(#bgoaqhum)"/>
-  <rect width="800" height="600" fill="url(#dotsoaqhum)"/>
-  <rect width="800" height="600" fill="url(#glowoaqhum)"/>
-
+  <rect width="800" height="600" fill="url(#bgkwotlr)"/>
+  <rect width="800" height="600" fill="url(#dotskwotlr)"/>
+  <rect width="800" height="600" fill="url(#glowkwotlr)"/>
+  
         <rect x="330" y="200" width="140" height="220" rx="10" fill="#0F172A" stroke="#60A5FA" stroke-width="3"/>
         <rect x="350" y="225" width="100" height="26" rx="4" fill="#60A5FA" opacity="0.85"/>
         <rect x="350" y="262" width="100" height="14" rx="3" fill="#60A5FA" opacity="0.35"/>

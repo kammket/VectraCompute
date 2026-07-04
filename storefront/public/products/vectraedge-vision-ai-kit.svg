@@ -1,21 +1,21 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600" role="img" aria-label="VectraEdge Vision AI Kit">
   <defs>
-    <linearGradient id="bgpziz4k" x1="0" y1="0" x2="1" y2="1">
+    <linearGradient id="bguidtqg" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#1A1206"/>
       <stop offset="1" stop-color="#92400E"/>
     </linearGradient>
-    <radialGradient id="glowpziz4k" cx="0.5" cy="0.45" r="0.6">
+    <radialGradient id="glowuidtqg" cx="0.5" cy="0.45" r="0.6">
       <stop offset="0" stop-color="#FBBF24" stop-opacity="0.25"/>
       <stop offset="1" stop-color="#FBBF24" stop-opacity="0"/>
     </radialGradient>
-    <pattern id="dotspziz4k" width="26" height="26" patternUnits="userSpaceOnUse">
+    <pattern id="dotsuidtqg" width="26" height="26" patternUnits="userSpaceOnUse">
       <circle cx="2" cy="2" r="1.4" fill="#FFFFFF" opacity="0.05"/>
     </pattern>
   </defs>
-  <rect width="800" height="600" fill="url(#bgpziz4k)"/>
-  <rect width="800" height="600" fill="url(#dotspziz4k)"/>
-  <rect width="800" height="600" fill="url(#glowpziz4k)"/>
-
+  <rect width="800" height="600" fill="url(#bguidtqg)"/>
+  <rect width="800" height="600" fill="url(#dotsuidtqg)"/>
+  <rect width="800" height="600" fill="url(#glowuidtqg)"/>
+  
         <circle cx="400" cy="310" r="78" fill="none" stroke="#FBBF24" stroke-width="4"/>
         <circle cx="400" cy="310" r="30" fill="#FBBF24" opacity="0.85"/>
         <line x1="478.0" y1="310.0" x2="500.0" y2="310.0" stroke="#FBBF24" stroke-width="6" stroke-linecap="round"/><line x1="455.2" y1="365.2" x2="470.7" y2="380.7" stroke="#FBBF24" stroke-width="6" stroke-linecap="round"/><line x1="400.0" y1="388.0" x2="400.0" y2="410.0" stroke="#FBBF24" stroke-width="6" stroke-linecap="round"/><line x1="344.8" y1="365.2" x2="329.3" y2="380.7" stroke="#FBBF24" stroke-width="6" stroke-linecap="round"/><line x1="322.0" y1="310.0" x2="300.0" y2="310.0" stroke="#FBBF24" stroke-width="6" stroke-linecap="round"/><line x1="344.8" y1="254.8" x2="329.3" y2="239.3" stroke="#FBBF24" stroke-width="6" stroke-linecap="round"/><line x1="400.0" y1="232.0" x2="400.0" y2="210.0" stroke="#FBBF24" stroke-width="6" stroke-linecap="round"/><line x1="455.2" y1="254.8" x2="470.7" y2="239.3" stroke="#FBBF24" stroke-width="6" stroke-linecap="round"/>
