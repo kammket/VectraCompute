@@ -9,8 +9,6 @@ import ProductBuyingConfidence from "@modules/products/components/product-buying
 import ProductDecisionSummary from "@modules/products/components/product-decision-summary"
 import ProductFitAssistant from "@modules/products/components/product-fit-assistant"
 import ProductQuickAnswers from "@modules/products/components/product-quick-answers"
-import ProductRatingBadge from "@modules/products/components/product-rating-badge"
-import ProductReviews from "@modules/products/components/product-reviews"
 import ManagedSpecs from "@modules/products/components/managed-specs"
 import ProductSpecs from "@modules/products/components/product-specs"
 import ProductOnboardingCta from "@modules/products/components/product-onboarding-cta"
@@ -67,7 +65,6 @@ const SECTION_NAV = [
   ["overview", "Overview"],
   ["fit", "Fit & compatibility"],
   ["specs", "Configurations & specs"],
-  ["reviews", "Reviews"],
   ["faq", "Questions"],
   ["assurance", "Warranty & support"],
 ] as const
@@ -98,7 +95,6 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
           <aside className="flex flex-col large:sticky large:top-24 large:self-start gap-y-5 rounded-md border border-ui-border-base bg-white p-5 shadow-elevation-card-rest small:p-6">
             <div className="flex flex-col gap-y-2">
               <ProductInfo product={product} />
-              <ProductRatingBadge handle={product.handle ?? ""} />
             </div>
             <ProductOnboardingCta />
             <Suspense
@@ -184,15 +180,6 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
             <ProductSpecs product={product} />
             <ManagedSpecs product={product} />
           </div>
-        </Section>
-
-        <Section
-          id="reviews"
-          eyebrow="Social proof"
-          title="What buyers say"
-          description="Only real reviews: verified purchases publish automatically, everything else after moderation."
-        >
-          <ProductReviews product={product} />
         </Section>
 
         <Section
