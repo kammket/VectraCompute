@@ -3,37 +3,22 @@ import { Suspense } from "react"
 import { listLocales } from "@lib/data/locales"
 import { getLocale } from "@lib/data/locale-actions"
 import { listRegions } from "@lib/data/regions"
-import {
-  CheckCircleMiniSolid,
-  CodeCompare,
-  ServerStack,
-  ShieldCheck,
-  User,
-} from "@medusajs/icons"
+import { CodeCompare, ServerStack, User } from "@medusajs/icons"
 import { StoreRegion } from "@medusajs/types"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import CartButton from "@modules/layout/components/cart-button"
 import SideMenu from "@modules/layout/components/side-menu"
 import ProductSearch from "@modules/store/components/product-search"
 
+// Kept to six so the row never scrolls; Edge AI, memory/storage, and
+// power/cooling entry points live in the store filters instead.
 const PRIMARY_LINKS = [
   { label: "Store", href: "/store" },
   { label: "Workstations", href: "/categories/ai-deep-learning-workstations" },
   { label: "GPU Servers", href: "/categories/gpu-rack-servers" },
   { label: "Refurbished", href: "/store?condition=refurbished" },
-  { label: "Edge AI", href: "/store?infrastructure=edge-robotics" },
-  { label: "Memory / Storage", href: "/store?infrastructure=memory-storage" },
-  { label: "Power / Cooling", href: "/store?infrastructure=power-cooling" },
-  { label: "Components", href: "/categories/components-accessories" },
   { label: "Solutions", href: "/solutions" },
   { label: "Resources", href: "/resources" },
-]
-
-const TRUST_POINTS = [
-  "Validated AI infrastructure",
-  "Burn-in tested",
-  "Engineering review",
-  "Deployment review available",
 ]
 
 export default async function Nav() {
@@ -46,32 +31,6 @@ export default async function Nav() {
   return (
     <div className="sticky top-0 inset-x-0 z-50 group">
       <header className="relative mx-auto border-b border-grey-80 bg-white/95 shadow-sm backdrop-blur duration-200">
-        <div className="hidden border-b border-white/10 bg-grey-90 text-white medium:block">
-          <div className="content-container flex h-9 items-center justify-between gap-6 text-small-regular text-grey-20">
-            <div className="flex min-w-0 items-center gap-2 text-white">
-              <ShieldCheck className="shrink-0 text-brand-200" />
-              <span className="truncate">
-                AI workstations, GPU servers, and infrastructure validated
-                before shipment
-              </span>
-            </div>
-            <div className="hidden items-center gap-4 large:flex">
-              {TRUST_POINTS.map((point) => (
-                <span key={point} className="inline-flex items-center gap-1.5">
-                  <CheckCircleMiniSolid className="text-brand-200" />
-                  {point}
-                </span>
-              ))}
-            </div>
-            <LocalizedClientLink
-              href="/contact"
-              className="shrink-0 text-small-semi text-brand-100 hover:text-white"
-            >
-              Talk to an engineer
-            </LocalizedClientLink>
-          </div>
-        </div>
-
         <nav className="content-container grid min-h-[72px] grid-cols-[auto_1fr_auto] items-center gap-4 py-3 text-small-regular text-ui-fg-subtle large:grid-cols-[minmax(230px,280px)_minmax(320px,1fr)_auto] large:gap-6">
           <div className="flex min-w-0 items-center gap-x-3">
             <div className="flex items-center small:hidden">
@@ -125,12 +84,6 @@ export default async function Nav() {
               <ServerStack />
               Request quote
             </LocalizedClientLink>
-            <LocalizedClientLink
-              className="hidden h-9 items-center rounded-md border border-ui-border-base px-3 text-small-semi text-ui-fg-base hover:border-brand-300 hover:text-brand-700 small:inline-flex medium:hidden"
-              href="/trust"
-            >
-              Trust
-            </LocalizedClientLink>
             <Suspense
               fallback={
                 <LocalizedClientLink
@@ -153,7 +106,7 @@ export default async function Nav() {
 
         <div className="hidden border-t border-ui-border-base bg-white large:block">
           <div className="content-container flex h-11 items-center justify-between gap-6">
-            <div className="flex min-w-0 items-center gap-5 overflow-x-auto text-small-semi text-ui-fg-subtle">
+            <div className="flex min-w-0 items-center gap-5 text-small-semi text-ui-fg-subtle">
               {PRIMARY_LINKS.map((link) => (
                 <LocalizedClientLink
                   key={link.href}
@@ -176,6 +129,12 @@ export default async function Nav() {
                 className="text-ui-fg-subtle hover:text-ui-fg-base"
               >
                 Trust center
+              </LocalizedClientLink>
+              <LocalizedClientLink
+                href="/contact"
+                className="text-ui-fg-subtle hover:text-ui-fg-base"
+              >
+                Talk to an engineer
               </LocalizedClientLink>
             </div>
           </div>

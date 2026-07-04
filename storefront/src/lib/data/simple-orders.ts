@@ -358,6 +358,44 @@ export async function retrieveOrder(id: string) {
   }
 }
 
+// Customer-facing lookup: both values must match so an order number alone
+// can't expose someone else's order details.
+export async function findOrderByDisplayIdAndEmail(
+  displayId: number,
+  email: string
+) {
+  const normalizedEmail = email.trim().toLowerCase()
+  if (!displayId || !normalizedEmail) {
+    return null
+  }
+
+  try {
+    await ensureCommerceTables()
+    const result = await query<StoredOrder>(
+      "select * from vectra_orders where display_id = $1 and lower(email) = $2 limit 1",
+      [displayId, normalizedEmail]
+    )
+    return result.rows[0] ? rowToOrder(result.rows[0]) : null
+  } catch (error) {
+    console.error("Direct Vercel order lookup failed", error)
+
+    try {
+      const payload = await fetchBackendJson<{ orders: StoredOrder[] }>(
+        "/api/orders"
+      )
+      const match = payload?.orders?.find(
+        (row) =>
+          Number(row.display_id) === displayId &&
+          row.email?.trim().toLowerCase() === normalizedEmail
+      )
+      return match ? rowToOrder(match) : null
+    } catch (backendError) {
+      console.error("Failed to look up VectraCompute order", backendError)
+      return null
+    }
+  }
+}
+
 export async function listSimpleOrders() {
   try {
     await ensureCommerceTables()

@@ -7,7 +7,6 @@ import StoreBuyingPaths from "@modules/store/components/buying-paths"
 import RefinementList from "@modules/store/components/refinement-list"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
 import { ProductFilterValue } from "@modules/store/types"
-import { PremiumPageHeader } from "@modules/common/components/premium-page"
 
 import PaginatedProducts from "./paginated-products"
 
@@ -30,41 +29,24 @@ const StoreTemplate = ({
   return (
     <div className="bg-grey-5">
       <div
-        className="content-container py-10 small:py-12"
+        className="content-container py-8 small:py-10"
         data-testid="category-container"
       >
-        <PremiumPageHeader
-          eyebrow="All products"
-          title="AI workstations, GPU rack servers, and upgrade hardware"
-          description="Browse validated AI systems and components organized for serious buyers: local development workstations, refurbished GPU servers, inference nodes, and infrastructure upgrades."
-          actions={[
-            { label: "Ask an expert", href: "/contact" },
-            { label: "Compare systems", href: "/compare" },
-          ]}
-          highlights={[
-            "Built to order",
-            "Burn-in and CUDA validation",
-            "Warranty and quote support",
-          ]}
-        />
-        <div className="mt-8 rounded-md border border-brand-200 bg-brand-50 p-5 shadow-elevation-card-rest">
-          <div className="mb-4 grid grid-cols-1 gap-2 medium:grid-cols-[minmax(0,1fr)_320px] medium:items-end">
-            <div>
-              <p className="text-small-semi uppercase text-brand-700">
-                Product finder
-              </p>
-              <h2 className="mt-1 text-xl-semi text-brand-950">
-                Search by GPU, workload, SKU, capacity, or system type
-              </h2>
-            </div>
-            <p className="text-small-regular leading-6 text-brand-800">
-              Try direct buyer terms like RTX 5090, H200 NVL, A100 server, RAG
-              appliance, NVMe storage, or 800GbE networking.
+        {/* Compact header: title + search on one band so products stay above the fold */}
+        <div className="grid grid-cols-1 gap-4 border-b border-ui-border-base pb-6 medium:grid-cols-[minmax(0,1fr)_380px] medium:items-end">
+          <div>
+            <h1 className="text-2xl font-semibold text-ui-fg-base">
+              AI workstations, GPU servers &amp; components
+            </h1>
+            <p className="mt-1 max-w-2xl text-small-regular leading-6 text-ui-fg-subtle">
+              Every system is built to order, burn-in tested, and CUDA-validated
+              before shipment. Search by GPU, workload, SKU, or system type —
+              e.g. RTX 5090, H200, inference node, NVMe storage.
             </p>
           </div>
           <ProductSearch initialQuery={query} />
         </div>
-        <StoreBuyingPaths />
+
         <div className="mt-8 grid grid-cols-1 large:grid-cols-[260px_minmax(0,1fr)] gap-8 items-start">
           <aside className="large:sticky large:top-24 grid grid-cols-1 gap-5">
             <div className="rounded-md border border-ui-border-base bg-white p-4 shadow-elevation-card-rest">
@@ -107,6 +89,9 @@ const StoreTemplate = ({
             </Suspense>
           </div>
         </div>
+
+        {/* Guided entry points sit after the catalog so products load first */}
+        <StoreBuyingPaths />
       </div>
     </div>
   )

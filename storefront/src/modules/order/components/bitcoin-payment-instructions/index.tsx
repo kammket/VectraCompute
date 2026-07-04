@@ -7,6 +7,7 @@ import {
 } from "@lib/util/bitcoin-payment"
 import { convertToLocale } from "@lib/util/money"
 import BitcoinCountdown from "@modules/common/components/bitcoin-countdown"
+import CopyButton from "@modules/common/components/copy-button"
 import { Heading, Text } from "@modules/common/components/ui"
 import { HttpTypes } from "@medusajs/types"
 
@@ -82,9 +83,17 @@ const BitcoinPaymentInstructions = ({
                 </Text>
               </div>
               <div className="rounded-md border border-amber-200 bg-amber-50 p-4">
-                <Text className="txt-compact-small-plus text-amber-950">
-                  BTC to send
-                </Text>
+                <div className="flex items-center justify-between gap-2">
+                  <Text className="txt-compact-small-plus text-amber-950">
+                    BTC to send
+                  </Text>
+                  {btcAmount && (
+                    <CopyButton
+                      value={btcAmount.replace(/\s*BTC$/, "")}
+                      label="Copy amount"
+                    />
+                  )}
+                </div>
                 <Text className="text-xl font-semibold text-amber-950 mt-1">
                   {btcAmount || "Live BTC/USD rate unavailable"}
                 </Text>
@@ -102,9 +111,17 @@ const BitcoinPaymentInstructions = ({
             </div>
 
             <div className="rounded-md border border-slate-200 bg-white p-4">
-              <Text className="txt-compact-small-plus text-ui-fg-base mb-2">
-                BTC receiving address
-              </Text>
+              <div className="mb-2 flex items-center justify-between gap-2">
+                <Text className="txt-compact-small-plus text-ui-fg-base">
+                  BTC receiving address
+                </Text>
+                {settings.manual.walletAddress && (
+                  <CopyButton
+                    value={settings.manual.walletAddress}
+                    label="Copy address"
+                  />
+                )}
+              </div>
               <code className="block overflow-x-auto rounded-md border border-slate-200 bg-slate-50 px-3 py-3 text-[12px] text-ui-fg-base">
                 {settings.manual.walletAddress ||
                   "Admin has not added a wallet address yet."}
@@ -122,9 +139,15 @@ const BitcoinPaymentInstructions = ({
                 </Text>
               </div>
               <div className="rounded-md border border-blue-200 bg-blue-50 p-3">
-                <Text className="txt-compact-small-plus text-ui-fg-base">
-                  Include reference
-                </Text>
+                <div className="flex items-center justify-between gap-2">
+                  <Text className="txt-compact-small-plus text-ui-fg-base">
+                    Include reference
+                  </Text>
+                  <CopyButton
+                    value={`Order #${order.display_id}`}
+                    label="Copy"
+                  />
+                </div>
                 <Text className="text-small-regular text-blue-900 mt-1">
                   Order #{order.display_id} and transaction ID
                 </Text>

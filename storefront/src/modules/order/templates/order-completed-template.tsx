@@ -1,4 +1,5 @@
 import { Heading, Text } from "@modules/common/components/ui"
+import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import { cookies as nextCookies } from "next/headers"
 
 import CartTotals from "@modules/common/components/cart-totals"
@@ -109,6 +110,24 @@ export default async function OrderCompletedTemplate({
                     </Text>
                   </div>
                 ))}
+              </div>
+              <div className="mt-6 rounded-md border border-brand-200 bg-brand-50 p-4">
+                <Text className="text-small-semi text-brand-950">
+                  Track this order anytime
+                </Text>
+                <Text className="mt-1 text-small-regular leading-6 text-brand-800">
+                  Use order #{order.display_id} and your checkout email on the
+                  order tracking page to follow payment review, build, and
+                  shipping.
+                </Text>
+                <LocalizedClientLink
+                  href={`/order/status?order=${order.display_id}&email=${encodeURIComponent(
+                    order.email ?? ""
+                  )}`}
+                  className="mt-3 inline-flex h-9 items-center rounded-md bg-brand-600 px-3 text-small-semi text-white hover:bg-brand-700"
+                >
+                  Open order tracking
+                </LocalizedClientLink>
               </div>
             </aside>
           </div>
