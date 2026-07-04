@@ -329,9 +329,13 @@ const summarizeProduct = (product: BackendCatalogProduct) => ({
 })
 
 const getPaymentSettings = () => ({
-  enabled: Boolean(process.env.BITCOIN_WALLET_ADDRESS),
+  enabled: Boolean(
+    process.env.BITCOIN_WALLET_ADDRESS || process.env.BITCOIN_QR_CODE_URL
+  ),
   walletAddress: process.env.BITCOIN_WALLET_ADDRESS || "",
-  qrCodeImageUrl: process.env.BITCOIN_QR_CODE_URL || "",
+  qrCodeImageUrl:
+    process.env.BITCOIN_QR_CODE_URL ||
+    "https://vectracompute-storefront.vercel.app/images/bitcoin-payment-qr.jpeg",
   instructions:
     process.env.BITCOIN_PAYMENT_INSTRUCTIONS ||
     "Send the exact BTC amount and keep your transaction ID. Our team will confirm the payment before dispatch.",

@@ -13,6 +13,8 @@ type BackendPaymentSettings = {
 
 const DEFAULT_INSTRUCTIONS =
   "Send the exact BTC amount shown and include your order number when contacting support."
+const DEFAULT_QR_CODE_URL =
+  "https://vectracompute-storefront.vercel.app/images/bitcoin-payment-qr.jpeg"
 
 const buildSettings = (input: {
   walletAddress: string
@@ -25,7 +27,7 @@ const buildSettings = (input: {
   activeMode: "manual_wallet",
   manual: {
     walletAddress: input.walletAddress,
-    qrCodeImageUrl: input.qrCodeImageUrl || "",
+    qrCodeImageUrl: input.qrCodeImageUrl || DEFAULT_QR_CODE_URL,
     instructions: input.instructions || DEFAULT_INSTRUCTIONS,
     requiredConfirmations: Number(input.requiredConfirmations || 2),
     paymentExpiryMinutes: Number(input.paymentExpiryMinutes || 30),
@@ -82,12 +84,12 @@ export const getBitcoinPaymentSettings =
       }
 
       const payload = (await response.json()) as BackendPaymentSettings
-      if (!payload.enabled || !payload.walletAddress) {
+      if (!payload.enabled && !payload.walletAddress && !payload.qrCodeImageUrl) {
         return null
       }
 
       return buildSettings({
-        walletAddress: payload.walletAddress,
+        walletAddress: payload.walletAddress || "",
         qrCodeImageUrl: payload.qrCodeImageUrl,
         instructions: payload.instructions,
         requiredConfirmations: payload.requiredConfirmations,
