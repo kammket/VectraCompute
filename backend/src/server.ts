@@ -28,6 +28,23 @@ type AiOrderRequest = {
   notes?: string
 }
 
+type CommerceOrderRequest = {
+  id?: string
+  email: string
+  customerName: string
+  phone: string
+  company?: string | null
+  address: Record<string, string>
+  paymentMethod?: string
+  bitcoinTxid?: string | null
+  notes?: string | null
+  status?: string
+  currencyCode?: string
+  subtotal?: number
+  total: number
+  items: unknown[]
+}
+
 const PORT = Number(process.env.PORT || 9000)
 const XAI_API_URL = "https://api.x.ai/v1/chat/completions"
 const DEFAULT_MODEL = "grok-3-mini"
@@ -132,6 +149,51 @@ const ensureCommerceTables = async () => {
       updated_at timestamptz not null default now()
     )
   `)
+}
+
+const createStoredOrder = async (order: CommerceOrderRequest) => {
+  await ensureCommerceTables()
+
+  const db = getPool()
+  if (!db) {
+    throw new Error("DATABASE_URL is required.")
+  }
+
+  const id =
+    order.id || `ord_${randomUUID().replace(/-/g, "").slice(0, 18)}`
+
+  await db.query(
+    `
+      insert into vectra_orders (
+        id, email, customer_name, phone, company, address, payment_method,
+        bitcoin_txid, notes, status, currency_code, subtotal, total, items
+      )
+      values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)
+    `,
+    [
+      id,
+      order.email.trim(),
+      order.customerName.trim(),
+      order.phone.trim(),
+      order.company?.trim() || null,
+      order.address,
+      order.paymentMethod || "bitcoin",
+      order.bitcoinTxid?.trim() || null,
+      order.notes?.trim() || null,
+      order.status || "awaiting_payment",
+      order.currencyCode || "usd",
+      Number(order.subtotal || order.total || 0),
+      Number(order.total || 0),
+      order.items,
+    ]
+  )
+
+  const result = await db.query(
+    "select * from vectra_orders where id = $1 limit 1",
+    [id]
+  )
+
+  return result.rows[0]
 }
 
 const money = (amount: number) =>
@@ -364,6 +426,25 @@ const validateOrder = (order: AiOrderRequest) => {
   return null
 }
 
+const validateCommerceOrder = (order: CommerceOrderRequest) => {
+  if (!order.email?.trim()) return "Enter your email."
+  if (!order.customerName?.trim()) return "Enter your full name."
+  if (!order.phone?.trim()) return "Enter your phone number."
+  if (!order.address?.address_1?.trim()) return "Enter the delivery address."
+  if (!order.address?.city?.trim()) return "Enter the delivery city."
+  if (!Array.isArray(order.items) || !order.items.length) {
+    return "Order must include at least one item."
+  }
+  if (!Number.isFinite(Number(order.total)) || Number(order.total) <= 0) {
+    return "Order total is invalid."
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(order.email)) {
+    return "Enter a valid email address."
+  }
+
+  return null
+}
+
 const handleAiOrder = async (req: IncomingMessage, res: ServerResponse) => {
   const body = await readJson<AiOrderRequest>(req)
   const validationError = validateOrder(body)
@@ -412,43 +493,27 @@ const handleAiOrder = async (req: IncomingMessage, res: ServerResponse) => {
   }
 
   try {
-    await ensureCommerceTables()
-
-    const db = getPool()
-    if (!db) {
-      throw new Error("DATABASE_URL is required.")
-    }
-
-    await db.query(
-      `
-        insert into vectra_orders (
-          id, email, customer_name, phone, company, address, payment_method,
-          bitcoin_txid, notes, status, currency_code, subtotal, total, items
-        )
-        values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)
-      `,
-      [
-        orderId,
-        body.email.trim(),
-        body.customerName.trim(),
-        body.phone.trim(),
-        body.company?.trim() || null,
-        address,
-        "bitcoin",
-        null,
-        [
-          "Created by VectraCompute AI sales engineer.",
-          body.notes?.trim() ? `Customer notes: ${body.notes.trim()}` : "",
-        ]
-          .filter(Boolean)
-          .join("\n"),
-        "awaiting_payment",
-        "usd",
-        total,
-        total,
-        [item],
+    await createStoredOrder({
+      id: orderId,
+      email: body.email,
+      customerName: body.customerName,
+      phone: body.phone,
+      company: body.company || null,
+      address,
+      paymentMethod: "bitcoin",
+      bitcoinTxid: null,
+      notes: [
+        "Created by VectraCompute AI sales engineer.",
+        body.notes?.trim() ? `Customer notes: ${body.notes.trim()}` : "",
       ]
-    )
+        .filter(Boolean)
+        .join("\n"),
+      status: "awaiting_payment",
+      currencyCode: "usd",
+      subtotal: total,
+      total,
+      items: [item],
+    })
   } catch (error) {
     console.error("AI order creation failed", error)
     sendJson(req, res, 500, {
@@ -489,6 +554,109 @@ const handleAiOrder = async (req: IncomingMessage, res: ServerResponse) => {
         "Your order has been saved. Send the Bitcoin payment to the wallet shown. Our team will contact you after payment is confirmed.",
     },
   })
+}
+
+const handleCreateCommerceOrder = async (
+  req: IncomingMessage,
+  res: ServerResponse
+) => {
+  const body = await readJson<CommerceOrderRequest>(req)
+  const validationError = validateCommerceOrder(body)
+
+  if (validationError) {
+    sendJson(req, res, 400, { error: validationError })
+    return
+  }
+
+  try {
+    const order = await createStoredOrder(body)
+    sendJson(req, res, 201, { order })
+  } catch (error) {
+    console.error("Commerce order creation failed", error)
+    sendJson(req, res, 500, {
+      error:
+        "Order storage is not connected. Add DATABASE_URL to the Railway backend and retry.",
+    })
+  }
+}
+
+const handleListCommerceOrders = async (
+  req: IncomingMessage,
+  res: ServerResponse
+) => {
+  try {
+    await ensureCommerceTables()
+    const db = getPool()
+    if (!db) throw new Error("DATABASE_URL is required.")
+
+    const result = await db.query(
+      "select * from vectra_orders order by created_at desc limit 100"
+    )
+    sendJson(req, res, 200, { orders: result.rows })
+  } catch (error) {
+    console.error("Commerce order list failed", error)
+    sendJson(req, res, 500, { error: "Unable to list orders." })
+  }
+}
+
+const handleRetrieveCommerceOrder = async (
+  req: IncomingMessage,
+  res: ServerResponse,
+  id: string
+) => {
+  try {
+    await ensureCommerceTables()
+    const db = getPool()
+    if (!db) throw new Error("DATABASE_URL is required.")
+
+    const result = await db.query(
+      "select * from vectra_orders where id = $1 limit 1",
+      [id]
+    )
+
+    if (!result.rows[0]) {
+      sendJson(req, res, 404, { error: "Order not found." })
+      return
+    }
+
+    sendJson(req, res, 200, { order: result.rows[0] })
+  } catch (error) {
+    console.error("Commerce order retrieval failed", error)
+    sendJson(req, res, 500, { error: "Unable to retrieve order." })
+  }
+}
+
+const handleUpdateCommerceOrderStatus = async (
+  req: IncomingMessage,
+  res: ServerResponse
+) => {
+  const body = await readJson<{ id?: string; status?: string }>(req)
+
+  if (!body.id || !body.status) {
+    sendJson(req, res, 400, { error: "Order ID and status are required." })
+    return
+  }
+
+  try {
+    await ensureCommerceTables()
+    const db = getPool()
+    if (!db) throw new Error("DATABASE_URL is required.")
+
+    const result = await db.query(
+      "update vectra_orders set status = $1, updated_at = now() where id = $2 returning *",
+      [body.status, body.id]
+    )
+
+    if (!result.rows[0]) {
+      sendJson(req, res, 404, { error: "Order not found." })
+      return
+    }
+
+    sendJson(req, res, 200, { order: result.rows[0] })
+  } catch (error) {
+    console.error("Commerce order status update failed", error)
+    sendJson(req, res, 500, { error: "Unable to update order." })
+  }
 }
 
 const handleProducts = (req: IncomingMessage, res: ServerResponse, url: URL) => {
@@ -532,6 +700,30 @@ const server = createServer(async (req, res) => {
 
     if (req.method === "GET" && url.pathname === "/api/payment-settings") {
       sendJson(req, res, 200, getPaymentSettings())
+      return
+    }
+
+    if (req.method === "GET" && url.pathname === "/api/orders") {
+      await handleListCommerceOrders(req, res)
+      return
+    }
+
+    if (req.method === "GET" && url.pathname.startsWith("/api/orders/")) {
+      await handleRetrieveCommerceOrder(
+        req,
+        res,
+        decodeURIComponent(url.pathname.replace("/api/orders/", ""))
+      )
+      return
+    }
+
+    if (req.method === "POST" && url.pathname === "/api/orders") {
+      await handleCreateCommerceOrder(req, res)
+      return
+    }
+
+    if (req.method === "POST" && url.pathname === "/api/orders/status") {
+      await handleUpdateCommerceOrderStatus(req, res)
       return
     }
 

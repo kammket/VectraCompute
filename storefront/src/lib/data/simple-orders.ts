@@ -36,6 +36,10 @@ type StoredOrder = {
 }
 
 const getDatabaseUrl = () => process.env.DATABASE_URL
+const getOrderBackendUrl = () =>
+  (process.env.AI_BACKEND_URL || process.env.NEXT_PUBLIC_AI_BACKEND_URL || "")
+    .trim()
+    .replace(/\/$/, "")
 
 const getClient = () => {
   const connectionString = getDatabaseUrl()
@@ -51,7 +55,8 @@ const getClient = () => {
   })
 }
 
-export const isCommerceStorageConfigured = async () => Boolean(getDatabaseUrl())
+export const isCommerceStorageConfigured = async () =>
+  Boolean(getDatabaseUrl() || getOrderBackendUrl())
 
 async function query<T>(sql: string, params: unknown[] = []) {
   const client = getClient()
@@ -154,6 +159,86 @@ const rowToOrder = (row: StoredOrder): HttpTypes.StoreOrder => {
   } as HttpTypes.StoreOrder
 }
 
+const fetchBackendJson = async <T>(
+  path: string,
+  init?: RequestInit
+): Promise<T | null> => {
+  const backendUrl = getOrderBackendUrl()
+
+  if (!backendUrl) {
+    return null
+  }
+
+  const response = await fetch(`${backendUrl}${path}`, {
+    ...init,
+    headers: {
+      "Content-Type": "application/json",
+      ...(init?.headers || {}),
+    },
+    cache: "no-store",
+  })
+
+  if (!response.ok) {
+    const detail = await response.text()
+    throw new Error(
+      `Backend order request failed (${response.status}): ${detail.slice(0, 300)}`
+    )
+  }
+
+  return (await response.json()) as T
+}
+
+const createOrderViaBackend = async ({
+  id,
+  cart,
+  formData,
+  email,
+  customerName,
+  phone,
+  address1,
+  city,
+  countryCode,
+}: {
+  id: string
+  cart: NonNullable<Awaited<ReturnType<typeof retrieveCart>>>
+  formData: FormData
+  email: string
+  customerName: string
+  phone: string
+  address1: string
+  city: string
+  countryCode: string
+}) => {
+  const payload = await fetchBackendJson<{ order: StoredOrder }>("/api/orders", {
+    method: "POST",
+    body: JSON.stringify({
+      id,
+      email,
+      customerName,
+      phone,
+      company: String(formData.get("company") ?? "").trim() || null,
+      address: {
+        address_1: address1,
+        address_2: String(formData.get("address_2") ?? "").trim(),
+        city,
+        province: String(formData.get("province") ?? "").trim(),
+        postal_code: String(formData.get("postal_code") ?? "").trim(),
+        country_code: countryCode,
+      },
+      paymentMethod: String(formData.get("payment_method") ?? "bitcoin"),
+      bitcoinTxid: String(formData.get("bitcoin_txid") ?? "").trim() || null,
+      notes: String(formData.get("notes") ?? "").trim() || null,
+      status: "awaiting_payment",
+      currencyCode: cart.currency_code,
+      subtotal: cart.item_subtotal ?? cart.subtotal ?? 0,
+      total: cart.total ?? 0,
+      items: cart.items,
+    }),
+  })
+
+  return payload?.order ?? null
+}
+
 export async function createSimpleOrder(
   _currentState: { error?: string; success?: boolean } | undefined,
   formData: FormData
@@ -175,6 +260,8 @@ export async function createSimpleOrder(
   }
 
   const id = `ord_${crypto.randomUUID().replace(/-/g, "").slice(0, 18)}`
+  let createdOrderId = id
+
   try {
     await ensureCommerceTables()
 
@@ -211,16 +298,41 @@ export async function createSimpleOrder(
       ]
     )
   } catch (error) {
-    console.error("Failed to create VectraCompute order", error)
-    return {
-      error:
-        "Order storage is not connected yet. Please add DATABASE_URL in Vercel from your Railway Postgres database, redeploy, and try again.",
+    console.error(
+      "Direct Vercel order storage failed, trying Railway backend fallback",
+      error
+    )
+
+    try {
+      const remoteOrder = await createOrderViaBackend({
+        id,
+        cart,
+        formData,
+        email,
+        customerName,
+        phone,
+        address1,
+        city,
+        countryCode,
+      })
+
+      if (!remoteOrder?.id) {
+        throw new Error("Railway backend did not return an order.")
+      }
+
+      createdOrderId = remoteOrder.id
+    } catch (backendError) {
+      console.error("Failed to create VectraCompute order", backendError)
+      return {
+        error:
+          "Order storage is not connected. Check DATABASE_URL in Vercel or Railway backend order storage, then redeploy and try again.",
+      }
     }
   }
 
   await clearCart()
   revalidatePath("/", "layout")
-  redirect(`/us/order/${id}/confirmed`)
+  redirect(`/us/order/${createdOrderId}/confirmed`)
 }
 
 export async function retrieveOrder(id: string) {
@@ -232,8 +344,17 @@ export async function retrieveOrder(id: string) {
     )
     return result.rows[0] ? rowToOrder(result.rows[0]) : null
   } catch (error) {
-    console.error("Failed to retrieve VectraCompute order", error)
-    return null
+    console.error("Direct Vercel order retrieval failed", error)
+
+    try {
+      const payload = await fetchBackendJson<{ order: StoredOrder }>(
+        `/api/orders/${encodeURIComponent(id)}`
+      )
+      return payload?.order ? rowToOrder(payload.order) : null
+    } catch (backendError) {
+      console.error("Failed to retrieve VectraCompute order", backendError)
+      return null
+    }
   }
 }
 
@@ -245,8 +366,17 @@ export async function listSimpleOrders() {
     )
     return result.rows.map(rowToOrder)
   } catch (error) {
-    console.error("Failed to list VectraCompute orders", error)
-    return []
+    console.error("Direct Vercel order listing failed", error)
+
+    try {
+      const payload = await fetchBackendJson<{ orders: StoredOrder[] }>(
+        "/api/orders"
+      )
+      return payload?.orders?.map(rowToOrder) ?? []
+    } catch (backendError) {
+      console.error("Failed to list VectraCompute orders", backendError)
+      return []
+    }
   }
 }
 
@@ -266,6 +396,16 @@ export async function updateSimpleOrderStatus(formData: FormData) {
     )
     revalidatePath("/admin/orders")
   } catch (error) {
-    console.error("Failed to update VectraCompute order status", error)
+    console.error("Direct Vercel order status update failed", error)
+
+    try {
+      await fetchBackendJson("/api/orders/status", {
+        method: "POST",
+        body: JSON.stringify({ id, status }),
+      })
+      revalidatePath("/admin/orders")
+    } catch (backendError) {
+      console.error("Failed to update VectraCompute order status", backendError)
+    }
   }
 }
