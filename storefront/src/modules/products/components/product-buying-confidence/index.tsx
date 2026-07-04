@@ -35,11 +35,6 @@ const ProductBuyingConfidence = ({
     "returns",
     "30-day return review on eligible systems"
   )
-  const financing = getMetadataString(
-    product,
-    "financing",
-    "PO, leasing, and financing support"
-  )
   const install = getMetadataString(
     product,
     "install_support",
@@ -54,23 +49,23 @@ const ProductBuyingConfidence = ({
   const faqs = getBuyerFaqItems(product, [
     "Can I request a custom configuration? Yes, use Request quote and include GPU, memory, storage, rack, power, or software requirements.",
     "Is this ready for AI workloads? Yes, systems are validated with NVIDIA drivers, CUDA, and common AI frameworks.",
-    "Can procurement buy by invoice or purchase order? Yes, our team can prepare quote-ready details for approval workflows.",
+    "Can I request a custom configuration? Yes, include GPU, memory, storage, rack, power, or software requirements for review.",
   ])
 
   return (
     <section
       id="purchase-confidence"
-      className="rounded-md border border-ui-border-base bg-white p-5 small:p-6 scroll-mt-28"
+      className="rounded-md border border-emerald-100 bg-emerald-50 p-5 small:p-6 scroll-mt-28"
     >
       <div className="grid grid-cols-1 gap-6">
         <div>
-          <Text className="text-small-semi uppercase text-brand-600 mb-2">
-            Purchase confidence
+          <Text className="text-small-semi uppercase text-emerald-700 mb-2">
+            Buyer confidence
           </Text>
           <Heading level="h2" className="text-xl mb-2">
-            What to confirm before purchase
+            What to confirm before ordering
           </Heading>
-          <Text className="text-small-regular text-ui-fg-subtle leading-6 mb-5">
+          <Text className="text-small-regular text-emerald-950/75 leading-6 mb-5">
             The details below are product-specific, so technical buyers can
             check deployment fit, risk, support, and procurement readiness
             before they commit.
@@ -98,7 +93,7 @@ const ProductBuyingConfidence = ({
             ].map(([label, value]) => (
               <div
                 key={label}
-                className="rounded-md border border-ui-border-base bg-grey-5 p-4"
+                className="rounded-md border border-emerald-100 bg-white p-4"
               >
                 <Text className="text-small-regular text-ui-fg-muted mb-1">
                   {label}
@@ -109,14 +104,14 @@ const ProductBuyingConfidence = ({
           </div>
 
           <div className="grid grid-cols-1 gap-4">
-            <div className="rounded-md border border-ui-border-base bg-grey-5 p-5">
+            <div className="rounded-md border border-emerald-100 bg-white p-5">
               <Heading level="h3" className="text-base mb-3">
                 Buyer requirements
               </Heading>
               <ul className="grid grid-cols-1 gap-2 text-small-regular text-ui-fg-subtle mb-5">
                 {profile.requirements.map((item) => (
                   <li key={item} className="flex gap-2">
-                    <span className="mt-2 size-1.5 rounded-full bg-brand-600 shrink-0" />
+                    <span className="mt-2 size-1.5 rounded-full bg-emerald-600 shrink-0" />
                     <span>{item}</span>
                   </li>
                 ))}
@@ -128,19 +123,18 @@ const ProductBuyingConfidence = ({
                 {certifications.map((item) => (
                   <span
                     key={item}
-                    className="rounded-md bg-white border border-ui-border-base px-2.5 py-1 text-xs"
+                    className="rounded-md bg-emerald-50 border border-emerald-100 px-2.5 py-1 text-xs text-emerald-800"
                   >
                     {item}
                   </span>
                 ))}
               </div>
               <div className="grid grid-cols-1 gap-3 text-small-regular text-ui-fg-subtle">
-                <p>{financing}</p>
                 <p>{install}</p>
               </div>
             </div>
 
-            <div className="rounded-md border border-ui-border-base bg-white p-5">
+            <div className="rounded-md border border-emerald-100 bg-white p-5">
               <Heading level="h3" className="text-base mb-3">
                 Buyer questions
               </Heading>

@@ -85,27 +85,27 @@ const ProductQuickAnswers = ({
   ]
 
   return (
-    <section className="rounded-md border border-ui-border-base bg-white p-5 small:p-6">
+    <section className="rounded-md border border-blue-100 bg-blue-50 p-5 small:p-6">
       <div className="flex flex-col gap-6">
         <div className="grid grid-cols-1 large:grid-cols-[minmax(0,1fr)_280px] gap-6">
           <div>
-            <Text className="text-small-semi uppercase text-brand-600 mb-2">
+            <Text className="text-small-semi uppercase text-blue-700 mb-2">
               Quick answers
             </Text>
             <Heading level="h2" className="text-xl mb-2">
-              The information buyers usually need before checkout
+              The information buyers usually need before ordering
             </Heading>
-            <Text className="text-small-regular text-ui-fg-subtle leading-6">
+            <Text className="text-small-regular text-blue-950/70 leading-6">
               Start here for a plain-language summary. The detailed sections
               below keep every specification, validation note, configuration,
               and buying detail available for deeper review.
             </Text>
           </div>
-          <div className="rounded-md border border-brand-200 bg-brand-50 p-4">
-            <Text className="text-base-semi text-brand-900 mb-2">
+          <div className="rounded-md border border-blue-200 bg-white p-4">
+            <Text className="text-base-semi text-blue-950 mb-2">
               Still unsure?
             </Text>
-            <Text className="text-small-regular text-brand-900 leading-6 mb-4">
+            <Text className="text-small-regular text-blue-950/70 leading-6 mb-4">
               Send this exact product for review with your model, users, power,
               cooling, storage, and timeline.
             </Text>
@@ -116,7 +116,7 @@ const ProductQuickAnswers = ({
                 `Pre-purchase review for ${product.title}`
               )}`}
             >
-              <Button className="w-full bg-brand-600 hover:bg-brand-700 border-none">
+              <Button className="w-full bg-blue-700 hover:bg-blue-800 border-none">
                 Request review
               </Button>
             </LocalizedClientLink>
@@ -128,7 +128,7 @@ const ProductQuickAnswers = ({
             <a
               key={answer.title}
               href={answer.href}
-              className="rounded-md border border-ui-border-base bg-grey-5 p-4 hover:border-brand-300 hover:bg-white"
+              className="rounded-md border border-blue-100 bg-white p-4 hover:border-blue-300"
             >
               <Text className="text-small-semi text-ui-fg-base mb-1">
                 {answer.title}
@@ -141,7 +141,7 @@ const ProductQuickAnswers = ({
         </div>
 
         {faqs.length > 0 && (
-          <div className="rounded-md border border-ui-border-base bg-grey-5 p-5">
+          <div className="rounded-md border border-blue-100 bg-white p-5">
             <Heading level="h3" className="text-base mb-3">
               Common buyer questions answered on this page
             </Heading>
@@ -153,7 +153,7 @@ const ProductQuickAnswers = ({
                 return (
                   <div
                     key={faq}
-                    className="rounded-md border border-ui-border-base bg-white p-4"
+                    className="rounded-md border border-blue-100 bg-blue-50 p-4"
                   >
                     <Text className="text-small-semi">{question.trim()}?</Text>
                     {answer && (

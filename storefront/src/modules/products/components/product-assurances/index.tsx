@@ -14,10 +14,10 @@ const ProductAssurances = ({
   )
 
   return (
-    <section className="rounded-md border border-ui-border-base bg-white p-5 small:p-6">
+    <section className="rounded-md border border-emerald-100 bg-white p-5 small:p-6">
       <div className="grid grid-cols-1 gap-5">
         <div>
-          <Text className="text-small-semi uppercase text-brand-600 mb-2">
+          <Text className="text-small-semi uppercase text-emerald-700 mb-2">
             Trust
           </Text>
           <Heading level="h2" className="text-xl mb-2">
@@ -33,7 +33,7 @@ const ProductAssurances = ({
           {assurances.map(([title, body]) => (
             <div
               key={title}
-              className="rounded-md border border-ui-border-base bg-grey-5 p-4"
+              className="rounded-md border border-emerald-100 bg-emerald-50 p-4"
             >
               <Heading level="h3" className="text-base mb-1">
                 {title}

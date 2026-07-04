@@ -28,11 +28,11 @@ const ProductDecisionSummary = ({
   return (
     <section
       id="buyer-summary"
-      className="rounded-md border border-ui-border-base bg-white p-5 small:p-6 scroll-mt-28"
+      className="rounded-md border border-slate-200 bg-white p-5 small:p-6 scroll-mt-28"
     >
       <div className="grid grid-cols-1 gap-6">
         <div>
-          <Text className="text-small-semi uppercase text-brand-600 mb-2">
+          <Text className="text-small-semi uppercase text-slate-700 mb-2">
             Buyer summary
           </Text>
           <Heading level="h2" className="text-xl mb-2">
@@ -41,14 +41,14 @@ const ProductDecisionSummary = ({
           <Text className="text-small-regular text-ui-fg-subtle leading-6">
             Use this page to confirm the exact workload fit, technical
             requirements, validation checks, and support path for this product
-            before checkout or quote approval.
+            before ordering or quote approval.
           </Text>
         </div>
         <div className="grid grid-cols-1 medium:grid-cols-3 gap-4">
           {profile.summaryCards.map(([title, body]) => (
             <div
               key={title}
-              className="rounded-md border border-ui-border-base bg-grey-5 p-4"
+              className="rounded-md border border-slate-200 bg-slate-50 p-4"
             >
               <Heading level="h3" className="text-base mb-2">
                 {title}

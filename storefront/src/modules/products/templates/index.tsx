@@ -39,33 +39,59 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
   }
 
   return (
-    <>
+    <div className="bg-grey-5">
       <ProductBreadcrumbs product={product} />
-      <div
-        className="content-container grid grid-cols-1 large:grid-cols-[minmax(0,1fr)_420px] gap-10 py-8 small:py-10 relative"
-        data-testid="product-container"
-      >
-        <div className="w-full min-w-0 large:sticky large:top-24 large:self-start">
-          <ImageGallery images={images} productTitle={product.title} />
+      <section className="border-b border-ui-border-base bg-white">
+        <div className="content-container py-5">
+          <div className="grid grid-cols-1 gap-3 medium:grid-cols-4">
+            {[
+              ["Validated", "Burn-in and compatibility checks"],
+              ["Supported", "Engineer-led configuration guidance"],
+              ["Transparent", "Specs, condition, warranty, and lead time"],
+              ["Reviewed", "Admin-confirmed fulfillment workflow"],
+            ].map(([title, body]) => (
+              <div
+                key={title}
+                className="rounded-md border border-ui-border-base bg-grey-5 px-4 py-3"
+              >
+                <p className="text-small-semi text-ui-fg-base">{title}</p>
+                <p className="mt-1 text-xs leading-5 text-ui-fg-subtle">
+                  {body}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
-        <aside className="flex flex-col large:sticky large:top-24 large:self-start gap-y-6 rounded-md border border-ui-border-base bg-white p-5 small:p-6 shadow-elevation-card-rest">
-          <ProductInfo product={product} />
-          <ProductOnboardingCta />
-          <Suspense
-            fallback={
-              <ProductActions
-                disabled={true}
-                product={product}
-                region={region}
-              />
-            }
-          >
-            <ProductActionsWrapper id={product.id} region={region} />
-          </Suspense>
-          <ProductTabs product={product} />
-        </aside>
-      </div>
-      <div className="content-container pb-16">
+      </section>
+
+      <section className="content-container py-8 small:py-10">
+        <div
+          className="grid grid-cols-1 large:grid-cols-[minmax(0,1fr)_430px] gap-8 large:gap-10 relative"
+          data-testid="product-container"
+        >
+          <div className="w-full min-w-0 large:sticky large:top-24 large:self-start">
+            <ImageGallery images={images} productTitle={product.title} />
+          </div>
+          <aside className="flex flex-col large:sticky large:top-24 large:self-start gap-y-5 rounded-md border border-ui-border-base bg-white p-5 small:p-6 shadow-elevation-card-rest">
+            <ProductInfo product={product} />
+            <ProductOnboardingCta />
+            <Suspense
+              fallback={
+                <ProductActions
+                  disabled={true}
+                  product={product}
+                  region={region}
+                />
+              }
+            >
+              <ProductActionsWrapper id={product.id} region={region} />
+            </Suspense>
+            <ProductTabs product={product} />
+          </aside>
+        </div>
+      </section>
+
+      <div className="content-container pb-16 small:pb-20">
         <div className="flex flex-col gap-8">
           <ProductQuickAnswers product={product} />
 
@@ -73,8 +99,8 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
             <div className="flex flex-col gap-8">
               <div>
                 <div className="mb-4">
-                  <p className="text-small-semi uppercase text-brand-600">
-                    Step 1
+                  <p className="text-small-semi uppercase text-brand-700">
+                    Buyer decision
                   </p>
                   <h2 className="text-2xl font-semibold text-ui-fg-base">
                     Decide if this product fits your workload
@@ -85,11 +111,11 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
 
               <div>
                 <div className="mb-4">
-                  <p className="text-small-semi uppercase text-brand-600">
-                    Step 2
+                  <p className="text-small-semi uppercase text-blue-700">
+                    Compatibility
                   </p>
                   <h2 className="text-2xl font-semibold text-ui-fg-base">
-                    Check compatibility before checkout
+                    Check compatibility before ordering
                   </h2>
                 </div>
                 <ProductFitAssistant product={product} />
@@ -97,8 +123,8 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
 
               <div>
                 <div className="mb-4">
-                  <p className="text-small-semi uppercase text-brand-600">
-                    Step 3
+                  <p className="text-small-semi uppercase text-emerald-700">
+                    Technical review
                   </p>
                   <h2 className="text-2xl font-semibold text-ui-fg-base">
                     Review technical detail and configurations
@@ -118,6 +144,32 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
           </div>
         </div>
       </div>
+      <section className="bg-slate-950 text-white">
+        <div className="content-container grid grid-cols-1 gap-5 py-10 medium:grid-cols-[minmax(0,1fr)_260px] medium:items-center">
+          <div>
+            <p className="text-small-semi uppercase text-cyan-300">
+              Need certainty before ordering?
+            </p>
+            <h2 className="mt-2 text-2xl font-semibold">
+              Ask for an engineer review of this exact configuration.
+            </h2>
+            <p className="mt-3 max-w-3xl text-small-regular leading-6 text-slate-300">
+              Share your model size, users, data volume, rack or office limits,
+              software stack, power, cooling, and timeline. We will help confirm
+              whether this product is the right fit before you commit.
+            </p>
+          </div>
+          <a
+            href={`/${countryCode}/contact?product=${encodeURIComponent(
+              product.title
+            )}`}
+            className="inline-flex h-11 items-center justify-center rounded-md bg-white px-5 text-small-semi text-slate-950 transition hover:bg-cyan-100"
+          >
+            Request engineer review
+          </a>
+        </div>
+      </section>
+
       <div
         className="content-container border-t border-ui-border-base py-16 small:py-20"
         data-testid="related-products-container"
@@ -126,7 +178,7 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
           <RelatedProducts product={product} countryCode={countryCode} />
         </Suspense>
       </div>
-    </>
+    </div>
   )
 }
 

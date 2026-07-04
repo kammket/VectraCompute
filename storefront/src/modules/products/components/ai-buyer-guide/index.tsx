@@ -14,10 +14,10 @@ const AiBuyerGuide = ({ product }: Props) => {
   const seo = getProductSeo(product)
 
   return (
-    <section className="rounded-md border border-ui-border-base bg-white p-5 small:p-6">
+    <section className="rounded-md border border-emerald-100 bg-white p-5 small:p-6">
       <div className="grid grid-cols-1 gap-6">
         <div>
-          <Text className="text-small-semi uppercase text-brand-600 mb-2">
+          <Text className="text-small-semi uppercase text-emerald-700 mb-2">
             AI hardware fit
           </Text>
           <Heading level="h2" className="text-xl mb-3">
@@ -26,7 +26,7 @@ const AiBuyerGuide = ({ product }: Props) => {
           <Text className="text-ui-fg-subtle max-w-3xl mb-6 leading-7">
             {profile.modelFit}
           </Text>
-          <div className="mb-6 rounded-md border border-brand-200 bg-brand-50 p-4">
+          <div className="mb-6 rounded-md border border-emerald-200 bg-emerald-50 p-4">
             <Text className="text-base-semi mb-1">Why buyers trust it</Text>
             <Text className="text-small-regular text-ui-fg-subtle leading-6">
               {seo.trustNote}
@@ -34,7 +34,7 @@ const AiBuyerGuide = ({ product }: Props) => {
           </div>
 
           <div className="grid grid-cols-1 medium:grid-cols-3 gap-4">
-            <div className="rounded-md border border-ui-border-base bg-grey-5 p-4">
+            <div className="rounded-md border border-emerald-100 bg-emerald-50 p-4">
               <Heading level="h3" className="text-base mb-3">
                 Best for
               </Heading>
@@ -44,7 +44,7 @@ const AiBuyerGuide = ({ product }: Props) => {
                 ))}
               </ul>
             </div>
-            <div className="rounded-md border border-ui-border-base bg-grey-5 p-4">
+            <div className="rounded-md border border-emerald-100 bg-emerald-50 p-4">
               <Heading level="h3" className="text-base mb-3">
                 Platform notes
               </Heading>
@@ -54,7 +54,7 @@ const AiBuyerGuide = ({ product }: Props) => {
                 ))}
               </ul>
             </div>
-            <div className="rounded-md border border-ui-border-base bg-grey-5 p-4">
+            <div className="rounded-md border border-emerald-100 bg-emerald-50 p-4">
               <Heading level="h3" className="text-base mb-3">
                 Delivery planning
               </Heading>
@@ -67,7 +67,7 @@ const AiBuyerGuide = ({ product }: Props) => {
           </div>
         </div>
 
-        <aside className="border border-ui-border-base rounded-md bg-grey-5 p-5">
+        <aside className="border border-emerald-100 rounded-md bg-emerald-50 p-5">
           <Heading level="h3" className="text-base mb-4">
             Validation checklist
           </Heading>
@@ -84,7 +84,7 @@ const AiBuyerGuide = ({ product }: Props) => {
           <LocalizedClientLink href="/contact">
             <Button
               variant="primary"
-              className="bg-brand-600 hover:bg-brand-700 border-none w-full"
+              className="bg-emerald-700 hover:bg-emerald-800 border-none w-full"
             >
               Request sizing help
             </Button>
