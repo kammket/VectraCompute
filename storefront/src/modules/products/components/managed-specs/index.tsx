@@ -33,17 +33,17 @@ const ManagedSpecs = ({ product }: { product: HttpTypes.StoreProduct }) => {
   return (
     <section
       id="deployment-details"
-      className="rounded-md border border-amber-100 bg-amber-50 p-5 small:p-6 scroll-mt-28"
+      className="rounded-md border border-ui-border-base bg-grey-5 p-5 small:p-6 scroll-mt-28"
     >
       <div className="grid grid-cols-1 gap-5">
         <div>
-          <Text className="text-small-semi uppercase text-amber-700 mb-2">
+          <Text className="text-small-semi uppercase text-brand-700 mb-2">
             Operational details
           </Text>
           <Heading level="h2" className="text-xl mb-2">
             Deployment details
           </Heading>
-          <Text className="text-amber-950/75 text-small-regular leading-6">
+          <Text className="text-ui-fg-subtle text-small-regular leading-6">
             These fields are managed from product metadata in the admin
             dashboard so buyers see current operational details.
           </Text>
@@ -52,9 +52,9 @@ const ManagedSpecs = ({ product }: { product: HttpTypes.StoreProduct }) => {
           {specs.map((spec) => (
             <div
               key={spec.key}
-              className="border border-amber-100 rounded-md p-4 bg-white"
+              className="border border-ui-border-base rounded-md p-4 bg-white"
             >
-              <dt className="text-small-regular text-amber-800 mb-1">
+              <dt className="text-small-regular text-ui-fg-subtle mb-1">
                 {spec.label}
               </dt>
               <dd className="text-base-semi text-ui-fg-base">{spec.value}</dd>

@@ -49,21 +49,15 @@ const ProductBuyingConfidence = ({
   return (
     <section
       id="purchase-confidence"
-      className="rounded-md border border-emerald-100 bg-emerald-50 p-5 small:p-6 scroll-mt-28"
+      className="rounded-md border border-ui-border-base bg-grey-5 p-5 small:p-6 scroll-mt-28"
     >
       <div className="grid grid-cols-1 gap-6">
-        <div className="grid grid-cols-1 gap-4 medium:grid-cols-[72px_minmax(0,1fr)]">
-          <div className="flex h-14 w-14 items-center justify-center rounded-md bg-emerald-700 text-xl font-semibold text-white">
-            04
-          </div>
+        <div className="grid grid-cols-1 gap-4">
           <div>
-            <Text className="text-small-semi uppercase text-emerald-700 mb-2">
-              Priority four: trust proof
-            </Text>
             <Heading level="h2" className="text-xl mb-2">
               Confirm validation, support, and buyer confidence
             </Heading>
-            <Text className="text-small-regular text-emerald-950/75 leading-6 mb-5">
+            <Text className="text-small-regular text-ui-fg-subtle leading-6 mb-5">
               The details below are product-specific, so technical buyers can
               check deployment fit, risk, support, warranty, and operational
               readiness before they commit.
@@ -92,7 +86,7 @@ const ProductBuyingConfidence = ({
             ].map(([label, value]) => (
               <div
                 key={label}
-                className="rounded-md border border-emerald-100 bg-white p-4"
+                className="rounded-md border border-ui-border-base bg-white p-4"
               >
                 <Text className="text-small-regular text-ui-fg-muted mb-1">
                   {label}
@@ -103,14 +97,14 @@ const ProductBuyingConfidence = ({
           </div>
 
           <div className="grid grid-cols-1 gap-4">
-            <div className="rounded-md border border-emerald-100 bg-white p-5">
+            <div className="rounded-md border border-ui-border-base bg-white p-5">
               <Heading level="h3" className="text-base mb-3">
                 Buyer requirements to confirm
               </Heading>
               <ul className="grid grid-cols-1 gap-2 text-small-regular text-ui-fg-subtle mb-5">
                 {profile.requirements.map((item) => (
                   <li key={item} className="flex gap-2">
-                    <span className="mt-2 size-1.5 rounded-full bg-emerald-600 shrink-0" />
+                    <span className="mt-2 size-1.5 rounded-full bg-brand-600 shrink-0" />
                     <span>{item}</span>
                   </li>
                 ))}
@@ -122,7 +116,7 @@ const ProductBuyingConfidence = ({
                 {certifications.map((item) => (
                   <span
                     key={item}
-                    className="rounded-md bg-emerald-50 border border-emerald-100 px-2.5 py-1 text-xs text-emerald-800"
+                    className="rounded-md bg-grey-5 border border-ui-border-base px-2.5 py-1 text-xs text-ui-fg-subtle"
                   >
                     {item}
                   </span>
@@ -133,7 +127,7 @@ const ProductBuyingConfidence = ({
               </div>
             </div>
 
-            <div className="rounded-md border border-emerald-100 bg-white p-5">
+            <div className="rounded-md border border-ui-border-base bg-white p-5">
               <Heading level="h3" className="text-base mb-3">
                 Buyer questions
               </Heading>

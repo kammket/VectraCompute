@@ -263,17 +263,11 @@ const ProductFitAssistant = ({
   return (
     <section
       id="fit-and-compatibility"
-      className="rounded-md border border-blue-100 bg-blue-50 p-5 small:p-6 scroll-mt-28"
+      className="rounded-md border border-ui-border-base bg-grey-5 p-5 small:p-6 scroll-mt-28"
     >
       <div className="grid grid-cols-1 gap-6">
-        <div className="grid grid-cols-1 gap-4 medium:grid-cols-[72px_minmax(0,1fr)_150px] medium:items-start">
-          <div className="flex h-14 w-14 items-center justify-center rounded-md bg-blue-700 text-xl font-semibold text-white">
-            02
-          </div>
+        <div className="grid grid-cols-1 gap-4 medium:grid-cols-[minmax(0,1fr)_150px] medium:items-start">
           <div>
-            <Text className="text-small-semi uppercase text-blue-700 mb-2">
-              Priority two: compatibility
-            </Text>
             <Heading level="h2" className="text-xl mb-2">
               Check the technical requirements before ordering
             </Heading>
@@ -283,11 +277,11 @@ const ProductFitAssistant = ({
               before ordering.
             </Text>
           </div>
-          <div className="rounded-md border border-blue-200 bg-white p-4">
-            <Text className="text-small-semi text-blue-800">
+          <div className="rounded-md border border-ui-border-base bg-white p-4">
+            <Text className="text-small-semi text-ui-fg-subtle">
               Readiness score
             </Text>
-            <Text className="mt-1 text-2xl text-blue-700">
+            <Text className="mt-1 text-2xl text-brand-700">
               {readiness.score}%
             </Text>
           </div>
@@ -301,7 +295,7 @@ const ProductFitAssistant = ({
           ].map(([label, value]) => (
             <div
               key={label}
-              className="rounded-md border border-blue-100 bg-white p-4"
+              className="rounded-md border border-ui-border-base bg-white p-4"
             >
               <Text className="text-small-regular text-ui-fg-muted mb-1">
                 {label}
@@ -312,7 +306,7 @@ const ProductFitAssistant = ({
         </div>
 
         <div className="grid grid-cols-1 large:grid-cols-2 gap-5">
-          <div className="rounded-md border border-blue-100 bg-white p-5">
+          <div className="rounded-md border border-ui-border-base bg-white p-5">
             <Heading level="h3" className="text-base mb-4">
               Required compatibility answers
             </Heading>
@@ -340,7 +334,7 @@ const ProductFitAssistant = ({
               ].map(([label, value]) => (
                 <div
                   key={label}
-                  className="rounded-md border border-blue-100 bg-blue-50 p-3"
+                  className="rounded-md border border-ui-border-base bg-grey-5 p-3"
                 >
                   <Text className="text-small-semi">{label}</Text>
                   <Text className="mt-1 text-small-regular leading-6 text-ui-fg-subtle">
@@ -351,7 +345,7 @@ const ProductFitAssistant = ({
             </div>
           </div>
 
-          <div className="rounded-md border border-blue-100 bg-white p-5">
+          <div className="rounded-md border border-ui-border-base bg-white p-5">
             <Heading level="h3" className="text-base mb-4">
               Questions to answer first
             </Heading>
@@ -361,7 +355,7 @@ const ProductFitAssistant = ({
                 "Confirm warranty, lead time, support level, and installation handoff",
               ].map((item) => (
                 <li key={item} className="flex gap-2">
-                  <span className="mt-2 size-1.5 shrink-0 rounded-full bg-blue-600" />
+                  <span className="mt-2 size-1.5 shrink-0 rounded-full bg-brand-600" />
                   <span>{item}</span>
                 </li>
               ))}
@@ -370,7 +364,7 @@ const ProductFitAssistant = ({
         </div>
 
         <div className="grid grid-cols-1 large:grid-cols-[minmax(0,1fr)_320px] gap-5">
-          <div className="rounded-md border border-blue-100 bg-white p-5">
+          <div className="rounded-md border border-ui-border-base bg-white p-5">
             <Heading level="h3" className="text-base mb-4">
               Deployment readiness
             </Heading>
@@ -378,11 +372,11 @@ const ProductFitAssistant = ({
               {readiness.items.map((item) => (
                 <div
                   key={item.label}
-                  className="rounded-md border border-blue-100 bg-blue-50 p-3"
+                  className="rounded-md border border-ui-border-base bg-grey-5 p-3"
                 >
                   <div className="flex items-center justify-between gap-3">
                     <Text className="text-small-semi">{item.label}</Text>
-                    <span className="rounded-md bg-white px-2 py-1 text-[11px] font-medium uppercase text-blue-700">
+                    <span className="rounded-md bg-white px-2 py-1 text-[11px] font-medium uppercase text-brand-700">
                       {item.status}
                     </span>
                   </div>
@@ -394,7 +388,7 @@ const ProductFitAssistant = ({
             </div>
           </div>
 
-          <div className="rounded-md border border-slate-200 bg-slate-50 p-5">
+          <div className="rounded-md border border-ui-border-base bg-grey-5 p-5">
             <Heading level="h3" className="text-base mb-4">
               Not ideal for
             </Heading>
@@ -409,7 +403,7 @@ const ProductFitAssistant = ({
           </div>
         </div>
 
-        <div className="rounded-md border border-blue-200 bg-white p-5">
+        <div className="rounded-md border border-ui-border-base bg-white p-5">
           <div className="flex flex-col gap-4 medium:flex-row medium:items-center medium:justify-between">
             <div>
               <Heading level="h3" className="text-base mb-1">
@@ -427,7 +421,7 @@ const ProductFitAssistant = ({
                 `Compatibility review for ${product.title}`
               )}`}
             >
-                <Button className="w-full bg-blue-700 hover:bg-blue-800 border-none medium:w-auto">
+                <Button className="w-full bg-brand-600 hover:bg-grey-10 border-none medium:w-auto">
                 Ask compatibility question
               </Button>
             </LocalizedClientLink>
@@ -439,7 +433,7 @@ const ProductFitAssistant = ({
             <LocalizedClientLink
               key={link.href}
               href={link.href}
-              className="rounded-md border border-blue-100 bg-white p-3 text-small-semi text-ui-fg-base hover:border-blue-300 hover:text-blue-700"
+              className="rounded-md border border-ui-border-base bg-white p-3 text-small-semi text-ui-fg-base hover:border-brand-300 hover:text-brand-800"
             >
               {link.label}
             </LocalizedClientLink>

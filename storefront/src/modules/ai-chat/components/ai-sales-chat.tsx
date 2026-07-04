@@ -238,11 +238,11 @@ export default function AiSalesChat() {
   return (
     <div className="fixed bottom-5 right-5 z-50 flex max-w-[calc(100vw-2.5rem)] flex-col items-end">
       {open && (
-        <div className="mb-3 flex h-[680px] w-[420px] max-w-full flex-col overflow-hidden rounded border border-slate-800 bg-slate-950 shadow-2xl shadow-slate-950/30">
-          <div className="border-b border-slate-800 bg-slate-900 px-4 py-3">
+        <div className="mb-3 flex h-[680px] w-[420px] max-w-full flex-col overflow-hidden rounded border border-grey-80 bg-grey-90 shadow-2xl shadow-grey-90/30">
+          <div className="border-b border-grey-80 bg-grey-90 px-4 py-3">
             <div className="flex items-start justify-between gap-3">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-cyan-300">
+                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-brand-300">
                   AI Sales Engineer
                 </p>
                 <h2 className="mt-1 text-base font-semibold text-white">
@@ -252,21 +252,21 @@ export default function AiSalesChat() {
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                className="rounded border border-slate-700 px-2 py-1 text-xs text-slate-300 hover:border-slate-500"
+                className="rounded border border-grey-70 px-2 py-1 text-xs text-grey-30 hover:border-grey-50"
               >
                 Close
               </button>
             </div>
           </div>
 
-          <div className="flex-1 space-y-3 overflow-y-auto bg-slate-950 px-4 py-4">
+          <div className="flex-1 space-y-3 overflow-y-auto bg-grey-90 px-4 py-4">
             {messages.map((message, index) => (
               <div
                 key={`${message.role}-${index}`}
                 className={
                   message.role === "assistant"
-                    ? "mr-8 rounded bg-slate-900 p-3 text-sm leading-6 text-slate-100"
-                    : "ml-8 rounded bg-cyan-500 p-3 text-sm leading-6 text-slate-950"
+                    ? "mr-8 rounded bg-grey-90 p-3 text-sm leading-6 text-grey-10"
+                    : "ml-8 rounded bg-brand-500 p-3 text-sm leading-6 text-grey-90"
                 }
               >
                 {message.content}
@@ -274,8 +274,8 @@ export default function AiSalesChat() {
             ))}
 
             {suggestedProducts.length > 0 && (
-              <div className="rounded border border-slate-800 bg-slate-900/70 p-3">
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
+              <div className="rounded border border-grey-80 bg-grey-90/70 p-3">
+                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-grey-40">
                   Recommended systems
                 </p>
                 <div className="mt-3 space-y-2">
@@ -287,15 +287,15 @@ export default function AiSalesChat() {
                         updateForm("productHandle", product.handle)
                         setCheckoutOpen(true)
                       }}
-                      className="w-full rounded border border-slate-800 bg-slate-950 p-3 text-left hover:border-cyan-400"
+                      className="w-full rounded border border-grey-80 bg-grey-90 p-3 text-left hover:border-brand-400"
                     >
                       <span className="block text-sm font-semibold text-white">
                         {product.title}
                       </span>
-                      <span className="mt-1 block text-xs leading-5 text-slate-400">
+                      <span className="mt-1 block text-xs leading-5 text-grey-40">
                         {product.bestFor || product.category}
                       </span>
-                      <span className="mt-2 block text-xs font-semibold text-cyan-300">
+                      <span className="mt-2 block text-xs font-semibold text-brand-300">
                         From {product.variants[0]?.formattedPrice}
                       </span>
                     </button>
@@ -305,13 +305,13 @@ export default function AiSalesChat() {
             )}
 
             {checkoutOpen && (
-              <div className="rounded border border-cyan-900 bg-cyan-950/40 p-3">
+              <div className="rounded border border-brand-900 bg-brand-900/40 p-3">
                 <div className="flex items-center justify-between gap-3">
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-300">
+                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-300">
                       Chat checkout
                     </p>
-                    <p className="mt-1 text-sm text-slate-200">
+                    <p className="mt-1 text-sm text-grey-20">
                       Confirm the system and delivery details.
                     </p>
                   </div>
@@ -326,7 +326,7 @@ export default function AiSalesChat() {
                   <select
                     value={form.productHandle}
                     onChange={(event) => updateForm("productHandle", event.target.value)}
-                    className="w-full rounded border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-white"
+                    className="w-full rounded border border-grey-70 bg-grey-90 px-3 py-2 text-sm text-white"
                   >
                     {suggestedProducts.map((product) => (
                       <option key={product.handle} value={product.handle}>
@@ -339,7 +339,7 @@ export default function AiSalesChat() {
                     <select
                       value={form.variantSku || selectedProduct.variants[0]?.sku}
                       onChange={(event) => updateForm("variantSku", event.target.value)}
-                      className="w-full rounded border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-white"
+                      className="w-full rounded border border-grey-70 bg-grey-90 px-3 py-2 text-sm text-white"
                     >
                       {selectedProduct.variants.map((variant) => (
                         <option key={variant.sku} value={variant.sku}>
@@ -354,25 +354,25 @@ export default function AiSalesChat() {
                       value={form.customerName}
                       onChange={(event) => updateForm("customerName", event.target.value)}
                       placeholder="Full name"
-                      className="rounded border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-white placeholder:text-slate-500"
+                      className="rounded border border-grey-70 bg-grey-90 px-3 py-2 text-sm text-white placeholder:text-grey-50"
                     />
                     <input
                       value={form.email}
                       onChange={(event) => updateForm("email", event.target.value)}
                       placeholder="Email"
-                      className="rounded border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-white placeholder:text-slate-500"
+                      className="rounded border border-grey-70 bg-grey-90 px-3 py-2 text-sm text-white placeholder:text-grey-50"
                     />
                     <input
                       value={form.phone}
                       onChange={(event) => updateForm("phone", event.target.value)}
                       placeholder="Phone"
-                      className="rounded border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-white placeholder:text-slate-500"
+                      className="rounded border border-grey-70 bg-grey-90 px-3 py-2 text-sm text-white placeholder:text-grey-50"
                     />
                     <input
                       value={form.company}
                       onChange={(event) => updateForm("company", event.target.value)}
                       placeholder="Company"
-                      className="rounded border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-white placeholder:text-slate-500"
+                      className="rounded border border-grey-70 bg-grey-90 px-3 py-2 text-sm text-white placeholder:text-grey-50"
                     />
                   </div>
 
@@ -380,7 +380,7 @@ export default function AiSalesChat() {
                     value={form.address1}
                     onChange={(event) => updateForm("address1", event.target.value)}
                     placeholder="Delivery address"
-                    className="w-full rounded border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-white placeholder:text-slate-500"
+                    className="w-full rounded border border-grey-70 bg-grey-90 px-3 py-2 text-sm text-white placeholder:text-grey-50"
                   />
 
                   <div className="grid grid-cols-2 gap-2">
@@ -388,13 +388,13 @@ export default function AiSalesChat() {
                       value={form.city}
                       onChange={(event) => updateForm("city", event.target.value)}
                       placeholder="City"
-                      className="rounded border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-white placeholder:text-slate-500"
+                      className="rounded border border-grey-70 bg-grey-90 px-3 py-2 text-sm text-white placeholder:text-grey-50"
                     />
                     <input
                       value={form.countryCode}
                       onChange={(event) => updateForm("countryCode", event.target.value)}
                       placeholder="Country code"
-                      className="rounded border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-white placeholder:text-slate-500"
+                      className="rounded border border-grey-70 bg-grey-90 px-3 py-2 text-sm text-white placeholder:text-grey-50"
                     />
                   </div>
 
@@ -403,14 +403,14 @@ export default function AiSalesChat() {
                     onChange={(event) => updateForm("notes", event.target.value)}
                     placeholder="Workload notes, delivery timing, rack/power constraints"
                     rows={3}
-                    className="w-full rounded border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-white placeholder:text-slate-500"
+                    className="w-full rounded border border-grey-70 bg-grey-90 px-3 py-2 text-sm text-white placeholder:text-grey-50"
                   />
 
                   <button
                     type="button"
                     onClick={createOrder}
                     disabled={orderLoading}
-                    className="w-full rounded bg-cyan-400 px-4 py-3 text-sm font-semibold text-slate-950 hover:bg-cyan-300 disabled:cursor-not-allowed disabled:opacity-60"
+                    className="w-full rounded bg-brand-400 px-4 py-3 text-sm font-semibold text-grey-90 hover:bg-brand-300 disabled:cursor-not-allowed disabled:opacity-60"
                   >
                     {orderLoading ? "Saving order..." : "Save order and show Bitcoin payment"}
                   </button>
@@ -419,7 +419,7 @@ export default function AiSalesChat() {
             )}
 
             {orderResult && (
-              <div className="rounded border border-emerald-900 bg-emerald-950/40 p-3 text-sm text-slate-100">
+              <div className="rounded border border-emerald-900 bg-emerald-950/40 p-3 text-sm text-grey-10">
                 <p className="font-semibold text-emerald-300">
                   Order saved: {orderResult.order.id}
                 </p>
@@ -429,11 +429,11 @@ export default function AiSalesChat() {
                     ? ` / ${orderResult.payment.btcEstimate.btcAmount} BTC`
                     : ""}
                 </p>
-                <div className="mt-3 rounded bg-slate-950 p-3">
-                  <p className="text-xs uppercase tracking-[0.16em] text-slate-500">
+                <div className="mt-3 rounded bg-grey-90 p-3">
+                  <p className="text-xs uppercase tracking-[0.16em] text-grey-50">
                     Bitcoin wallet
                   </p>
-                  <p className="mt-2 break-all font-mono text-xs text-cyan-200">
+                  <p className="mt-2 break-all font-mono text-xs text-brand-200">
                     {orderResult.payment.walletAddress ||
                       "Wallet address is not configured yet."}
                   </p>
@@ -459,14 +459,14 @@ export default function AiSalesChat() {
             )}
           </div>
 
-          <div className="border-t border-slate-800 bg-slate-900 p-3">
+          <div className="border-t border-grey-80 bg-grey-90 p-3">
             <div className="mb-2 flex flex-wrap gap-2">
               {starterPrompts.map((prompt) => (
                 <button
                   type="button"
                   key={prompt}
                   onClick={() => sendMessage(prompt)}
-                  className="rounded-full border border-slate-700 px-3 py-1 text-xs text-slate-300 hover:border-cyan-400 hover:text-cyan-200"
+                  className="rounded-full border border-grey-70 px-3 py-1 text-xs text-grey-30 hover:border-brand-400 hover:text-brand-200"
                 >
                   {prompt}
                 </button>
@@ -483,12 +483,12 @@ export default function AiSalesChat() {
                 value={input}
                 onChange={(event) => setInput(event.target.value)}
                 placeholder="Ask about GPUs, servers, pricing, delivery..."
-                className="min-w-0 flex-1 rounded border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-white placeholder:text-slate-500"
+                className="min-w-0 flex-1 rounded border border-grey-70 bg-grey-90 px-3 py-2 text-sm text-white placeholder:text-grey-50"
               />
               <button
                 type="submit"
                 disabled={loading}
-                className="rounded bg-white px-4 py-2 text-sm font-semibold text-slate-950 disabled:cursor-not-allowed disabled:opacity-60"
+                className="rounded bg-white px-4 py-2 text-sm font-semibold text-grey-90 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {loading ? "..." : "Send"}
               </button>
@@ -500,7 +500,7 @@ export default function AiSalesChat() {
       <button
         type="button"
         onClick={() => setOpen((current) => !current)}
-        className="rounded-full border border-cyan-300 bg-slate-950 px-5 py-3 text-sm font-semibold text-white shadow-xl shadow-slate-950/30 hover:bg-slate-900"
+        className="rounded-full border border-brand-300 bg-grey-90 px-5 py-3 text-sm font-semibold text-white shadow-xl shadow-grey-90/30 hover:bg-grey-90"
       >
         AI hardware engineer
       </button>

@@ -12,10 +12,10 @@ const ImageGallery = ({ images, productTitle }: ImageGalleryProps) => {
 
   return (
     <div className="relative">
-      <div className="grid grid-cols-1 gap-4 rounded-md border border-slate-200 bg-slate-950 p-3 shadow-elevation-card-rest">
+      <div className="grid grid-cols-1 gap-4 rounded-md border border-grey-20 bg-grey-90 p-3 shadow-elevation-card-rest">
         {hero && (
           <Container
-            className="relative aspect-[16/11] w-full overflow-hidden rounded-md border border-slate-700 bg-slate-900"
+            className="relative aspect-[16/11] w-full overflow-hidden rounded-md border border-grey-70 bg-grey-90"
             id={hero.id}
           >
             {!!hero.url && (
@@ -38,7 +38,7 @@ const ImageGallery = ({ images, productTitle }: ImageGalleryProps) => {
             {rest.map((image, index) => (
               <Container
                 key={image.id}
-                className="relative aspect-[4/3] w-full overflow-hidden rounded-md border border-slate-700 bg-slate-900"
+                className="relative aspect-[4/3] w-full overflow-hidden rounded-md border border-grey-70 bg-grey-90"
                 id={image.id}
               >
                 {!!image.url && (

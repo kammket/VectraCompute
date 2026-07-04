@@ -26,17 +26,11 @@ const ProductSpecs = ({ product }: Props) => {
   return (
     <section
       id="technical-details"
-      className="rounded-md border border-blue-100 bg-white p-5 small:p-6 scroll-mt-28"
+      className="rounded-md border border-ui-border-base bg-white p-5 small:p-6 scroll-mt-28"
     >
       <div className="grid grid-cols-1 gap-6">
-        <div className="grid grid-cols-1 gap-4 medium:grid-cols-[72px_minmax(0,1fr)]">
-          <div className="flex h-14 w-14 items-center justify-center rounded-md bg-blue-700 text-xl font-semibold text-white">
-            03
-          </div>
+        <div className="grid grid-cols-1 gap-4">
           <div>
-            <Text className="text-small-semi uppercase text-blue-700 mb-2">
-              Priority three: configuration
-            </Text>
             <Heading level="h2" className="text-xl mb-2">
               {isSystem ? "Compare available configurations" : "Compare available options"}
             </Heading>
@@ -48,10 +42,10 @@ const ProductSpecs = ({ product }: Props) => {
           </div>
         </div>
 
-        <div className="overflow-x-auto rounded-md border border-blue-100 bg-white">
+        <div className="overflow-x-auto rounded-md border border-ui-border-base bg-white">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="border-b border-blue-100 bg-blue-50 text-small-regular text-blue-900">
+              <tr className="border-b border-ui-border-base bg-grey-5 text-small-regular text-ui-fg-subtle">
                 <th className="py-3 pl-4 pr-4 font-medium">
                   {isSystem ? "Configuration" : "Option"}
                 </th>
@@ -75,7 +69,7 @@ const ProductSpecs = ({ product }: Props) => {
                 return (
                   <tr
                     key={variant.id}
-                    className="border-b border-blue-100 align-top"
+                    className="border-b border-ui-border-base align-top"
                   >
                     <td className="py-4 pl-4 pr-4">
                       {segments.length > 1 ? (
@@ -83,7 +77,7 @@ const ProductSpecs = ({ product }: Props) => {
                           {segments.map((seg) => (
                             <span
                               key={seg}
-                              className="px-2 py-1 rounded-md bg-blue-50 text-blue-800 text-xs"
+                              className="px-2 py-1 rounded-md bg-grey-5 text-ui-fg-subtle text-xs"
                             >
                               {seg}
                             </span>

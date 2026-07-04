@@ -23,14 +23,11 @@ const ProductInfo = ({ product }: ProductInfoProps) => {
           {category && (
             <LocalizedClientLink
               href={`/categories/${category.handle}`}
-              className="rounded-md bg-slate-100 px-2.5 py-1 text-xs font-medium uppercase tracking-wide text-slate-700 hover:text-brand-700"
+              className="rounded-md bg-grey-5 px-2.5 py-1 text-xs font-medium uppercase tracking-wide text-ui-fg-subtle hover:text-brand-700"
             >
               {category.name}
             </LocalizedClientLink>
           )}
-          <span className="rounded-md bg-emerald-50 px-2.5 py-1 text-xs font-medium uppercase tracking-wide text-emerald-700">
-            Validated AI hardware
-          </span>
         </div>
         {product.collection && (
           <LocalizedClientLink
@@ -58,7 +55,7 @@ const ProductInfo = ({ product }: ProductInfoProps) => {
           {trustChips.map((item) => (
             <span
               key={item}
-              className="rounded-md border border-emerald-100 bg-emerald-50 px-3 py-2 text-center text-xs font-medium text-emerald-800"
+              className="rounded-md border border-ui-border-base bg-grey-5 px-3 py-2 text-center text-xs font-medium text-ui-fg-subtle"
             >
               {item}
             </span>

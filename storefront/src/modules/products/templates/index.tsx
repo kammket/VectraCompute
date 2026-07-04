@@ -18,6 +18,7 @@ import ProductTabs from "@modules/products/components/product-tabs"
 import RelatedProducts from "@modules/products/components/related-products"
 import ProductInfo from "@modules/products/templates/product-info"
 import SkeletonRelatedProducts from "@modules/skeletons/templates/skeleton-related-products"
+import { getMetadataString } from "@lib/util/product-metadata"
 import { notFound } from "next/navigation"
 import { HttpTypes } from "@medusajs/types"
 
@@ -113,8 +114,12 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
             </Suspense>
             <div className="grid grid-cols-1 gap-2 rounded-md border border-ui-border-base bg-grey-5 p-3 text-small-regular text-ui-fg-subtle">
               {[
-                "Built to order, burn-in tested before shipment",
-                "Up to 5-year warranty with lifetime technical support",
+                getMetadataString(
+                  product,
+                  "lead_time",
+                  "Built to order — most configurations ship in 3-7 business days"
+                ),
+                "Burn-in tested with warranty and lifetime technical support",
                 "Track every stage on the order status page after purchase",
               ].map((line) => (
                 <p key={line} className="flex items-start gap-2">
