@@ -722,7 +722,8 @@ HARD RULES (these outrank everything above):
 
 const callGrokAgent = async (
   messages: ChatMessage[],
-  effects: AgentSideEffects
+  effects: AgentSideEffects,
+  pageContext?: string
 ): Promise<string> => {
   const apiKey = process.env.XAI_API_KEY
 
@@ -732,6 +733,9 @@ const callGrokAgent = async (
 
   const conversation: GrokMessage[] = [
     { role: "system", content: AGENT_SYSTEM_PROMPT },
+    ...(pageContext
+      ? [{ role: "system" as const, content: pageContext }]
+      : []),
     ...messages.slice(-10).map((message) => ({
       role: message.role === "assistant" ? ("assistant" as const) : ("user" as const),
       content: message.content,
@@ -801,19 +805,51 @@ const callGrokAgent = async (
 }
 
 const handleAiChat = async (req: IncomingMessage, res: ServerResponse) => {
-  const body = await readJson<{ messages?: ChatMessage[] }>(req)
+  const body = await readJson<{
+    messages?: ChatMessage[]
+    context?: { productHandle?: string }
+  }>(req)
   const messages = Array.isArray(body.messages) ? body.messages : []
   const latestMessage = messages.at(-1)?.content || ""
 
+  // Page context: when the widget reports which product the customer is
+  // viewing, brief the agent so it opens with relevance instead of a generic
+  // greeting.
+  let pageContext: string | undefined
+  const contextHandle = body.context?.productHandle
+  if (contextHandle) {
+    const contextProduct = PRODUCT_CATALOG.find(
+      (item) => item.handle === contextHandle
+    )
+    if (contextProduct) {
+      const fromPrice = contextProduct.variants[0]
+      pageContext = `Context: the customer is currently viewing the product page for ${
+        contextProduct.title
+      } (${contextProduct.category}, from ${money(
+        fromPrice.priceUsd
+      )}, /us/products/${contextProduct.handle}). Assume questions refer to it unless they say otherwise, and open with relevance to this product.`
+    }
+  }
+
   // Seed suggestions from the raw query; the agent's own search_products calls
-  // overwrite these with whatever it actually recommended.
+  // overwrite these with whatever it actually recommended. On a product page,
+  // the viewed product always leads the list.
+  const contextProduct = contextHandle
+    ? PRODUCT_CATALOG.find((item) => item.handle === contextHandle)
+    : undefined
+  const seeded = findProducts(latestMessage || "AI workstation GPU server", 6)
   const effects: AgentSideEffects = {
-    suggestedProducts: findProducts(latestMessage || "AI workstation GPU server", 6),
+    suggestedProducts: contextProduct
+      ? [
+          contextProduct,
+          ...seeded.filter((item) => item.handle !== contextProduct.handle),
+        ].slice(0, 6)
+      : seeded,
     createdOrder: null,
     capturedLead: false,
   }
 
-  const assistant = await callGrokAgent(messages, effects)
+  const assistant = await callGrokAgent(messages, effects, pageContext)
 
   sendJson(req, res, 200, {
     assistant,
@@ -1154,6 +1190,38 @@ const server = createServer(async (req, res) => {
 
     if (req.method === "GET" && url.pathname === "/api/orders") {
       await handleListCommerceOrders(req, res)
+      return
+    }
+
+    if (req.method === "POST" && url.pathname === "/api/leads") {
+      const body = await readJson<{
+        name?: string
+        email?: string
+        topic?: string
+        message?: string
+      }>(req)
+      const email = String(body.email ?? "").trim()
+      const message = String(body.message ?? "").trim()
+
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || !message) {
+        sendJson(req, res, 400, {
+          error: "A valid email and a short message are required.",
+        })
+        return
+      }
+
+      try {
+        const id = await storeLead({
+          name: body.name ? String(body.name).slice(0, 120) : undefined,
+          email,
+          topic: body.topic ? String(body.topic).slice(0, 160) : undefined,
+          message: message.slice(0, 3000),
+        })
+        sendJson(req, res, 201, { saved: true, lead_id: id })
+      } catch (error) {
+        console.error("Lead endpoint failed", error)
+        sendJson(req, res, 500, { error: "Could not save your request." })
+      }
       return
     }
 

@@ -1,6 +1,7 @@
 "use client"
 
 import { useMemo, useState } from "react"
+import { usePathname } from "next/navigation"
 
 type ChatMessage = {
   role: "user" | "assistant"
@@ -83,9 +84,10 @@ const emptyForm: OrderForm = {
 }
 
 const starterPrompts = [
-  "Help me choose a workstation for local LLMs",
-  "I need a GPU server for inference",
-  "I want to buy with Bitcoin",
+  "Which system runs Llama 70B locally?",
+  "What can I get under $10,000?",
+  "How does Bitcoin payment work?",
+  "What's the status of my order?",
 ]
 
 const getBackendUrl = () =>
@@ -93,11 +95,22 @@ const getBackendUrl = () =>
 
 export default function AiSalesChat() {
   const backendUrl = useMemo(getBackendUrl, [])
+  const pathname = usePathname()
+  // Which product page (if any) the customer is on — sent as context so the
+  // agent opens with relevance instead of a generic greeting.
+  const viewedProductHandle = useMemo(() => {
+    const match = pathname?.match(/\/products\/([a-z0-9-]+)/)
+    return match?.[1] ?? ""
+  }, [pathname])
   const [open, setOpen] = useState(false)
   const [input, setInput] = useState("")
   const [loading, setLoading] = useState(false)
   const [orderLoading, setOrderLoading] = useState(false)
   const [error, setError] = useState("")
+  const [handoffOpen, setHandoffOpen] = useState(false)
+  const [handoffSent, setHandoffSent] = useState(false)
+  const [handoffLoading, setHandoffLoading] = useState(false)
+  const [handoff, setHandoff] = useState({ name: "", email: "", message: "" })
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       role: "assistant",
@@ -159,7 +172,12 @@ export default function AiSalesChat() {
       const response = await fetch(`${backendUrl}/api/ai/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: nextMessages }),
+        body: JSON.stringify({
+          messages: nextMessages,
+          context: viewedProductHandle
+            ? { productHandle: viewedProductHandle }
+            : undefined,
+        }),
       })
 
       const payload = await response.json()
@@ -196,6 +214,44 @@ export default function AiSalesChat() {
       setError(err instanceof Error ? err.message : "AI chat failed.")
     } finally {
       setLoading(false)
+    }
+  }
+
+  const submitHandoff = async () => {
+    if (!backendUrl || handoffLoading) {
+      return
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(handoff.email) || !handoff.message.trim()) {
+      setError("Please add a valid email and a short note for our engineer.")
+      return
+    }
+
+    setError("")
+    setHandoffLoading(true)
+    try {
+      const response = await fetch(`${backendUrl}/api/leads`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: handoff.name,
+          email: handoff.email,
+          topic: viewedProductHandle
+            ? `Human handoff from product: ${viewedProductHandle}`
+            : "Human handoff from chat",
+          message: handoff.message,
+        }),
+      })
+      if (!response.ok) {
+        const payload = await response.json().catch(() => ({}))
+        throw new Error(payload.error || "Could not reach the team right now.")
+      }
+      setHandoffSent(true)
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : "Could not reach the team right now."
+      )
+    } finally {
+      setHandoffLoading(false)
     }
   }
 
@@ -255,14 +311,29 @@ export default function AiSalesChat() {
                 <h2 className="mt-1 text-base font-semibold text-white">
                   VectraCompute hardware advisor
                 </h2>
+                <p className="mt-1 text-[11px] leading-4 text-grey-40">
+                  AI assistant — a human engineer reviews every order.
+                </p>
               </div>
-              <button
-                type="button"
-                onClick={() => setOpen(false)}
-                className="rounded border border-grey-70 px-2 py-1 text-xs text-grey-30 hover:border-grey-50"
-              >
-                Close
-              </button>
+              <div className="flex shrink-0 gap-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setHandoffOpen((current) => !current)
+                    setHandoffSent(false)
+                  }}
+                  className="rounded border border-brand-400/60 px-2 py-1 text-xs text-brand-200 hover:border-brand-300"
+                >
+                  Talk to a human
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setOpen(false)}
+                  className="rounded border border-grey-70 px-2 py-1 text-xs text-grey-30 hover:border-grey-50"
+                >
+                  Close
+                </button>
+              </div>
             </div>
           </div>
 
@@ -280,6 +351,67 @@ export default function AiSalesChat() {
               </div>
             ))}
 
+            {handoffOpen && (
+              <div className="rounded border border-brand-400/40 bg-grey-90 p-3">
+                {handoffSent ? (
+                  <div>
+                    <p className="text-sm font-semibold text-emerald-300">
+                      Request received
+                    </p>
+                    <p className="mt-1 text-xs leading-5 text-grey-30">
+                      One of our engineers will reply to {handoff.email} within
+                      one business day. You can keep chatting with me in the
+                      meantime.
+                    </p>
+                  </div>
+                ) : (
+                  <div className="space-y-2">
+                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-300">
+                      Talk to a human engineer
+                    </p>
+                    <p className="text-xs leading-5 text-grey-30">
+                      Leave your details and what you need — a VectraCompute
+                      engineer replies within one business day.
+                    </p>
+                    <input
+                      value={handoff.name}
+                      onChange={(event) =>
+                        setHandoff((c) => ({ ...c, name: event.target.value }))
+                      }
+                      placeholder="Name"
+                      className="w-full rounded border border-grey-70 bg-grey-90 px-3 py-2 text-sm text-white placeholder:text-grey-50"
+                    />
+                    <input
+                      value={handoff.email}
+                      onChange={(event) =>
+                        setHandoff((c) => ({ ...c, email: event.target.value }))
+                      }
+                      placeholder="Email"
+                      type="email"
+                      className="w-full rounded border border-grey-70 bg-grey-90 px-3 py-2 text-sm text-white placeholder:text-grey-50"
+                    />
+                    <textarea
+                      value={handoff.message}
+                      onChange={(event) =>
+                        setHandoff((c) => ({ ...c, message: event.target.value }))
+                      }
+                      placeholder="What do you need help with?"
+                      rows={3}
+                      className="w-full rounded border border-grey-70 bg-grey-90 px-3 py-2 text-sm text-white placeholder:text-grey-50"
+                    />
+                    <button
+                      type="button"
+                      onClick={submitHandoff}
+                      disabled={handoffLoading}
+                      className="w-full rounded bg-brand-400 px-4 py-2.5 text-sm font-semibold text-grey-90 hover:bg-brand-300 disabled:cursor-not-allowed disabled:opacity-60"
+                    >
+                      {handoffLoading ? "Sending..." : "Request engineer contact"}
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+
             {suggestedProducts.length > 0 && (
               <div className="rounded border border-grey-80 bg-grey-90/70 p-3">
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-grey-40">
@@ -287,25 +419,50 @@ export default function AiSalesChat() {
                 </p>
                 <div className="mt-3 space-y-2">
                   {suggestedProducts.slice(0, 3).map((product) => (
-                    <button
-                      type="button"
+                    <div
                       key={product.handle}
-                      onClick={() => {
-                        updateForm("productHandle", product.handle)
-                        setCheckoutOpen(true)
-                      }}
-                      className="w-full rounded border border-grey-80 bg-grey-90 p-3 text-left hover:border-brand-400"
+                      className="flex gap-3 rounded border border-grey-80 bg-grey-90 p-3"
                     >
-                      <span className="block text-sm font-semibold text-white">
-                        {product.title}
-                      </span>
-                      <span className="mt-1 block text-xs leading-5 text-grey-40">
-                        {product.bestFor || product.category}
-                      </span>
-                      <span className="mt-2 block text-xs font-semibold text-brand-300">
-                        From {product.variants[0]?.formattedPrice}
-                      </span>
-                    </button>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={`/products/${product.handle}.svg`}
+                        alt=""
+                        aria-hidden
+                        className="h-14 w-14 shrink-0 rounded object-cover"
+                        onError={(event) => {
+                          event.currentTarget.style.display = "none"
+                        }}
+                      />
+                      <div className="min-w-0 flex-1">
+                        <span className="block truncate text-sm font-semibold text-white">
+                          {product.title}
+                        </span>
+                        <span className="mt-0.5 block truncate text-xs leading-5 text-grey-40">
+                          {product.bestFor || product.category}
+                        </span>
+                        <span className="mt-1 block text-xs font-semibold text-brand-300">
+                          From {product.variants[0]?.formattedPrice}
+                        </span>
+                        <div className="mt-2 flex gap-2">
+                          <a
+                            href={product.url}
+                            className="rounded border border-grey-70 px-2.5 py-1 text-xs text-grey-20 hover:border-brand-400"
+                          >
+                            View
+                          </a>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              updateForm("productHandle", product.handle)
+                              setCheckoutOpen(true)
+                            }}
+                            className="rounded bg-brand-400 px-2.5 py-1 text-xs font-semibold text-grey-90 hover:bg-brand-300"
+                          >
+                            Order this
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                   ))}
                 </div>
               </div>
@@ -490,18 +647,20 @@ export default function AiSalesChat() {
           </div>
 
           <div className="border-t border-grey-80 bg-grey-90 p-3">
-            <div className="mb-2 flex flex-wrap gap-2">
-              {starterPrompts.map((prompt) => (
-                <button
-                  type="button"
-                  key={prompt}
-                  onClick={() => sendMessage(prompt)}
-                  className="rounded-full border border-grey-70 px-3 py-1 text-xs text-grey-30 hover:border-brand-400 hover:text-brand-200"
-                >
-                  {prompt}
-                </button>
-              ))}
-            </div>
+            {messages.length <= 2 && (
+              <div className="mb-2 flex flex-wrap gap-2">
+                {starterPrompts.map((prompt) => (
+                  <button
+                    type="button"
+                    key={prompt}
+                    onClick={() => sendMessage(prompt)}
+                    className="rounded-full border border-grey-70 px-3 py-1.5 text-xs text-grey-30 hover:border-brand-400 hover:text-brand-200"
+                  >
+                    {prompt}
+                  </button>
+                ))}
+              </div>
+            )}
             <form
               className="flex gap-2"
               onSubmit={(event) => {
