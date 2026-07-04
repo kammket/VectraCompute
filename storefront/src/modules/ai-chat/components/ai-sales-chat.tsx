@@ -45,6 +45,8 @@ type OrderForm = {
 type AiOrderResponse = {
   order: {
     id: string
+    display_id?: number
+    orderNumber?: string
     formattedTotal: string
     selectedVariant: SuggestedVariant
     product: SuggestedProduct
@@ -225,7 +227,12 @@ export default function AiSalesChat() {
         ...current,
         {
           role: "assistant",
-          content: `Your order ${payload.order.id} has been saved for ${payload.order.product.title}. Use the Bitcoin details shown here. Our team will contact you after payment is confirmed.`,
+          content: `Your order ${
+            payload.order.orderNumber ??
+            (payload.order.display_id
+              ? `#${payload.order.display_id}`
+              : payload.order.id)
+          } has been saved for ${payload.order.product.title}. Use the Bitcoin details shown here. Our team will contact you after payment is confirmed.`,
         },
       ])
     } catch (err) {
@@ -421,7 +428,12 @@ export default function AiSalesChat() {
             {orderResult && (
               <div className="rounded border border-emerald-900 bg-emerald-950/40 p-3 text-sm text-grey-10">
                 <p className="font-semibold text-emerald-300">
-                  Order saved: {orderResult.order.id}
+                  Order{" "}
+                  {orderResult.order.orderNumber ??
+                    (orderResult.order.display_id
+                      ? `#${orderResult.order.display_id}`
+                      : orderResult.order.id)}{" "}
+                  confirmed & saved
                 </p>
                 <p className="mt-1">
                   Total: {orderResult.order.formattedTotal}
@@ -433,10 +445,20 @@ export default function AiSalesChat() {
                   <p className="text-xs uppercase tracking-[0.16em] text-grey-50">
                     Bitcoin wallet
                   </p>
-                  <p className="mt-2 break-all font-mono text-xs text-brand-200">
-                    {orderResult.payment.walletAddress ||
-                      "Wallet address is not configured yet."}
-                  </p>
+                  {orderResult.payment.walletAddress ? (
+                    <p className="mt-2 break-all font-mono text-xs text-brand-200">
+                      {orderResult.payment.walletAddress}
+                    </p>
+                  ) : (
+                    <p className="mt-2 text-xs leading-5 text-grey-30">
+                      Your order is reserved. Our team will send the payment
+                      address to your email shortly — or reach us via the{" "}
+                      <a href="/us/contact" className="underline text-brand-200">
+                        contact page
+                      </a>{" "}
+                      with your order number.
+                    </p>
+                  )}
                   {orderResult.payment.qrCodeImageUrl && (
                     <img
                       src={orderResult.payment.qrCodeImageUrl}
@@ -449,6 +471,14 @@ export default function AiSalesChat() {
                   {orderResult.payment.message} Required confirmations:{" "}
                   {orderResult.payment.requiredConfirmations}.
                 </p>
+                <a
+                  href={`/us/order/status?order=${
+                    orderResult.order.display_id ?? ""
+                  }`}
+                  className="mt-2 inline-block text-xs font-semibold text-brand-200 underline"
+                >
+                  Track this order anytime
+                </a>
               </div>
             )}
 
