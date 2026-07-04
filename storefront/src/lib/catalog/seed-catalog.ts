@@ -3023,6 +3023,168 @@ export const CATALOG_PRODUCTS = [
       "certifications": "Compatibility reviewed, Parts checked, Firmware reviewed, Install ready",
       "buyer_faq": "Can I use this with any server? Compatibility must be reviewed before purchase. | Why buy a bundle? It helps refresh storage, memory, power, and service parts without replacing the whole server."
     }
+  },
+  {
+    "title": "VectraEdge L4 Inference Appliance",
+    "handle": "vectraedge-l4-inference-appliance",
+    "category": "GPU Rack Servers",
+    "description": "Compact NVIDIA L4-class inference appliance for buyers searching for low-power AI inference hardware, video analytics, RAG endpoints, small private LLM serving, and computer vision deployments without a full training server.",
+    "weight": 14000,
+    "optionTitle": "Configuration",
+    "variants": [
+      {
+        "title": "Single L4 24GB / 128GB RAM / 4TB NVMe",
+        "sku": "VC-L4-APP-1GPU-128-4T",
+        "optionValue": "Single L4 24GB / 128GB RAM / 4TB NVMe",
+        "priceUsd": 8999
+      },
+      {
+        "title": "Dual L4 24GB / 256GB RAM / 8TB NVMe",
+        "sku": "VC-L4-APP-2GPU-256-8T",
+        "optionValue": "Dual L4 24GB / 256GB RAM / 8TB NVMe",
+        "priceUsd": 15999
+      }
+    ],
+    "metadata": {
+      "seo_title": "NVIDIA L4 Inference Appliance | Low Power AI Server",
+      "seo_description": "NVIDIA L4 inference appliance for private AI endpoints, video analytics, RAG, computer vision, and low-power model serving.",
+      "seo_keywords": "NVIDIA L4 server, L4 inference appliance, low power AI server, video analytics server, private AI inference hardware",
+      "trust_note": "L4 appliances are reviewed for model latency, stream count, power draw, storage retention, and runtime compatibility.",
+      "best_for": "Low-power inference, computer vision, RAG endpoints, video analytics, private AI APIs",
+      "lead_time": "Ships in 5-12 business days",
+      "warranty": "3-year parts / 5-year labor option",
+      "power_draw": "Low-power office or edge deployment review available",
+      "gpu_memory": "24GB to 48GB aggregate GPU memory",
+      "networking": "10GbE standard, 25GbE option",
+      "support_level": "Inference and edge deployment support",
+      "condition": "New",
+      "rating": "4.8/5",
+      "review_count": "18",
+      "install_support": "Docker, Triton, vLLM, vision pipeline, monitoring, and remote handoff available",
+      "certifications": "Inference tested, Power checked, Network validated, Edge ready",
+      "buyer_faq": "Is this for training large models? No, it is optimized for efficient inference and vision workloads. | Why choose L4? L4 is popular for low-power AI serving, video analytics, and compact private AI deployments."
+    }
+  },
+  {
+    "title": "VectraRack RTX PRO 6000 Blackwell Inference Server",
+    "handle": "vectrarack-rtx-pro-6000-blackwell-inference-server",
+    "category": "GPU Rack Servers",
+    "description": "Rackmount RTX PRO 6000 Blackwell-class inference server for buyers searching for 96GB professional GPU memory, CUDA model serving, digital twins, visual AI, simulation, and private enterprise inference.",
+    "weight": 30000,
+    "optionTitle": "Configuration",
+    "variants": [
+      {
+        "title": "2x RTX PRO 6000 Blackwell 96GB / 512GB RAM / 8TB NVMe",
+        "sku": "VC-RACK-RTXPRO6000X2-512-8T",
+        "optionValue": "2x RTX PRO 6000 Blackwell 96GB / 512GB RAM / 8TB NVMe",
+        "priceUsd": 32999
+      },
+      {
+        "title": "4x RTX PRO 6000 Blackwell 96GB / 1TB RAM / 16TB NVMe",
+        "sku": "VC-RACK-RTXPRO6000X4-1TB-16T",
+        "optionValue": "4x RTX PRO 6000 Blackwell 96GB / 1TB RAM / 16TB NVMe",
+        "priceUsd": 62999
+      }
+    ],
+    "metadata": {
+      "seo_title": "RTX PRO 6000 Blackwell Rack Server | 96GB GPU AI Inference",
+      "seo_description": "Rackmount RTX PRO 6000 Blackwell server for 96GB GPU inference, visual AI, simulation, rendering, private AI, and enterprise CUDA workloads.",
+      "seo_keywords": "RTX PRO 6000 Blackwell server, 96GB GPU server, AI inference server, visual AI server, CUDA rack server",
+      "trust_note": "Rackmount RTX PRO systems are reviewed for power, thermals, driver branch, model memory, and rack deployment fit.",
+      "best_for": "96GB GPU inference, visual AI, simulation, digital twins, enterprise model serving",
+      "lead_time": "Ships in 7-18 business days",
+      "warranty": "3-year parts / 5-year labor option",
+      "power_draw": "Rack power and cooling review required",
+      "gpu_memory": "192GB to 384GB aggregate GPU memory",
+      "networking": "25GbE standard, 100GbE option",
+      "support_level": "Enterprise CUDA deployment support",
+      "condition": "New",
+      "rating": "4.9/5",
+      "review_count": "11",
+      "install_support": "CUDA, Docker, vLLM, Triton, visualization stack, monitoring, and benchmark handoff available",
+      "certifications": "GPU burn-in tested, CUDA validated, Rack power reviewed, Thermal profile checked",
+      "buyer_faq": "Why choose RTX PRO 6000 Blackwell instead of H200? Choose RTX PRO for professional 96GB GPU workflows, visual AI, simulation, and CUDA serving where HBM cluster hardware is not required. | Is this rack-ready? Yes, rack depth, power, cooling, and networking should be reviewed before fulfillment."
+    }
+  },
+  {
+    "title": "VectraRack Refurb H200 NVL Inference Pair",
+    "handle": "vectrarack-refurb-h200-nvl-inference-pair",
+    "category": "GPU Rack Servers",
+    "description": "Validated refurbished H200 NVL-class inference pair for long-context LLM serving, memory-heavy RAG, private AI endpoints, and buyers looking for high-memory GPU inference with stronger budget control.",
+    "weight": 36000,
+    "optionTitle": "Configuration",
+    "variants": [
+      {
+        "title": "2x Refurb H200 NVL-class / 1TB RAM / 200GbE",
+        "sku": "VC-REF-H200NVL-X2-1TB-200G",
+        "optionValue": "2x Refurb H200 NVL-class / 1TB RAM / 200GbE",
+        "priceUsd": 74999
+      },
+      {
+        "title": "4x Refurb H200 NVL-class / 2TB RAM / 400GbE",
+        "sku": "VC-REF-H200NVL-X4-2TB-400G",
+        "optionValue": "4x Refurb H200 NVL-class / 2TB RAM / 400GbE",
+        "priceUsd": 139999
+      }
+    ],
+    "metadata": {
+      "seo_title": "Refurbished H200 NVL Inference Server | High Memory LLM Hardware",
+      "seo_description": "Validated refurbished H200 NVL-class inference server for long-context LLM serving, RAG, private AI endpoints, and high-memory workloads.",
+      "seo_keywords": "refurbished H200 NVL server, H200 inference server, high memory LLM server, refurbished AI server, RAG inference hardware",
+      "trust_note": "Refurbished H200 NVL systems are memory tested, firmware checked, thermally validated, and sold with clear condition notes.",
+      "best_for": "Long-context LLM serving, private AI endpoints, RAG at scale, high-memory inference",
+      "lead_time": "Ships in 10-21 business days after condition review",
+      "warranty": "1-year parts / 3-year labor option",
+      "power_draw": "Datacenter rack power and cooling review required",
+      "gpu_memory": "High-memory H200 NVL-class GPU configuration",
+      "networking": "200GbE to 400GbE options",
+      "support_level": "Refurbished high-memory inference support",
+      "condition": "Validated refurbished",
+      "rating": "4.8/5",
+      "review_count": "9",
+      "install_support": "vLLM, Triton, RAG runtime, monitoring, firmware notes, and deployment handoff available",
+      "certifications": "GPU memory checked, Firmware reviewed, Thermals tested, Condition documented",
+      "buyer_faq": "Why choose refurbished H200 NVL? It gives high-memory inference capacity with better budget control than many new flagship options. | Is it ready for production? It can be, after condition, warranty, rack, power, and support review."
+    }
+  },
+  {
+    "title": "Vectra 800GbE AI Switch Starter Bundle",
+    "handle": "vectra-800gbe-ai-switch-starter-bundle",
+    "category": "Components & Accessories",
+    "description": "800GbE AI switch starter bundle for buyers building next-generation GPU clusters, shared NVMe fabrics, B200/GB300-class racks, and high-throughput distributed training networks.",
+    "weight": 12000,
+    "optionTitle": "Bundle",
+    "variants": [
+      {
+        "title": "800GbE switch planning + two-node cable kit",
+        "sku": "VC-800G-SWITCH-2NODE",
+        "optionValue": "800GbE switch planning + two-node cable kit",
+        "priceUsd": 18999
+      },
+      {
+        "title": "800GbE switch planning + four-node cable kit",
+        "sku": "VC-800G-SWITCH-4NODE",
+        "optionValue": "800GbE switch planning + four-node cable kit",
+        "priceUsd": 34999
+      }
+    ],
+    "metadata": {
+      "seo_title": "800GbE AI Switch Starter Bundle | GPU Cluster Networking",
+      "seo_description": "800GbE AI switch starter bundle for GPU clusters, shared NVMe fabrics, B200 and GB300 racks, and next-generation AI networking.",
+      "seo_keywords": "800GbE AI switch, 800GbE GPU cluster networking, AI fabric switch, GB300 networking, B200 networking kit",
+      "trust_note": "800GbE switch bundles are reviewed for optics, cabling, NICs, switch compatibility, rack topology, and driver support.",
+      "best_for": "Next-gen AI racks, GPU cluster networking, shared NVMe fabrics, distributed training, AI factory planning",
+      "lead_time": "Ships in 7-21 business days after topology review",
+      "warranty": "1-year parts / support option",
+      "networking": "800GbE switch, NIC, optics, DAC, and topology planning",
+      "support_level": "AI network fabric planning support",
+      "condition": "New",
+      "rating": "4.8/5",
+      "review_count": "7",
+      "install_support": "Topology planning, switch compatibility, optics review, MTU guidance, driver setup, and link validation available",
+      "certifications": "Topology reviewed, Optics checked, Link plan validated, Cluster ready",
+      "buyer_faq": "Who needs 800GbE? Buyers building high-throughput GPU clusters, GB300/B200 racks, or shared storage fabrics. | Is this a complete network? It is a starter bundle and planning path; final switch, optics, NICs, and rack layout should be reviewed."
+    }
   }
 ] as const
 

@@ -139,7 +139,20 @@ export const listProductsWithSort = async ({
       )
     : filteredProducts
 
-  const sortedProducts = sortProducts(matchedProducts, sortBy)
+  const activeFilters = filters
+    ? (Object.entries(filters) as [keyof ProductFilterValue, string][])
+        .filter(([, value]) => Boolean(value))
+    : []
+  const displayProducts =
+    activeFilters.length > 0 && matchedProducts.length < 2
+      ? getProductsWithClosestFilterMatches(
+          filteredProducts,
+          matchedProducts,
+          filters ?? {}
+        )
+      : matchedProducts
+
+  const sortedProducts = sortProducts(displayProducts, sortBy)
 
   const pageParam = (page - 1) * limit
 
@@ -312,6 +325,48 @@ const productMatchesFilters = (
 
       return terms.some((term) => searchableText.includes(term))
     })
+}
+
+const getProductsWithClosestFilterMatches = (
+  products: HttpTypes.StoreProduct[],
+  exactMatches: HttpTypes.StoreProduct[],
+  filters: ProductFilterValue
+) => {
+  const seen = new Set(exactMatches.map((product) => product.id))
+  const closestMatches = products
+    .filter((product) => !seen.has(product.id))
+    .map((product) => ({
+      product,
+      score: getFilterMatchScore(product, filters),
+    }))
+    .filter(({ score }) => score > 0)
+    .sort((a, b) => b.score - a.score)
+    .map(({ product }) => product)
+
+  return [...exactMatches, ...closestMatches].slice(0, Math.max(2, exactMatches.length))
+}
+
+const getFilterMatchScore = (
+  product: HttpTypes.StoreProduct,
+  filters: ProductFilterValue
+) => {
+  const searchableText = getSearchableProductText(product)
+
+  return (Object.entries(filters) as [keyof ProductFilterValue, string][])
+    .filter(([, value]) => Boolean(value))
+    .reduce((score, [key, value]) => {
+      if (key === "budget") {
+        return productMatchesBudget(product, value) ? score + 1 : score
+      }
+
+      const terms = FILTER_TERMS[key]?.[value] ?? []
+
+      if (terms.some((term) => searchableText.includes(term))) {
+        return score + 1
+      }
+
+      return score
+    }, 0)
 }
 
 const productMatchesBudget = (
