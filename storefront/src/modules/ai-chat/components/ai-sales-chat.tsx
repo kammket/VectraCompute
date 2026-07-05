@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { usePathname } from "next/navigation"
 
 type ChatMessage = {
@@ -115,6 +115,23 @@ export default function AiSalesChat() {
     },
   ])
   const [suggestedProducts, setSuggestedProducts] = useState<SuggestedProduct[]>([])
+
+  // Any component can open the chat (optionally with a seeded question) by
+  // dispatching: window.dispatchEvent(new CustomEvent("vectra:open-chat",
+  // { detail: { message } })). Used by the product-page compatibility button.
+  useEffect(() => {
+    const handler = (event: Event) => {
+      const detail = (event as CustomEvent).detail as
+        | { message?: string }
+        | undefined
+      setOpen(true)
+      if (detail?.message) {
+        setInput(detail.message)
+      }
+    }
+    window.addEventListener("vectra:open-chat", handler)
+    return () => window.removeEventListener("vectra:open-chat", handler)
+  }, [])
   const [checkoutOpen, setCheckoutOpen] = useState(false)
   const [form, setForm] = useState<OrderForm>(emptyForm)
   const [orderResult, setOrderResult] = useState<AiOrderResponse | null>(null)

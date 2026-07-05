@@ -10,6 +10,7 @@ import { convertToLocale } from "@lib/util/money"
 import { HttpTypes } from "@medusajs/types"
 import { Button, Heading, Text } from "@modules/common/components/ui"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
+import { COUNTRIES } from "@lib/util/countries"
 import type { ReactNode } from "react"
 import { useActionState, useState } from "react"
 
@@ -267,9 +268,33 @@ export default function SimpleCheckoutForm({
           <Field label="Postal code">
           <input name="postal_code" className="checkout-input" />
           </Field>
-          <Field label="Country code">
-          <input name="country_code" defaultValue="us" className="checkout-input" />
+          <Field label="Country" wide>
+            <select
+              name="country_code"
+              defaultValue="us"
+              required
+              className="checkout-input"
+            >
+              {COUNTRIES.map((country) => (
+                <option key={country.code} value={country.code}>
+                  {country.name}
+                </option>
+              ))}
+            </select>
           </Field>
+        </div>
+        <div className="mt-3 rounded-md border border-ui-border-base bg-grey-5 p-3">
+          <p className="text-small-regular leading-6 text-ui-fg-subtle">
+            <span className="font-medium text-ui-fg-base">
+              We ship worldwide.
+            </span>{" "}
+            Delivery is handled by DHL, UPS, FedEx, and TNT depending on your
+            country, fully insured at our cost. Don&apos;t see your country?{" "}
+            <LocalizedClientLink href="/contact" className="text-brand-700 underline">
+              Ask us
+            </LocalizedClientLink>{" "}
+            and we&apos;ll confirm the route.
+          </p>
         </div>
       </div>
 

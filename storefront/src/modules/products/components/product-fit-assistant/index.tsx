@@ -2,6 +2,7 @@ import { HttpTypes } from "@medusajs/types"
 
 import { getMetadataList, getMetadataString } from "@lib/util/product-metadata"
 import { getProductProfile } from "@lib/util/product-profile"
+import AskCompatibility from "@modules/products/components/ask-compatibility"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import { Button, Heading, Text } from "@modules/common/components/ui"
 
@@ -414,17 +415,7 @@ const ProductFitAssistant = ({
                 power, cooling, and deployment details for engineer review.
               </Text>
             </div>
-            <LocalizedClientLink
-              href={`/contact?product=${encodeURIComponent(
-                product.title
-              )}&constraints=${encodeURIComponent(
-                `Compatibility review for ${product.title}`
-              )}`}
-            >
-                <Button className="w-full bg-brand-600 hover:bg-grey-10 border-none medium:w-auto">
-                Ask compatibility question
-              </Button>
-            </LocalizedClientLink>
+            <AskCompatibility productTitle={product.title} />
           </div>
         </div>
 

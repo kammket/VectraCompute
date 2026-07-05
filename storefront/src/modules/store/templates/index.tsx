@@ -5,6 +5,7 @@ import ProductFilters from "@modules/store/components/product-filters"
 import ProductSearch from "@modules/store/components/product-search"
 import StoreBuyingPaths from "@modules/store/components/buying-paths"
 import RefinementList from "@modules/store/components/refinement-list"
+import MobileFilterDrawer from "@modules/store/components/mobile-filter-drawer"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
 import { ProductFilterValue } from "@modules/store/types"
 
@@ -25,6 +26,7 @@ const StoreTemplate = ({
 }) => {
   const pageNumber = page ? parseInt(page) : 1
   const sort = sortBy || "created_at"
+  const activeFilterCount = Object.values(filters ?? {}).filter(Boolean).length
 
   return (
     <div className="bg-grey-5">
@@ -47,8 +49,16 @@ const StoreTemplate = ({
           <ProductSearch initialQuery={query} />
         </div>
 
-        <div className="mt-8 grid grid-cols-1 large:grid-cols-[260px_minmax(0,1fr)] gap-8 items-start">
-          <aside className="large:sticky large:top-24 grid grid-cols-1 gap-5">
+        {/* Mobile/tablet: filters live in a dismissible bottom sheet */}
+        <div className="mt-6 large:hidden">
+          <MobileFilterDrawer activeCount={activeFilterCount}>
+            <ProductFilters filters={filters ?? {}} />
+            <RefinementList sortBy={sort} />
+          </MobileFilterDrawer>
+        </div>
+
+        <div className="mt-6 grid grid-cols-1 large:mt-8 large:grid-cols-[260px_minmax(0,1fr)] gap-8 items-start">
+          <aside className="hidden large:sticky large:top-24 large:grid grid-cols-1 gap-5">
             <div className="rounded-md border border-ui-border-base bg-white p-4 shadow-elevation-card-rest">
               <ProductFilters filters={filters ?? {}} />
             </div>
