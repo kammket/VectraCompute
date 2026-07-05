@@ -32,10 +32,13 @@ export const PremiumPageHeader = ({
           <Text className="text-small-semi uppercase tracking-wide text-brand-200 mb-3">
             {eyebrow}
           </Text>
-          <Heading level="h1" className="text-3xl leading-tight mb-4 text-white">
+          <Heading
+            level="h1"
+            className="text-2xl small:text-3xl leading-tight mb-4 text-white"
+          >
             {title}
           </Heading>
-          <Text className="text-base-regular text-grey-20 leading-7 max-w-3xl">
+          <Text className="text-small-regular small:text-base-regular text-grey-20 leading-6 small:leading-7 max-w-3xl">
             {description}
           </Text>
           {actions.length > 0 && (

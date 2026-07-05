@@ -257,9 +257,9 @@ export default function AiSalesChat() {
   }
 
   return (
-    <div className="fixed bottom-5 right-5 z-50 flex max-w-[calc(100vw-2.5rem)] flex-col items-end">
+    <>
       {open && (
-        <div className="mb-3 flex h-[min(680px,calc(100dvh-7rem))] w-[420px] max-w-full flex-col overflow-hidden rounded border border-grey-80 bg-grey-90 shadow-2xl shadow-grey-90/30">
+        <div className="fixed inset-x-2 bottom-2 top-14 z-[60] flex flex-col overflow-hidden rounded-lg border border-grey-80 bg-grey-90 shadow-2xl shadow-grey-90/30 small:inset-x-auto small:bottom-24 small:right-5 small:top-auto small:h-[min(680px,calc(100dvh-8rem))] small:w-[420px]">
           <div className="border-b border-grey-80 bg-grey-90 px-4 py-3">
             <div className="flex items-start justify-between gap-3">
               <div>
@@ -573,13 +573,38 @@ export default function AiSalesChat() {
         </div>
       )}
 
+      {/* Launcher: middle-right on mobile so it never covers the sticky
+          add-to-cart bar or product option buttons; bottom-right on desktop. */}
       <button
         type="button"
         onClick={() => setOpen((current) => !current)}
-        className="rounded-full border border-brand-300 bg-grey-90 px-5 py-3 text-sm font-semibold text-white shadow-xl shadow-grey-90/30 hover:bg-grey-90"
+        aria-label={open ? "Close AI chat" : "Open AI hardware chat"}
+        className="fixed right-3 top-1/2 z-[70] -translate-y-1/2 inline-flex items-center gap-2 rounded-full border border-brand-300 bg-grey-90 px-3 py-3 text-sm font-semibold text-white shadow-xl shadow-grey-90/40 hover:bg-grey-80 small:right-5 small:top-auto small:bottom-5 small:translate-y-0 small:px-5"
       >
-        AI hardware engineer
+        {open ? (
+          <svg viewBox="0 0 20 20" className="h-5 w-5" aria-hidden>
+            <path
+              d="M5 5l10 10M15 5L5 15"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+            />
+          </svg>
+        ) : (
+          <svg viewBox="0 0 20 20" className="h-5 w-5" aria-hidden>
+            <path
+              d="M3 4.5h14v9H8l-4 3v-3H3z"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.6"
+              strokeLinejoin="round"
+            />
+          </svg>
+        )}
+        <span className="hidden small:inline">
+          {open ? "Close chat" : "AI hardware engineer"}
+        </span>
       </button>
-    </div>
+    </>
   )
 }

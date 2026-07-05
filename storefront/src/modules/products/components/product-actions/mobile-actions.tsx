@@ -148,51 +148,56 @@ const MobileActions: React.FC<MobileActionsProps> = ({
           </Transition.Child>
 
           <div className="fixed bottom-0 inset-x-0">
-            <div className="flex min-h-full h-full items-center justify-center text-center">
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0"
-                enterTo="opacity-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0"
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0 translate-y-full"
+              enterTo="opacity-100 translate-y-0"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100 translate-y-0"
+              leaveTo="opacity-0 translate-y-full"
+            >
+              <Dialog.Panel
+                className="w-full transform overflow-hidden rounded-t-2xl bg-white text-left shadow-2xl"
+                data-testid="mobile-actions-modal"
               >
-                <Dialog.Panel
-                  className="w-full h-full transform overflow-hidden text-left flex flex-col gap-y-3"
-                  data-testid="mobile-actions-modal"
-                >
-                  <div className="w-full flex justify-end pr-6">
-                    <button
-                      onClick={close}
-                      className="bg-white w-12 h-12 rounded-full text-ui-fg-base flex justify-center items-center"
-                      data-testid="close-modal-button"
-                    >
-                      <X />
-                    </button>
-                  </div>
-                  <div className="bg-white px-6 py-12">
-                    {(product.variants?.length ?? 0) > 1 && (
-                      <div className="flex flex-col gap-y-6">
-                        {(product.options || []).map((option) => {
-                          return (
-                            <div key={option.id}>
-                              <OptionSelect
-                                option={option}
-                                current={options[option.id]}
-                                updateOption={updateOptions}
-                                title={option.title ?? ""}
-                                disabled={optionsDisabled}
-                              />
-                            </div>
-                          )
-                        })}
-                      </div>
-                    )}
-                  </div>
-                </Dialog.Panel>
-              </Transition.Child>
-            </div>
+                <div className="flex items-center justify-between border-b border-ui-border-base px-5 py-4">
+                  <span className="text-base-semi text-ui-fg-base">
+                    Choose your configuration
+                  </span>
+                  <button
+                    onClick={close}
+                    className="flex h-9 w-9 items-center justify-center rounded-full bg-grey-5 text-ui-fg-base"
+                    data-testid="close-modal-button"
+                    aria-label="Close options"
+                  >
+                    <X />
+                  </button>
+                </div>
+                <div className="max-h-[70dvh] overflow-y-auto px-5 py-5">
+                  {(product.variants?.length ?? 0) > 1 && (
+                    <div className="flex flex-col gap-y-6">
+                      {(product.options || []).map((option) => {
+                        return (
+                          <div key={option.id}>
+                            <OptionSelect
+                              option={option}
+                              current={options[option.id]}
+                              updateOption={updateOptions}
+                              title={option.title ?? ""}
+                              disabled={optionsDisabled}
+                            />
+                          </div>
+                        )
+                      })}
+                    </div>
+                  )}
+                  <Button onClick={close} className="mt-6 w-full">
+                    Done
+                  </Button>
+                </div>
+              </Dialog.Panel>
+            </Transition.Child>
           </div>
         </Dialog>
       </Transition>
