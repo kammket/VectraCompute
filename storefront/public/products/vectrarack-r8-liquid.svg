@@ -1,20 +1,20 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600" role="img" aria-label="VectraRack R8 Liquid">
   <defs>
-    <linearGradient id="bgv15s2d" x1="0" y1="0" x2="1" y2="1">
+    <linearGradient id="bgi5v0nn" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#0B0F1A"/>
       <stop offset="1" stop-color="#0F766E"/>
     </linearGradient>
-    <radialGradient id="glowv15s2d" cx="0.5" cy="0.45" r="0.6">
+    <radialGradient id="glowi5v0nn" cx="0.5" cy="0.45" r="0.6">
       <stop offset="0" stop-color="#2DD4BF" stop-opacity="0.25"/>
       <stop offset="1" stop-color="#2DD4BF" stop-opacity="0"/>
     </radialGradient>
-    <pattern id="dotsv15s2d" width="26" height="26" patternUnits="userSpaceOnUse">
+    <pattern id="dotsi5v0nn" width="26" height="26" patternUnits="userSpaceOnUse">
       <circle cx="2" cy="2" r="1.4" fill="#FFFFFF" opacity="0.05"/>
     </pattern>
   </defs>
-  <rect width="800" height="600" fill="url(#bgv15s2d)"/>
-  <rect width="800" height="600" fill="url(#dotsv15s2d)"/>
-  <rect width="800" height="600" fill="url(#glowv15s2d)"/>
+  <rect width="800" height="600" fill="url(#bgi5v0nn)"/>
+  <rect width="800" height="600" fill="url(#dotsi5v0nn)"/>
+  <rect width="800" height="600" fill="url(#glowi5v0nn)"/>
   
         <rect x="250" y="240" width="300" height="46" rx="6" fill="#0F172A" stroke="#2DD4BF" stroke-width="2.5"/>
         <rect x="250" y="296" width="300" height="46" rx="6" fill="#0F172A" stroke="#2DD4BF" stroke-width="2.5"/>

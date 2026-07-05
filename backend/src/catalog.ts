@@ -2654,5 +2654,479 @@ export const PRODUCT_CATALOG: BackendCatalogProduct[] = [
         "priceUsd": 1039
       }
     ]
+  },
+  {
+    "handle": "nvidia-blackwell-ultra-b300-gpu",
+    "title": "NVIDIA Blackwell Ultra B300 GPU Module",
+    "category": "Components & Accessories",
+    "description": "NVIDIA Blackwell Ultra (B300-class) GPU module with 288GB HBM3e for frontier-scale training and high-throughput inference. Supplied through our enterprise allocation channel with compatibility review against your baseboard, power, and cooling before dispatch.",
+    "bestFor": "Frontier model training, large-scale inference, HGX-class server builds",
+    "condition": "New",
+    "warranty": "Manufacturer warranty plus VectraCompute validation support",
+    "leadTime": "Ships in 3-6 weeks after allocation and compatibility review",
+    "specs": [],
+    "variants": [
+      {
+        "title": "Single B300 SXM module / 288GB HBM3e",
+        "sku": "VC-B300-1X",
+        "optionValue": "Single B300 SXM module / 288GB HBM3e",
+        "priceUsd": 26999
+      },
+      {
+        "title": "8x B300 module set / HGX baseboard-ready",
+        "sku": "VC-B300-8X",
+        "optionValue": "8x B300 module set / HGX baseboard-ready",
+        "priceUsd": 215999
+      }
+    ]
+  },
+  {
+    "handle": "nvidia-h100-80gb-tensor-core-gpu",
+    "title": "NVIDIA H100 80GB Tensor Core GPU",
+    "category": "Components & Accessories",
+    "description": "NVIDIA H100 Tensor Core GPU for training and inference at data-center scale, available in PCIe, NVL, and SXM form factors. Each card is functionally tested and firmware-validated before shipment.",
+    "bestFor": "LLM training and inference, HPC, multi-GPU server upgrades",
+    "condition": "New",
+    "warranty": "Manufacturer warranty plus VectraCompute validation support",
+    "leadTime": "Ships in 5-10 business days after validation",
+    "specs": [],
+    "variants": [
+      {
+        "title": "H100 80GB PCIe",
+        "sku": "VC-H100-PCIE",
+        "optionValue": "H100 80GB PCIe",
+        "priceUsd": 14399
+      },
+      {
+        "title": "H100 NVL 94GB PCIe",
+        "sku": "VC-H100-NVL",
+        "optionValue": "H100 NVL 94GB PCIe",
+        "priceUsd": 17999
+      },
+      {
+        "title": "H100 80GB SXM5 with carrier review",
+        "sku": "VC-H100-SXM",
+        "optionValue": "H100 80GB SXM5 with carrier review",
+        "priceUsd": 16199
+      }
+    ]
+  },
+  {
+    "handle": "amd-instinct-mi300x-accelerator",
+    "title": "AMD Instinct MI300X 192GB Accelerator",
+    "category": "Components & Accessories",
+    "description": "AMD Instinct MI300X accelerator with 192GB HBM3 - the largest single-device memory in its class, ideal for serving big models without model-parallel complexity. ROCm-validated before shipment.",
+    "bestFor": "Large-model inference, ROCm training, memory-bound AI workloads",
+    "condition": "New",
+    "warranty": "Manufacturer warranty plus VectraCompute validation support",
+    "leadTime": "Ships in 1-3 weeks after platform review",
+    "specs": [],
+    "variants": [
+      {
+        "title": "Single MI300X OAM module / 192GB HBM3",
+        "sku": "VC-MI300X-OAM",
+        "optionValue": "Single MI300X OAM module / 192GB HBM3",
+        "priceUsd": 8999
+      },
+      {
+        "title": "8x MI300X OAM set / platform-ready",
+        "sku": "VC-MI300X-8X",
+        "optionValue": "8x MI300X OAM set / platform-ready",
+        "priceUsd": 71899
+      }
+    ]
+  },
+  {
+    "handle": "intel-gaudi-3-ai-accelerator",
+    "title": "Intel Gaudi 3 AI Accelerator",
+    "category": "Components & Accessories",
+    "description": "Intel Gaudi 3 AI accelerator with 128GB HBM2e and integrated 200GbE RoCE networking on every card - cluster scaling without separate NICs. A cost-efficient alternative for training and inference.",
+    "bestFor": "Cost-efficient training, inference clusters, Ethernet-based scale-out",
+    "condition": "New",
+    "warranty": "Manufacturer warranty plus VectraCompute validation support",
+    "leadTime": "Ships in 1-3 weeks after platform review",
+    "specs": [],
+    "variants": [
+      {
+        "title": "Gaudi 3 PCIe (HL-338)",
+        "sku": "VC-GAUDI3-PCIE",
+        "optionValue": "Gaudi 3 PCIe (HL-338)",
+        "priceUsd": 4799
+      },
+      {
+        "title": "Gaudi 3 OAM (HL-325L)",
+        "sku": "VC-GAUDI3-OAM",
+        "optionValue": "Gaudi 3 OAM (HL-325L)",
+        "priceUsd": 9349
+      }
+    ]
+  },
+  {
+    "handle": "intel-core-ultra-9-285k-processor",
+    "title": "Intel Core Ultra 9 285K Processor",
+    "category": "Components & Accessories",
+    "description": "Intel Core Ultra 9 285K (Arrow Lake) with 24 cores and an integrated NPU for local AI acceleration - the flagship desktop CPU for AI development workstations and creator builds.",
+    "bestFor": "AI developer desktops, creator workstations, high-frequency compute",
+    "condition": "New",
+    "warranty": "Manufacturer warranty plus VectraCompute validation support",
+    "leadTime": "Ships in 2-5 business days",
+    "specs": [],
+    "variants": [
+      {
+        "title": "Boxed CPU",
+        "sku": "VC-CPU-285K",
+        "optionValue": "Boxed CPU",
+        "priceUsd": 349
+      },
+      {
+        "title": "CPU + Z890 board + 64GB DDR5 bundle",
+        "sku": "VC-CPU-285K-KIT",
+        "optionValue": "CPU + Z890 board + 64GB DDR5 bundle",
+        "priceUsd": 749
+      }
+    ]
+  },
+  {
+    "handle": "amd-ryzen-ai-9-hx-370-kit",
+    "title": "AMD Ryzen AI 9 HX 370 Mini-ITX Kit",
+    "category": "Components & Accessories",
+    "description": "AMD Ryzen AI 9 HX 370 supplied on a validated Mini-ITX carrier board - 12 Zen 5 cores plus a 50 TOPS NPU for compact AI PCs, edge boxes, and quiet local-inference builds.",
+    "bestFor": "Compact AI PCs, quiet local inference, embedded AI development",
+    "condition": "New",
+    "warranty": "Manufacturer warranty plus VectraCompute validation support",
+    "leadTime": "Ships in 3-7 business days",
+    "specs": [],
+    "variants": [
+      {
+        "title": "HX 370 on Mini-ITX carrier board",
+        "sku": "VC-CPU-HX370",
+        "optionValue": "HX 370 on Mini-ITX carrier board",
+        "priceUsd": 329
+      },
+      {
+        "title": "Barebone mini PC (board + case + PSU)",
+        "sku": "VC-CPU-HX370-PC",
+        "optionValue": "Barebone mini PC (board + case + PSU)",
+        "priceUsd": 479
+      }
+    ]
+  },
+  {
+    "handle": "amd-threadripper-pro-7000wx-processor",
+    "title": "AMD Ryzen Threadripper PRO 7000 WX Processor",
+    "category": "Components & Accessories",
+    "description": "AMD Ryzen Threadripper PRO 7000 WX-series processors - up to 96 Zen 4 cores, 8-channel DDR5, and 128 PCIe 5.0 lanes for multi-GPU AI workstations that need real host bandwidth.",
+    "bestFor": "Multi-GPU workstation hosts, data preprocessing, rendering and simulation",
+    "condition": "New",
+    "warranty": "Manufacturer warranty plus VectraCompute validation support",
+    "leadTime": "Ships in 2-5 business days",
+    "specs": [],
+    "variants": [
+      {
+        "title": "7975WX / 32 cores",
+        "sku": "VC-TRP-7975",
+        "optionValue": "7975WX / 32 cores",
+        "priceUsd": 2349
+      },
+      {
+        "title": "7985WX / 64 cores",
+        "sku": "VC-TRP-7985",
+        "optionValue": "7985WX / 64 cores",
+        "priceUsd": 4399
+      },
+      {
+        "title": "7995WX / 96 cores",
+        "sku": "VC-TRP-7995",
+        "optionValue": "7995WX / 96 cores",
+        "priceUsd": 5999
+      }
+    ]
+  },
+  {
+    "handle": "intel-xeon-6-scalable-processor",
+    "title": "Intel Xeon 6 Scalable Processor",
+    "category": "Components & Accessories",
+    "description": "Intel Xeon 6 (6th Gen Scalable) processors for AI servers - efficiency cores for dense inference hosting or performance cores with AMX acceleration for training pipelines and memory-bound serving.",
+    "bestFor": "AI server hosts, inference density, memory-bandwidth-bound serving",
+    "condition": "New",
+    "warranty": "Manufacturer warranty plus VectraCompute validation support",
+    "leadTime": "Ships in 1-2 weeks",
+    "specs": [],
+    "variants": [
+      {
+        "title": "Xeon 6740E / 48 E-cores",
+        "sku": "VC-XE6-6740E",
+        "optionValue": "Xeon 6740E / 48 E-cores",
+        "priceUsd": 2649
+      },
+      {
+        "title": "Xeon 6952P / 72 P-cores",
+        "sku": "VC-XE6-6952P",
+        "optionValue": "Xeon 6952P / 72 P-cores",
+        "priceUsd": 6849
+      },
+      {
+        "title": "Xeon 6980P / 128 P-cores",
+        "sku": "VC-XE6-6980P",
+        "optionValue": "Xeon 6980P / 128 P-cores",
+        "priceUsd": 10699
+      }
+    ]
+  },
+  {
+    "handle": "snapdragon-x-elite-ai-mini-pc",
+    "title": "Snapdragon X Elite AI Mini PC",
+    "category": "Workstations by CPU Platform",
+    "description": "Compact AI development PC built on the Qualcomm Snapdragon X Elite (X1E-84-100) - 12 Oryon cores and a 45 TOPS NPU for Windows-on-ARM AI development, quiet enough for any desk.",
+    "bestFor": "Windows-on-ARM AI development, NPU application testing, quiet desk compute",
+    "condition": "New",
+    "warranty": "Manufacturer warranty plus VectraCompute validation support",
+    "leadTime": "Ships in 3-7 business days",
+    "specs": [],
+    "variants": [
+      {
+        "title": "32GB RAM / 1TB NVMe",
+        "sku": "VC-SDXE-32-1T",
+        "optionValue": "32GB RAM / 1TB NVMe",
+        "priceUsd": 539
+      },
+      {
+        "title": "64GB RAM / 2TB NVMe",
+        "sku": "VC-SDXE-64-2T",
+        "optionValue": "64GB RAM / 2TB NVMe",
+        "priceUsd": 749
+      }
+    ]
+  },
+  {
+    "handle": "nvidia-geforce-rtx-5090-gpu",
+    "title": "NVIDIA GeForce RTX 5090 32GB GPU",
+    "category": "Components & Accessories",
+    "description": "NVIDIA GeForce RTX 5090 add-in card with 32GB GDDR7 - the strongest consumer GPU for local LLMs, letting 70B-class models run quantized on a single card. Burn-in tested before dispatch.",
+    "bestFor": "Local LLM inference, fine-tuning, generative image and video",
+    "condition": "New",
+    "warranty": "Manufacturer warranty plus VectraCompute validation support",
+    "leadTime": "Ships in 2-5 business days",
+    "specs": [],
+    "variants": [
+      {
+        "title": "Single card",
+        "sku": "VC-GPU-5090",
+        "optionValue": "Single card",
+        "priceUsd": 1439
+      },
+      {
+        "title": "2x matched pair",
+        "sku": "VC-GPU-5090-2X",
+        "optionValue": "2x matched pair",
+        "priceUsd": 2869
+      }
+    ]
+  },
+  {
+    "handle": "nvidia-geforce-rtx-4090-gpu",
+    "title": "NVIDIA GeForce RTX 4090 24GB GPU",
+    "category": "Components & Accessories",
+    "description": "NVIDIA GeForce RTX 4090 with 24GB GDDR6X - still the best price-per-VRAM card for fine-tuning and mid-size local models. Every card is stress-tested under CUDA load before it ships.",
+    "bestFor": "Fine-tuning, mid-size local models, budget multi-GPU rigs",
+    "condition": "New",
+    "warranty": "Manufacturer warranty plus VectraCompute validation support",
+    "leadTime": "Ships in 2-5 business days",
+    "specs": [],
+    "variants": [
+      {
+        "title": "Single card",
+        "sku": "VC-GPU-4090",
+        "optionValue": "Single card",
+        "priceUsd": 1079
+      },
+      {
+        "title": "2x matched pair",
+        "sku": "VC-GPU-4090-2X",
+        "optionValue": "2x matched pair",
+        "priceUsd": 2149
+      }
+    ]
+  },
+  {
+    "handle": "nvidia-rtx-6000-ada-gpu",
+    "title": "NVIDIA RTX 6000 Ada 48GB GPU",
+    "category": "Components & Accessories",
+    "description": "NVIDIA RTX 6000 Ada Generation with 48GB ECC GDDR6 - professional-grade reliability for long unattended training runs, blower-style cooling for dense multi-GPU workstations.",
+    "bestFor": "Long training runs, ECC-critical workloads, dense multi-GPU workstations",
+    "condition": "New",
+    "warranty": "Manufacturer warranty plus VectraCompute validation support",
+    "leadTime": "Ships in 3-7 business days",
+    "specs": [],
+    "variants": [
+      {
+        "title": "Single card",
+        "sku": "VC-GPU-6000ADA",
+        "optionValue": "Single card",
+        "priceUsd": 4079
+      },
+      {
+        "title": "2x matched pair",
+        "sku": "VC-GPU-6000ADA-2X",
+        "optionValue": "2x matched pair",
+        "priceUsd": 8149
+      }
+    ]
+  },
+  {
+    "handle": "amd-radeon-rx-7900-xtx-gpu",
+    "title": "AMD Radeon RX 7900 XTX 24GB GPU",
+    "category": "Components & Accessories",
+    "description": "AMD Radeon RX 7900 XTX with 24GB GDDR6 - the budget path to 24GB of VRAM for ROCm-based local inference and open-model experimentation at half the cost of comparable NVIDIA VRAM.",
+    "bestFor": "Budget local inference, ROCm experimentation, 24GB VRAM on a budget",
+    "condition": "New",
+    "warranty": "Manufacturer warranty plus VectraCompute validation support",
+    "leadTime": "Ships in 2-5 business days",
+    "specs": [],
+    "variants": [
+      {
+        "title": "Single card",
+        "sku": "VC-GPU-79XTX",
+        "optionValue": "Single card",
+        "priceUsd": 509
+      },
+      {
+        "title": "2x pair",
+        "sku": "VC-GPU-79XTX-2X",
+        "optionValue": "2x pair",
+        "priceUsd": 1019
+      }
+    ]
+  },
+  {
+    "handle": "nvidia-jetson-agx-orin-developer-kit",
+    "title": "NVIDIA Jetson AGX Orin Developer Kit",
+    "category": "Edge & Robotics",
+    "description": "NVIDIA Jetson AGX Orin Developer Kit - up to 275 TOPS of edge AI compute with the full JetPack stack, for robotics, autonomous machines, and vision AI development that graduates straight to production modules.",
+    "bestFor": "Robotics development, autonomous machines, multi-camera vision AI",
+    "condition": "New",
+    "warranty": "Manufacturer warranty plus VectraCompute validation support",
+    "leadTime": "Ships in 2-5 business days",
+    "specs": [],
+    "variants": [
+      {
+        "title": "AGX Orin 32GB kit",
+        "sku": "VC-JET-AGX32",
+        "optionValue": "AGX Orin 32GB kit",
+        "priceUsd": 779
+      },
+      {
+        "title": "AGX Orin 64GB kit",
+        "sku": "VC-JET-AGX64",
+        "optionValue": "AGX Orin 64GB kit",
+        "priceUsd": 1199
+      }
+    ]
+  },
+  {
+    "handle": "nvidia-jetson-orin-nano-module",
+    "title": "NVIDIA Jetson Orin Nano Module",
+    "category": "Edge & Robotics",
+    "description": "NVIDIA Jetson Orin Nano - compact edge AI for production devices, from smart cameras to inspection systems. Modules for integration, or the Super Developer Kit to start building today.",
+    "bestFor": "Smart cameras, embedded vision, low-power production AI devices",
+    "condition": "New",
+    "warranty": "Manufacturer warranty plus VectraCompute validation support",
+    "leadTime": "Ships in 2-5 business days",
+    "specs": [],
+    "variants": [
+      {
+        "title": "Orin Nano 4GB module",
+        "sku": "VC-JET-NANO4",
+        "optionValue": "Orin Nano 4GB module",
+        "priceUsd": 109
+      },
+      {
+        "title": "Orin Nano 8GB module",
+        "sku": "VC-JET-NANO8",
+        "optionValue": "Orin Nano 8GB module",
+        "priceUsd": 155
+      },
+      {
+        "title": "Orin Nano Super Developer Kit",
+        "sku": "VC-JET-NANOSDK",
+        "optionValue": "Orin Nano Super Developer Kit",
+        "priceUsd": 149
+      }
+    ]
+  },
+  {
+    "handle": "google-coral-m2-accelerator",
+    "title": "Google Coral M.2 Accelerator",
+    "category": "Edge & Robotics",
+    "description": "Google Coral M.2 accelerator with the Edge TPU - 4 TOPS of vision inference at 2 watts, dropping into any M.2 slot to add real-time object detection to existing x86 or ARM systems.",
+    "bestFor": "Adding vision AI to existing systems, low-power inference, industrial PCs",
+    "condition": "New",
+    "warranty": "Manufacturer warranty plus VectraCompute validation support",
+    "leadTime": "Ships in 2-5 business days",
+    "specs": [],
+    "variants": [
+      {
+        "title": "Single Edge TPU (A+E key)",
+        "sku": "VC-CORAL-M2",
+        "optionValue": "Single Edge TPU (A+E key)",
+        "priceUsd": 35
+      },
+      {
+        "title": "Dual Edge TPU",
+        "sku": "VC-CORAL-M2-DUAL",
+        "optionValue": "Dual Edge TPU",
+        "priceUsd": 47
+      }
+    ]
+  },
+  {
+    "handle": "raspberry-pi-5-ai-kit",
+    "title": "Raspberry Pi 5 AI Kit",
+    "category": "Edge & Robotics",
+    "description": "Raspberry Pi 5 AI Kit with the Hailo-8L accelerator - 13 TOPS of vision inference on the world's most accessible platform. The lowest-cost serious entry into edge AI, solo or bundled with a Pi 5.",
+    "bestFor": "Edge AI learning, prototypes, hobbyist-to-pilot vision projects",
+    "condition": "New",
+    "warranty": "Manufacturer warranty plus VectraCompute validation support",
+    "leadTime": "Ships in 2-5 business days",
+    "specs": [],
+    "variants": [
+      {
+        "title": "AI Kit (Hailo-8L M.2)",
+        "sku": "VC-RPI5-AIKIT",
+        "optionValue": "AI Kit (Hailo-8L M.2)",
+        "priceUsd": 42
+      },
+      {
+        "title": "AI Kit + Raspberry Pi 5 16GB bundle",
+        "sku": "VC-RPI5-AIKIT-16",
+        "optionValue": "AI Kit + Raspberry Pi 5 16GB bundle",
+        "priceUsd": 115
+      }
+    ]
+  },
+  {
+    "handle": "hailo-15-vision-processor-module",
+    "title": "Hailo-15 Vision Processor Module",
+    "category": "Edge & Robotics",
+    "description": "Hailo-15 vision processor system-on-module - camera-grade AI SoC combining CPU and 20 TOPS neural acceleration for building intelligent cameras and vision devices without a host computer.",
+    "bestFor": "Intelligent camera products, standalone vision devices, industrial inspection",
+    "condition": "New",
+    "warranty": "Manufacturer warranty plus VectraCompute validation support",
+    "leadTime": "Ships in 1-2 weeks",
+    "specs": [],
+    "variants": [
+      {
+        "title": "Hailo-15 system-on-module",
+        "sku": "VC-HAILO15-SOM",
+        "optionValue": "Hailo-15 system-on-module",
+        "priceUsd": 89
+      },
+      {
+        "title": "Vision evaluation kit",
+        "sku": "VC-HAILO15-EVK",
+        "optionValue": "Vision evaluation kit",
+        "priceUsd": 299
+      }
+    ]
   }
 ]
