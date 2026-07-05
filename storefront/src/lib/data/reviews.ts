@@ -1,5 +1,6 @@
 "use server"
 
+import { requireAdmin } from "@lib/data/admin-auth"
 import { revalidatePath } from "next/cache"
 import { Client, type QueryResultRow } from "pg"
 
@@ -210,6 +211,7 @@ export async function submitProductReview(
 }
 
 export async function moderateReview(formData: FormData) {
+  await requireAdmin()
   const id = String(formData.get("id") ?? "")
   const action = String(formData.get("action") ?? "")
 

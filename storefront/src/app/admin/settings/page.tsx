@@ -6,8 +6,11 @@ import {
 } from "@lib/data/store-settings"
 import Link from "next/link"
 
-export default async function AdminSettingsPage() {
+export default async function AdminSettingsPage(props: {
+  searchParams: Promise<{ saved?: string }>
+}) {
   await requireAdmin()
+  const { saved } = await props.searchParams
   const [stored, effective] = await Promise.all([
     getStoredPaymentSettings(),
     getBitcoinPaymentSettings(),
@@ -32,6 +35,16 @@ export default async function AdminSettingsPage() {
             and the AI chat.
           </p>
         </div>
+
+        {saved && (
+          <div className="mt-6 rounded-md border border-emerald-300 bg-emerald-50 px-5 py-4 text-emerald-900">
+            <p className="text-base-semi">Settings saved</p>
+            <p className="mt-1 text-small-regular leading-6">
+              Buyers now see the values below. The AI chat backend picks them
+              up within a minute.
+            </p>
+          </div>
+        )}
 
         <div className="mt-6 rounded-md border border-ui-border-base bg-white p-5">
           <p className="text-small-semi text-ui-fg-base">

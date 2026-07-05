@@ -1,6 +1,8 @@
 "use server"
 
+import { requireAdmin } from "@lib/data/admin-auth"
 import { revalidatePath } from "next/cache"
+import { redirect } from "next/navigation"
 import { Client, type QueryResultRow } from "pg"
 
 // Simple key/value store settings in the shared Postgres, managed from the
@@ -91,6 +93,7 @@ export async function getStoredPaymentSettings(): Promise<StoredPaymentSettings>
 }
 
 export async function savePaymentSettings(formData: FormData) {
+  await requireAdmin()
   await ensureSettingsTable()
 
   const entries: [string, string][] = [
@@ -122,4 +125,5 @@ export async function savePaymentSettings(formData: FormData) {
 
   revalidatePath("/", "layout")
   revalidatePath("/admin/settings")
+  redirect("/admin/settings?saved=1")
 }

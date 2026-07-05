@@ -13,6 +13,14 @@ const S3_PATHNAME = process.env.MEDUSA_CLOUD_S3_PATHNAME
  */
 const nextConfig = {
   reactStrictMode: true,
+  experimental: {
+    serverActions: {
+      // Admin photo uploads: up to 8 gallery files per submit (1.5MB each
+      // inline, 8MB each via Vercel Blob). Next's 1MB default rejected any
+      // real photo with a 413 before our code ran.
+      bodySizeLimit: "24mb",
+    },
+  },
   logging: {
     fetches: {
       fullUrl: true,

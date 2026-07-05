@@ -304,14 +304,36 @@ function ProductFields({
   )
 }
 
-export default async function AdminProductsPage() {
+const SAVE_ERRORS: Record<string, string> = {
+  "missing-title": "The product needs at least a title before it can be saved.",
+  storage:
+    "Product storage is not reachable. Check DATABASE_URL and try again — nothing was saved.",
+  image:
+    "One of the photos could not be processed (not an image, or too large). Nothing was saved.",
+  save: "Saving to the database failed. Nothing was changed — please try again.",
+}
+
+export default async function AdminProductsPage(props: {
+  searchParams: Promise<{ saved?: string; error?: string; product?: string; q?: string }>
+}) {
   await requireAdmin()
-  const [products, overrides, storageConfigured] = await Promise.all([
+  const { saved, error, product: erroredProduct, q } = await props.searchParams
+  const [allProducts, overrides, storageConfigured] = await Promise.all([
     listAdminCatalogProducts(),
     listProductOverrides(),
     isProductStorageConfigured(),
   ])
   const overrideMap = new Map(overrides.map((item) => [item.handle, item]))
+
+  const search = q?.trim().toLowerCase() ?? ""
+  const products = search
+    ? allProducts.filter(
+        (item) =>
+          item.title.toLowerCase().includes(search) ||
+          (item.handle ?? "").includes(search) ||
+          (item.categories?.[0]?.name ?? "").toLowerCase().includes(search)
+      )
+    : allProducts
 
   return (
     <main className="min-h-screen bg-grey-5 px-6 py-10">
@@ -332,6 +354,32 @@ export default async function AdminProductsPage() {
             appear on the Vercel storefront after save.
           </p>
         </div>
+
+        {saved && (
+          <div className="mt-6 rounded-md border border-emerald-300 bg-emerald-50 px-5 py-4 text-emerald-900">
+            <p className="text-base-semi">Saved</p>
+            <p className="mt-1 text-small-regular leading-6">
+              “{saved}” was saved and is live on the storefront.{" "}
+              <a
+                href={`/us/products/${saved}`}
+                className="underline"
+                target="_blank"
+              >
+                View product page
+              </a>
+            </p>
+          </div>
+        )}
+        {error && (
+          <div className="mt-6 rounded-md border border-red-300 bg-red-50 px-5 py-4 text-red-900">
+            <p className="text-base-semi">
+              Save failed{erroredProduct ? ` — ${erroredProduct}` : ""}
+            </p>
+            <p className="mt-1 text-small-regular leading-6">
+              {SAVE_ERRORS[error] ?? "Something went wrong. Nothing was saved."}
+            </p>
+          </div>
+        )}
 
         {!storageConfigured && (
           <div className="mt-6 rounded-md border border-amber-200 bg-amber-50 p-5 text-amber-900">
@@ -358,11 +406,39 @@ export default async function AdminProductsPage() {
         </form>
 
         <div className="mt-10">
-          <div className="mb-4">
-            <p className="text-small-semi uppercase text-brand-600">
-              Existing products
-            </p>
-            <h2 className="text-2xl font-semibold">Edit catalog products</h2>
+          <div className="mb-4 flex flex-col gap-3 small:flex-row small:items-end small:justify-between">
+            <div>
+              <p className="text-small-semi uppercase text-brand-600">
+                Existing products
+              </p>
+              <h2 className="text-2xl font-semibold">
+                Edit catalog products{" "}
+                <span className="text-base font-normal text-ui-fg-muted">
+                  ({products.length}
+                  {search ? ` of ${allProducts.length}` : ""})
+                </span>
+              </h2>
+            </div>
+            <form method="get" className="flex gap-2">
+              <input
+                name="q"
+                type="search"
+                defaultValue={q ?? ""}
+                placeholder="Search title, handle, or category"
+                className="checkout-input h-10 w-72"
+              />
+              <button className="h-10 rounded-md bg-slate-950 px-4 text-small-semi text-white">
+                Filter
+              </button>
+              {search && (
+                <Link
+                  href="/admin/products"
+                  className="flex h-10 items-center text-small-semi text-brand-700"
+                >
+                  Clear
+                </Link>
+              )}
+            </form>
           </div>
           <div className="grid gap-4">
             {products.map((product) => {

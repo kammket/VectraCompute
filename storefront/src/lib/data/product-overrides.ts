@@ -4,8 +4,10 @@ import {
   localCategories,
   localProducts,
 } from "@lib/catalog/local-catalog"
+import { requireAdmin } from "@lib/data/admin-auth"
 import { HttpTypes } from "@medusajs/types"
 import { revalidatePath } from "next/cache"
+import { redirect } from "next/navigation"
 import { Client } from "pg"
 
 export type ProductOverrideRow = {
@@ -410,31 +412,49 @@ export async function findCatalogProductByVariantId(variantId: string) {
   return null
 }
 
+// Save always ends in a redirect carrying the outcome, so the admin sees an
+// explicit success or error banner instead of a silent page refresh.
 export async function saveProductOverride(formData: FormData) {
-  try {
-    await ensureProductOverrideTable()
-  } catch (error) {
-    console.error("Failed to prepare VectraCompute product storage", error)
-    return
-  }
+  await requireAdmin()
 
   const title = readText(formData, "title")
   const requestedHandle = readText(formData, "handle")
   const handle = slugify(requestedHandle || title)
+
+  const fail = (code: string): never =>
+    redirect(
+      `/admin/products?error=${code}${handle ? `&product=${handle}` : ""}`
+    )
+
   if (!handle || !title) {
-    return
+    fail("missing-title")
+  }
+
+  let storageReady = true
+  try {
+    await ensureProductOverrideTable()
+  } catch (error) {
+    console.error("Failed to prepare VectraCompute product storage", error)
+    storageReady = false
+  }
+  if (!storageReady) {
+    fail("storage")
   }
 
   const priceValue = readText(formData, "price_usd")
   const isActive = formData.get("is_active") === "on"
   let imageUpload: string | null = null
   let galleryUploads: string[] = []
+  let imageError = false
   try {
     imageUpload = await readImageUpload(formData)
     galleryUploads = await readGalleryUploads(formData)
   } catch (error) {
     console.error("Failed to read uploaded product photo", error)
-    return
+    imageError = true
+  }
+  if (imageError) {
+    fail("image")
   }
   const imageUrl = imageUpload || readNullableText(formData, "image_url")
 
@@ -523,9 +543,10 @@ export async function saveProductOverride(formData: FormData) {
     )
   } catch (error) {
     console.error("Failed to save VectraCompute product override", error)
-    return
+    fail("save")
   }
 
   revalidatePath("/", "layout")
   revalidatePath("/admin/products")
+  redirect(`/admin/products?saved=${handle}`)
 }

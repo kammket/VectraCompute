@@ -1,6 +1,7 @@
 "use server"
 
 import { clearCart, retrieveCart } from "@lib/data/cart"
+import { requireAdmin } from "@lib/data/admin-auth"
 import { sendOrderConfirmationEmail } from "@lib/util/order-email"
 import { HttpTypes } from "@medusajs/types"
 import { revalidatePath } from "next/cache"
@@ -443,6 +444,7 @@ export async function listSimpleOrders() {
 }
 
 export async function updateSimpleOrderStatus(formData: FormData) {
+  await requireAdmin()
   const id = String(formData.get("id") ?? "")
   const status = String(formData.get("status") ?? "") as SimpleOrderStatus
 
