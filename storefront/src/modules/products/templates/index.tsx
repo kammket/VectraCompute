@@ -4,8 +4,6 @@ import ImageGallery from "@modules/products/components/image-gallery"
 import ProductActions from "@modules/products/components/product-actions"
 import ProductAssurances from "@modules/products/components/product-assurances"
 import ProductBreadcrumbs from "@modules/products/components/product-breadcrumbs"
-import AiBuyerGuide from "@modules/products/components/ai-buyer-guide"
-import ProductBuyingConfidence from "@modules/products/components/product-buying-confidence"
 import ProductDecisionSummary from "@modules/products/components/product-decision-summary"
 import ProductFitAssistant from "@modules/products/components/product-fit-assistant"
 import ProductQuickAnswers from "@modules/products/components/product-quick-answers"
@@ -63,10 +61,9 @@ const Section = ({
 
 const SECTION_NAV = [
   ["overview", "Overview"],
-  ["fit", "Fit & compatibility"],
   ["specs", "Configurations & specs"],
-  ["faq", "Questions"],
-  ["assurance", "Warranty & support"],
+  ["fit", "Fit & compatibility"],
+  ["support", "Support & questions"],
 ] as const
 
 const ProductTemplate: React.FC<ProductTemplateProps> = ({
@@ -165,18 +162,6 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
         </Section>
 
         <Section
-          id="fit"
-          eyebrow="Fit & compatibility"
-          title="Confirm it matches your workload and environment"
-          description="Model sizes, users, power, cooling, and software stack — checked before you buy, not after delivery."
-        >
-          <div className="grid grid-cols-1 gap-8">
-            <ProductFitAssistant product={product} />
-            <AiBuyerGuide product={product} />
-          </div>
-        </Section>
-
-        <Section
           id="specs"
           eyebrow="Configurations & specifications"
           title="Every configuration, SKU, and price — nothing hidden"
@@ -188,21 +173,22 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
         </Section>
 
         <Section
-          id="faq"
-          eyebrow="Common questions"
-          title="Answers before you need to ask"
+          id="fit"
+          eyebrow="Fit & compatibility"
+          title="Confirm it matches your workload and environment"
+          description="Model sizes, users, power, cooling, and software stack — checked before you buy, not after delivery."
         >
-          <ProductQuickAnswers product={product} />
+          <ProductFitAssistant product={product} />
         </Section>
 
         <Section
-          id="assurance"
-          eyebrow="Warranty & support"
+          id="support"
+          eyebrow="Support & questions"
           title="What stands behind this purchase"
         >
-          <div className="grid grid-cols-1 gap-8 large:grid-cols-[minmax(0,1fr)_360px] large:items-start">
-            <ProductBuyingConfidence product={product} />
+          <div className="grid grid-cols-1 gap-8">
             <ProductAssurances product={product} />
+            <ProductQuickAnswers product={product} />
           </div>
         </Section>
       </div>

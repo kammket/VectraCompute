@@ -55,12 +55,12 @@ const ProductQuickAnswers = ({
     {
       title: "Lead time",
       body: leadTime,
-      href: "#purchase-confidence",
+      href: "#support",
     },
     {
       title: "Warranty and support",
       body: `${warranty}. ${support}.`,
-      href: "#purchase-confidence",
+      href: "#support",
     },
     {
       title: "Power and deployment",
