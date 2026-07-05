@@ -54,14 +54,14 @@ const getClient = () => {
   })
 }
 
+// Read path: swallows errors so an unreachable DATABASE_URL never crashes a
+// page render — pages just fall back to the seeded catalog.
 async function query<T>(sql: string, params: unknown[] = []) {
   const client = getClient()
   if (!client) {
     return { rows: [] as T[] }
   }
 
-  // connect() must be inside the try: an unreachable DATABASE_URL otherwise
-  // throws unhandled and crashes whatever page triggered the query.
   try {
     await client.connect()
     const result = await client.query<T>(sql, params)
@@ -69,6 +69,23 @@ async function query<T>(sql: string, params: unknown[] = []) {
   } catch (error) {
     console.error("VectraCompute product database query failed", error)
     return { rows: [] as T[] }
+  } finally {
+    await client.end().catch(() => {})
+  }
+}
+
+// Write path: THROWS on any failure. Admin saves must never pretend to
+// succeed — a swallowed error here once showed a green "Saved" banner while
+// nothing was persisted.
+async function strictQuery<T>(sql: string, params: unknown[] = []) {
+  const client = getClient()
+  if (!client) {
+    throw new Error("DATABASE_URL is not configured on this deployment.")
+  }
+
+  try {
+    await client.connect()
+    return await client.query<T>(sql, params)
   } finally {
     await client.end().catch(() => {})
   }
@@ -144,8 +161,7 @@ const readGalleryUploads = async (formData: FormData) => {
   return urls
 }
 
-export async function ensureProductOverrideTable() {
-  await query(`
+const OVERRIDE_TABLE_SQL = `
     create table if not exists vectra_product_overrides (
       handle text primary key,
       title text,
@@ -156,9 +172,9 @@ export async function ensureProductOverrideTable() {
       is_active boolean not null default true,
       updated_at timestamptz not null default now()
     )
-  `)
+  `
 
-  await query(`
+const OVERRIDE_ALTER_SQL = `
     alter table vectra_product_overrides
       add column if not exists subtitle text,
       add column if not exists sku text,
@@ -175,7 +191,18 @@ export async function ensureProductOverrideTable() {
       add column if not exists support_level text,
       add column if not exists is_custom boolean not null default false,
       add column if not exists gallery_images jsonb
-  `)
+  `
+
+export async function ensureProductOverrideTable() {
+  await query(OVERRIDE_TABLE_SQL)
+  await query(OVERRIDE_ALTER_SQL)
+}
+
+// Strict variant for the save path: any failure throws instead of being
+// silently absorbed.
+async function ensureProductOverrideTableStrict() {
+  await strictQuery(OVERRIDE_TABLE_SQL)
+  await strictQuery(OVERRIDE_ALTER_SQL)
 }
 
 export async function listProductOverrides() {
@@ -430,9 +457,11 @@ export async function saveProductOverride(formData: FormData) {
     fail("missing-title")
   }
 
+  // Strict path: a broken or unreachable DATABASE_URL must surface as the
+  // red storage banner, never a false green "Saved".
   let storageReady = true
   try {
-    await ensureProductOverrideTable()
+    await ensureProductOverrideTableStrict()
   } catch (error) {
     console.error("Failed to prepare VectraCompute product storage", error)
     storageReady = false
@@ -466,10 +495,16 @@ export async function saveProductOverride(formData: FormData) {
       .map((value) => Number(value))
       .filter((value) => Number.isInteger(value))
   )
-  const existing = await query<{ gallery_images: string[] | null }>(
-    "select gallery_images from vectra_product_overrides where handle = $1 limit 1",
-    [handle]
-  )
+  let existing: { rows: { gallery_images: string[] | null }[] } = { rows: [] }
+  try {
+    existing = await strictQuery<{ gallery_images: string[] | null }>(
+      "select gallery_images from vectra_product_overrides where handle = $1 limit 1",
+      [handle]
+    )
+  } catch (error) {
+    console.error("Failed to read existing gallery", error)
+    fail("storage")
+  }
   const currentGallery = Array.isArray(existing.rows[0]?.gallery_images)
     ? (existing.rows[0]!.gallery_images as string[])
     : []
@@ -482,7 +517,7 @@ export async function saveProductOverride(formData: FormData) {
     !localProducts.some((product) => product.handle === handle)
 
   try {
-    await query(
+    await strictQuery(
       `
         insert into vectra_product_overrides
           (
