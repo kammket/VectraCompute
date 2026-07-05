@@ -13,6 +13,28 @@ export const metadata: Metadata = {
     default: "VectraCompute | AI Workstations & GPU Servers",
     template: "%s",
   },
+  applicationName: "VectraCompute",
+  // Social defaults inherited by every page that doesn't set its own. The
+  // file-based opengraph-image.tsx supplies the default share image.
+  openGraph: {
+    type: "website",
+    siteName: "VectraCompute",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "VectraCompute | AI Workstations & GPU Servers",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
 }
 
 export default function RootLayout(props: { children: React.ReactNode }) {

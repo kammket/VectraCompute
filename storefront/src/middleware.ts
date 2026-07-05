@@ -99,6 +99,8 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/((?!api|admin|_next/static|_next/image|favicon.ico|images|assets|png|svg|jpg|jpeg|gif|webp).*)",
+    // Exclude metadata routes (opengraph-image, sitemap, robots, etc.) so the
+    // country-prefix redirect doesn't turn them into 404s for crawlers.
+    "/((?!api|admin|_next/static|_next/image|favicon.ico|images|assets|opengraph-image|twitter-image|sitemap.xml|robots.txt|manifest.webmanifest|png|svg|jpg|jpeg|gif|webp).*)",
   ],
 }

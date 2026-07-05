@@ -3,11 +3,22 @@ import { Metadata } from "next"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
 import StoreTemplate from "@modules/store/templates"
 
-export const metadata: Metadata = {
-  title:
-    "AI Hardware Store | Workstations, GPU Servers & Components | VectraCompute",
-  description:
-    "Shop VectraCompute AI workstations, GPU rack servers, CPU-platform workstations, and components with burn-in testing, warranty, and engineer support.",
+// Canonical is the clean /store URL regardless of filter/sort/search query
+// params, so faceted variants (?gpu=…&condition=…) consolidate to one indexed
+// page instead of spawning thousands of thin duplicate crawl paths.
+export async function generateMetadata(props: {
+  params: Promise<{ countryCode: string }>
+}): Promise<Metadata> {
+  const { countryCode } = await props.params
+  return {
+    title:
+      "AI Hardware Store | Workstations, GPU Servers & Components | VectraCompute",
+    description:
+      "Shop VectraCompute AI workstations, GPU rack servers, CPU-platform workstations, and components with burn-in testing, warranty, and engineer support.",
+    alternates: {
+      canonical: `/${countryCode}/store`,
+    },
+  }
 }
 
 type Params = {
