@@ -7,6 +7,7 @@ import {
 } from "@medusajs/icons"
 
 import { getBreadcrumbJsonLd, JsonLd } from "@lib/util/json-ld"
+import ComplianceMarks from "@modules/common/components/compliance-marks"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import { PremiumPageHeader } from "@modules/common/components/premium-page"
 import { Heading, Text } from "@modules/common/components/ui"
@@ -361,6 +362,8 @@ export default async function TrustPage(props: Props) {
             ))}
           </div>
         </section>
+
+        <ComplianceMarks />
       </div>
     </div>
   )
