@@ -5,7 +5,7 @@ import { HttpTypes } from "@medusajs/types"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
 import type { ProductFilterValue } from "@modules/store/types"
 import { localProducts } from "@lib/catalog/local-catalog"
-import { applyProductOverrides } from "@lib/data/product-overrides"
+import { getMergedCatalog } from "@lib/data/product-overrides"
 import { getRegion, retrieveRegion } from "./regions"
 
 export const listProducts = async ({
@@ -46,7 +46,7 @@ export const listProducts = async ({
     }
   }
 
-  let products = await applyProductOverrides([...localProducts])
+  let products = await getMergedCatalog()
 
   if (queryParams?.handle) {
     const handles = Array.isArray(queryParams.handle)

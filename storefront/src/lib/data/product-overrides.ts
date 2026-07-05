@@ -6,9 +6,12 @@ import {
 } from "@lib/catalog/local-catalog"
 import { requireAdmin } from "@lib/data/admin-auth"
 import { HttpTypes } from "@medusajs/types"
-import { revalidatePath } from "next/cache"
+import { revalidatePath, revalidateTag, unstable_cache } from "next/cache"
 import { redirect } from "next/navigation"
 import { Client } from "pg"
+
+// Cache key/tag for the merged (seed + admin overrides) catalog.
+const CATALOG_TAG = "vectra-catalog"
 
 export type ProductOverrideRow = {
   handle: string
@@ -423,6 +426,21 @@ export async function applyProductOverrides(products: HttpTypes.StoreProduct[]) 
   return [...customProducts, ...updated]
 }
 
+// Public storefront path: cache the merged catalog so the full-catalog map and
+// the overrides DB read happen once per window and are shared across all
+// requests, instead of on every product/category/store/home render. Admin
+// saves call revalidateTag(CATALOG_TAG) to refresh immediately.
+const getMergedCatalogCached = unstable_cache(
+  async () => applyProductOverrides([...localProducts]),
+  ["vectra-merged-catalog"],
+  { revalidate: 300, tags: [CATALOG_TAG] }
+)
+
+export async function getMergedCatalog() {
+  return getMergedCatalogCached()
+}
+
+// Admin path stays uncached so edits are visible immediately after save.
 export async function listAdminCatalogProducts() {
   return applyProductOverrides([...localProducts])
 }
@@ -581,6 +599,7 @@ export async function saveProductOverride(formData: FormData) {
     fail("save")
   }
 
+  revalidateTag(CATALOG_TAG)
   revalidatePath("/", "layout")
   revalidatePath("/admin/products")
   redirect(`/admin/products?saved=${handle}`)
