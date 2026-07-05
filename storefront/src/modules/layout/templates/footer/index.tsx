@@ -154,6 +154,14 @@ export default async function Footer() {
                 <li>
                   <LocalizedClientLink
                     className="hover:text-white"
+                    href="/shipping"
+                  >
+                    Shipping &amp; delivery
+                  </LocalizedClientLink>
+                </li>
+                <li>
+                  <LocalizedClientLink
+                    className="hover:text-white"
                     href="/resources/how-bitcoin-payment-works"
                   >
                     How payment works
