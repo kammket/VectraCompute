@@ -43,13 +43,13 @@ const BitcoinPaymentInstructions = ({
 
   return (
     <section className="overflow-hidden rounded-md border border-slate-200 bg-slate-50">
-      <div className="bg-slate-950 px-5 py-5 text-white">
+      <div className="bg-slate-950 px-4 py-4 text-white small:px-5 small:py-5">
         <div className="flex flex-col small:flex-row small:items-start small:justify-between gap-4">
           <div>
             <Text className="text-small-regular text-amber-300 uppercase mb-2">
               Awaiting Bitcoin payment
             </Text>
-            <Heading level="h2" className="text-2xl text-white mb-2">
+            <Heading level="h2" className="text-xl small:text-2xl text-white mb-2">
               {isManualWallet
                 ? "Send BTC to confirm your order"
                 : "BTCPay invoice verification"}
@@ -71,7 +71,7 @@ const BitcoinPaymentInstructions = ({
         </div>
       </div>
       {isManualWallet ? (
-        <div className="grid grid-cols-1 large:grid-cols-[minmax(0,1fr)_190px] gap-4 p-5">
+        <div className="grid grid-cols-1 large:grid-cols-[minmax(0,1fr)_190px] gap-4 p-4 small:p-5">
           <div className="grid gap-3">
             <div className="grid grid-cols-1 small:grid-cols-2 gap-3">
               <div className="rounded-md border border-emerald-200 bg-emerald-50 p-4">
@@ -122,7 +122,7 @@ const BitcoinPaymentInstructions = ({
                   />
                 )}
               </div>
-              <code className="block overflow-x-auto rounded-md border border-slate-200 bg-slate-50 px-3 py-3 text-[12px] text-ui-fg-base">
+              <code className="block break-all rounded-md border border-slate-200 bg-slate-50 px-3 py-3 text-[12px] leading-5 text-ui-fg-base">
                 {settings.manual.walletAddress ||
                   "Admin has not added a wallet address yet."}
               </code>
@@ -187,10 +187,10 @@ const BitcoinPaymentInstructions = ({
               <img
                 src={settings.manual.qrCodeImageUrl}
                 alt="Bitcoin wallet QR code"
-                className="mx-auto aspect-square w-full object-contain"
+                className="mx-auto aspect-square w-full max-w-[180px] object-contain large:max-w-none"
               />
             ) : (
-              <div className="flex aspect-square w-full items-center justify-center rounded-md bg-slate-100 px-3 text-[11px] leading-5 text-ui-fg-subtle">
+              <div className="mx-auto flex aspect-square w-full max-w-[180px] items-center justify-center rounded-md bg-slate-100 px-3 text-[11px] leading-5 text-ui-fg-subtle large:max-w-none">
                 QR will appear after admin adds it
               </div>
             )}
