@@ -369,9 +369,19 @@ const applyOverrideToProduct = (
     categories: override.category && category ? [category] : product.categories,
     category_ids:
       override.category && category ? [category.id] : product.category_ids,
+    // The admin has a single price field, which only makes sense for a
+    // single-config product. Applying it to every variant of a multi-config
+    // product would flatten all configurations to one price (so switching a
+    // config wouldn't change the price). So only override variant prices when
+    // there's exactly one variant; multi-config products keep per-variant
+    // seed prices. The SKU override still applies to the first variant.
     variants:
-      price === null
-        ? product.variants
+      price === null || (product.variants?.length ?? 0) !== 1
+        ? product.variants?.map((variant, index) =>
+            index === 0 && override.sku
+              ? { ...variant, sku: override.sku }
+              : variant
+          )
         : product.variants?.map((variant) => ({
             ...variant,
             sku: override.sku || variant.sku,
