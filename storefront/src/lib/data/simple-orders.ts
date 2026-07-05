@@ -171,10 +171,15 @@ const fetchBackendJson = async <T>(
     return null
   }
 
+  // Send the shared secret so the backend's protected order endpoints accept
+  // this server-to-server call. Harmless when the backend has no token set.
+  const apiToken = process.env.VECTRA_API_TOKEN
+
   const response = await fetch(`${backendUrl}${path}`, {
     ...init,
     headers: {
       "Content-Type": "application/json",
+      ...(apiToken ? { Authorization: `Bearer ${apiToken}` } : {}),
       ...(init?.headers || {}),
     },
     cache: "no-store",

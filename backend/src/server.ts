@@ -1319,6 +1319,36 @@ const handleProducts = (req: IncomingMessage, res: ServerResponse, url: URL) => 
   })
 }
 
+// Shared secret for server-to-server endpoints that expose customer data.
+// When VECTRA_API_TOKEN is set, these endpoints require a matching
+// `Authorization: Bearer <token>` (or `x-api-token`) header. When it is unset,
+// behavior is unchanged (backward compatible) — set it on Railway AND on the
+// storefront to lock the endpoints down.
+const requireApiToken = (
+  req: IncomingMessage,
+  res: ServerResponse
+): boolean => {
+  const expected = process.env.VECTRA_API_TOKEN
+  if (!expected) {
+    return true // not configured yet — allow, unchanged behavior
+  }
+
+  const auth = req.headers["authorization"]
+  const bearer =
+    typeof auth === "string" && auth.startsWith("Bearer ")
+      ? auth.slice(7).trim()
+      : ""
+  const headerToken = String(req.headers["x-api-token"] ?? "").trim()
+  const provided = bearer || headerToken
+
+  if (provided && provided === expected) {
+    return true
+  }
+
+  sendJson(req, res, 401, { error: "Unauthorized." })
+  return false
+}
+
 const server = createServer(async (req, res) => {
   setCors(req, res)
 
@@ -1353,6 +1383,7 @@ const server = createServer(async (req, res) => {
     }
 
     if (req.method === "GET" && url.pathname === "/api/orders") {
+      if (!requireApiToken(req, res)) return
       await handleListCommerceOrders(req, res)
       return
     }
@@ -1390,6 +1421,7 @@ const server = createServer(async (req, res) => {
     }
 
     if (req.method === "GET" && url.pathname === "/api/leads") {
+      if (!requireApiToken(req, res)) return
       try {
         await ensureLeadsTable()
         const db = getPool()
@@ -1406,6 +1438,7 @@ const server = createServer(async (req, res) => {
     }
 
     if (req.method === "GET" && url.pathname.startsWith("/api/orders/")) {
+      if (!requireApiToken(req, res)) return
       await handleRetrieveCommerceOrder(
         req,
         res,
@@ -1415,11 +1448,13 @@ const server = createServer(async (req, res) => {
     }
 
     if (req.method === "POST" && url.pathname === "/api/orders") {
+      if (!requireApiToken(req, res)) return
       await handleCreateCommerceOrder(req, res)
       return
     }
 
     if (req.method === "POST" && url.pathname === "/api/orders/status") {
+      if (!requireApiToken(req, res)) return
       await handleUpdateCommerceOrderStatus(req, res)
       return
     }
