@@ -107,10 +107,6 @@ export default function AiSalesChat() {
   const [loading, setLoading] = useState(false)
   const [orderLoading, setOrderLoading] = useState(false)
   const [error, setError] = useState("")
-  const [handoffOpen, setHandoffOpen] = useState(false)
-  const [handoffSent, setHandoffSent] = useState(false)
-  const [handoffLoading, setHandoffLoading] = useState(false)
-  const [handoff, setHandoff] = useState({ name: "", email: "", message: "" })
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       role: "assistant",
@@ -217,44 +213,6 @@ export default function AiSalesChat() {
     }
   }
 
-  const submitHandoff = async () => {
-    if (!backendUrl || handoffLoading) {
-      return
-    }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(handoff.email) || !handoff.message.trim()) {
-      setError("Please add a valid email and a short note for our engineer.")
-      return
-    }
-
-    setError("")
-    setHandoffLoading(true)
-    try {
-      const response = await fetch(`${backendUrl}/api/leads`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: handoff.name,
-          email: handoff.email,
-          topic: viewedProductHandle
-            ? `Human handoff from product: ${viewedProductHandle}`
-            : "Human handoff from chat",
-          message: handoff.message,
-        }),
-      })
-      if (!response.ok) {
-        const payload = await response.json().catch(() => ({}))
-        throw new Error(payload.error || "Could not reach the team right now.")
-      }
-      setHandoffSent(true)
-    } catch (err) {
-      setError(
-        err instanceof Error ? err.message : "Could not reach the team right now."
-      )
-    } finally {
-      setHandoffLoading(false)
-    }
-  }
-
   const createOrder = async () => {
     if (!backendUrl || orderLoading) {
       return
@@ -318,16 +276,6 @@ export default function AiSalesChat() {
               <div className="flex shrink-0 gap-2">
                 <button
                   type="button"
-                  onClick={() => {
-                    setHandoffOpen((current) => !current)
-                    setHandoffSent(false)
-                  }}
-                  className="rounded border border-brand-400/60 px-2 py-1 text-xs text-brand-200 hover:border-brand-300"
-                >
-                  Talk to a human
-                </button>
-                <button
-                  type="button"
                   onClick={() => setOpen(false)}
                   className="rounded border border-grey-70 px-2 py-1 text-xs text-grey-30 hover:border-grey-50"
                 >
@@ -350,67 +298,6 @@ export default function AiSalesChat() {
                 {message.content}
               </div>
             ))}
-
-            {handoffOpen && (
-              <div className="rounded border border-brand-400/40 bg-grey-90 p-3">
-                {handoffSent ? (
-                  <div>
-                    <p className="text-sm font-semibold text-emerald-300">
-                      Request received
-                    </p>
-                    <p className="mt-1 text-xs leading-5 text-grey-30">
-                      One of our engineers will reply to {handoff.email} within
-                      one business day. You can keep chatting with me in the
-                      meantime.
-                    </p>
-                  </div>
-                ) : (
-                  <div className="space-y-2">
-                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-300">
-                      Talk to a human engineer
-                    </p>
-                    <p className="text-xs leading-5 text-grey-30">
-                      Leave your details and what you need — a VectraCompute
-                      engineer replies within one business day.
-                    </p>
-                    <input
-                      value={handoff.name}
-                      onChange={(event) =>
-                        setHandoff((c) => ({ ...c, name: event.target.value }))
-                      }
-                      placeholder="Name"
-                      className="w-full rounded border border-grey-70 bg-grey-90 px-3 py-2 text-sm text-white placeholder:text-grey-50"
-                    />
-                    <input
-                      value={handoff.email}
-                      onChange={(event) =>
-                        setHandoff((c) => ({ ...c, email: event.target.value }))
-                      }
-                      placeholder="Email"
-                      type="email"
-                      className="w-full rounded border border-grey-70 bg-grey-90 px-3 py-2 text-sm text-white placeholder:text-grey-50"
-                    />
-                    <textarea
-                      value={handoff.message}
-                      onChange={(event) =>
-                        setHandoff((c) => ({ ...c, message: event.target.value }))
-                      }
-                      placeholder="What do you need help with?"
-                      rows={3}
-                      className="w-full rounded border border-grey-70 bg-grey-90 px-3 py-2 text-sm text-white placeholder:text-grey-50"
-                    />
-                    <button
-                      type="button"
-                      onClick={submitHandoff}
-                      disabled={handoffLoading}
-                      className="w-full rounded bg-brand-400 px-4 py-2.5 text-sm font-semibold text-grey-90 hover:bg-brand-300 disabled:cursor-not-allowed disabled:opacity-60"
-                    >
-                      {handoffLoading ? "Sending..." : "Request engineer contact"}
-                    </button>
-                  </div>
-                )}
-              </div>
-            )}
 
             {suggestedProducts.length > 0 && (
               <div className="rounded border border-grey-80 bg-grey-90/70 p-3">

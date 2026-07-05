@@ -290,18 +290,65 @@ const productText = (product: BackendCatalogProduct) =>
     ].join(" ")
   )
 
+// Common buyer vocabulary mapped to catalog vocabulary, so "run llama
+// locally" or "budget inference box" match the right products.
+const SEARCH_SYNONYMS: Record<string, string[]> = {
+  llama: ["llm", "vram"],
+  deepseek: ["llm", "vram"],
+  qwen: ["llm", "vram"],
+  mistral: ["llm", "vram"],
+  llm: ["vram", "llama"],
+  chatbot: ["llm", "inference"],
+  train: ["training"],
+  finetune: ["training", "fine"],
+  finetuning: ["training", "fine"],
+  cheap: ["budget", "compact", "mini"],
+  budget: ["compact", "mini", "refurb"],
+  affordable: ["budget", "refurb"],
+  fastest: ["b200", "h200", "pro 6000"],
+  biggest: ["b200", "gb300", "nvl72"],
+  cluster: ["rack", "node", "pod"],
+  datacenter: ["rack", "server"],
+  "data-center": ["rack", "server"],
+  video: ["vision", "rendering", "pro 6000"],
+  rendering: ["pro 6000", "workstation"],
+  robotics: ["jetson", "edge", "thor"],
+  camera: ["vision", "edge"],
+  backup: ["ups", "battery"],
+  network: ["gbe", "fabric", "switch"],
+  networking: ["gbe", "fabric", "switch"],
+}
+
 const scoreProduct = (product: BackendCatalogProduct, query: string) => {
-  const terms = normalize(query)
+  const baseTerms = normalize(query)
     .split(" ")
     .map((term) => term.trim())
     .filter((term) => term.length > 1)
 
-  if (!terms.length) {
+  if (!baseTerms.length) {
     return product.category.includes("Workstation") ? 2 : 1
   }
 
-  const text = productText(product)
-  return terms.reduce((score, term) => score + (text.includes(term) ? 1 : 0), 0)
+  const expanded = new Set(baseTerms)
+  for (const term of baseTerms) {
+    for (const synonym of SEARCH_SYNONYMS[term] ?? []) {
+      expanded.add(synonym)
+    }
+  }
+
+  const fullText = productText(product)
+  const titleText = normalize(`${product.title} ${product.category} ${product.bestFor}`)
+
+  let score = 0
+  for (const term of expanded) {
+    // Title/category/best-for hits outweigh a stray mention in a description.
+    if (titleText.includes(term)) {
+      score += 3
+    } else if (fullText.includes(term)) {
+      score += 1
+    }
+  }
+  return score
 }
 
 const findProducts = (query: string, limit = 6) =>
@@ -501,6 +548,31 @@ const AGENT_TOOLS = [
   {
     type: "function",
     function: {
+      name: "get_site_info",
+      description:
+        "Fetch the website's factual content on a topic to answer customer questions accurately: shipping (carriers, insurance, delivery times), payment (Bitcoin flow, invoices), warranty_support (warranty, returns, lifetime support), company (who we are, testing process, pre-installed software), categories (what we sell), tracking (how order tracking works). Use this instead of guessing policy answers.",
+      parameters: {
+        type: "object",
+        properties: {
+          topic: {
+            type: "string",
+            enum: [
+              "shipping",
+              "payment",
+              "warranty_support",
+              "company",
+              "categories",
+              "tracking",
+            ],
+          },
+        },
+        required: ["topic"],
+      },
+    },
+  },
+  {
+    type: "function",
+    function: {
       name: "get_payment_instructions",
       description:
         "Get the current Bitcoin payment instructions: wallet address, required confirmations, expiry window, and a live BTC estimate for a USD total.",
@@ -572,6 +644,24 @@ const AGENT_TOOLS = [
     },
   },
 ] as const
+
+// Condensed, factual site knowledge so the agent can answer policy and
+// company questions with the same content the website states. Keep in sync
+// with /shipping, /resources/how-bitcoin-payment-works, /trust, and /about.
+const SITE_INFO: Record<string, string> = {
+  shipping:
+    "We ship worldwide via DHL Express, FedEx, and UPS, with dedicated air/ocean freight for palletized rack systems. Every shipment is insured for full replacement value at our cost. Typical express delivery after dispatch: US/Canada 2-5 business days, Europe/UK 3-7, Asia-Pacific 4-8, Middle East/Africa and Latin America 5-10; rack freight 1-3 weeks on a scheduled date. Build and validation take 3-7 business days before dispatch (components 1-2). Signature required on delivery; freight is scheduled in advance with liftgate available. Customs: we prepare export documentation; where import duties apply we confirm them before dispatch. Full details: /us/shipping",
+  payment:
+    "Payment is Bitcoin, manually verified by our team. Flow: place the order, get an order number and the exact BTC amount at a live rate locked for the payment window (default 30 minutes), send BTC to the wallet address shown (with QR), we verify on-chain (2 confirmations by default), then build starts. Every stage is visible on the order tracking page. If the window lapses we re-quote at the current rate. Invoice/purchase-order payment is available for companies and institutions. Guide: /us/resources/how-bitcoin-payment-works",
+  warranty_support:
+    "Systems carry up to a 5-year warranty on labor and up to 3 years on parts, with an advance-replacement option. Every buyer gets lifetime technical support from engineers (drivers, CUDA, multi-GPU configuration, cluster networking). Eligible systems have a 30-day return review. Details: /us/resources/warranty-support and /us/resources/ai-hardware-shipping-returns-warranty",
+  company:
+    "VectraCompute builds and validates AI workstations, GPU rack servers, and infrastructure. Every system is built to order, burn-in tested for 24 hours under full CUDA load, and ships with a validated AI stack pre-installed (Ubuntu, NVIDIA drivers, CUDA, cuDNN, Docker, PyTorch, TensorFlow, vLLM, Ollama, JupyterLab). Orders are trackable live at /us/order/status. Components carry CE, FCC, RoHS, and WEEE regulatory markings from their manufacturers.",
+  categories:
+    "Nine catalog categories: AI & Deep Learning Workstations, GPU Rack Servers, Refurbished & Certified (validated H100/H200/A100/L40S systems), Storage & Memory, Networking & Interconnect (100GbE-800GbE), Power & Cooling (PDU, UPS, liquid cooling), Edge & Robotics (Jetson, NPU, vision), Workstations by CPU Platform, and Components & Accessories. Store: /us/store",
+  tracking:
+    "Buyers track orders at /us/order/status using the order number plus checkout email. Stages: awaiting payment, payment review, order confirmed, build & validation, shipped, delivered. The carrier tracking number is emailed at dispatch.",
+}
 
 const transcriptFromMessages = (messages: ChatMessage[], limit = 4000) => {
   const text = messages
@@ -648,6 +738,16 @@ const executeTool = async (
       } catch {
         return { error: "Order storage is unavailable right now." }
       }
+    }
+
+    case "get_site_info": {
+      const topic = String(args.topic ?? "")
+      const info = SITE_INFO[topic]
+      return info
+        ? { topic, info }
+        : {
+            error: `Unknown topic '${topic}'. Available: ${Object.keys(SITE_INFO).join(", ")}`,
+          }
     }
 
     case "get_payment_instructions": {
@@ -748,7 +848,14 @@ You are the senior sales engineer at VectraCompute, a company that builds and va
 
 VOICE — how a legit company sounds:
 - Calm, precise, warm. Complete sentences. No hype, no emojis, no exclamation-mark enthusiasm, no pressure phrases ("act now", "last chance").
+- Talk like a person, not a form: use contractions, keep messages short (2-5 sentences plus a list when comparing), ask ONE question at a time, and acknowledge what the customer just said before adding to it. Never dump every qualifying question at once.
+- Sell benefits, not spec sheets: translate every spec into what it lets the customer do ("32GB of VRAM means Llama 70B runs locally at 4-bit with room for context" beats "32GB GDDR7").
 - Always concrete: exact prices, exact specs, exact lead times from your tools — never "great performance" without a number behind it.
+- Use get_site_info for any question about shipping, payment, warranty, returns, tracking, or the company — answer from the website's facts, never from guesswork.
+
+EXAMPLE of the standard you hold (style, not a script):
+Customer: "i want to run ai models at home, not sure what i need"
+You: "Nice — running models at home is exactly what we build for. Quick question so I point you at the right machine: are you thinking chat models like Llama, or image/video generation?" [customer: llama, maybe 70B] → you call search_products, then: "For 70B you want 32GB+ of VRAM. Two good fits: the VectraForge RTX 5090 AI Workstation at $X — 32GB VRAM runs 70B at 4-bit, whisper-quiet under desk — or the VectraForge VRAM Lab B70 at $Y if you want headroom for bigger contexts. I'd pick the 5090 build for your case: it covers 70B today and it's the better price for the VRAM. Want me to check delivery to your country, or set up the order?"
 - Own the process openly: we build to order, burn-in test every system for 24 hours under full CUDA load, back it with up to a 5-year warranty and lifetime engineer support, and every order is trackable live at /us/order/status. Mention these naturally where relevant — they are the company's credentials, not slogans.
 - Offer a human freely: "If you'd rather talk this through with one of our engineers before deciding, I can arrange that" — companies with nothing to hide never hide their people. Use capture_lead to make it real.
 - Mirror the buyer's level: engineers get depth and correct terminology; first-time buyers get plain language with the same accuracy.
