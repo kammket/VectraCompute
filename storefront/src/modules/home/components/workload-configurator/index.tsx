@@ -752,6 +752,20 @@ const WorkloadConfigurator = () => {
   const [dataSize, setDataSize] = useState<DataSizeKey>("growing")
   const [condition, setCondition] = useState<ConditionKey>("either")
   const [urgency, setUrgency] = useState<UrgencyKey>("month")
+  // Accordion: only one question expanded at a time on mobile so the selector
+  // fits the screen. Answering advances to the next question automatically.
+  const [openStep, setOpenStep] = useState(0)
+
+  const STEPS = [
+    { title: "Workload", options: WORKLOADS, value: workload, set: setWorkload },
+    { title: "Scale", options: SCALES, value: scale, set: setScale },
+    { title: "Budget", options: BUDGETS, value: budget, set: setBudget },
+    { title: "Deployment", options: DEPLOYMENTS, value: deployment, set: setDeployment },
+    { title: "Model size", options: MODEL_SIZES, value: modelSize, set: setModelSize },
+    { title: "Data profile", options: DATA_SIZES, value: dataSize, set: setDataSize },
+    { title: "Condition", options: CONDITIONS, value: condition, set: setCondition },
+    { title: "Timeline", options: URGENCIES, value: urgency, set: setUrgency },
+  ] as { title: string; options: { key: string; label: string; description: string }[]; value: string; set: (v: never) => void }[]
 
   const recommendation = useMemo(
     () =>
@@ -804,194 +818,104 @@ const WorkloadConfigurator = () => {
             networking option.
           </Text>
 
-          <div className="grid grid-cols-1 medium:grid-cols-2 gap-5">
-            <div>
-              <Text className="text-base-semi mb-3">Workload</Text>
-              <div className="grid grid-cols-1 gap-3">
-                {WORKLOADS.map((item) => (
+          <div className="grid grid-cols-1 gap-2.5">
+            {STEPS.map((step, index) => {
+              const selected = step.options.find((o) => o.key === step.value)
+              const isOpen = openStep === index
+              return (
+                <div
+                  key={step.title}
+                  className="overflow-hidden rounded-md border border-ui-border-base bg-white"
+                >
                   <button
-                    key={item.key}
                     type="button"
-                    onClick={() => setWorkload(item.key)}
-                    className={`min-h-[96px] text-left border rounded-md p-4 transition-colors ${
-                      workload === item.key
-                        ? "border-brand-600 bg-brand-50"
-                        : "border-ui-border-base bg-white hover:bg-grey-5"
-                    }`}
+                    onClick={() => setOpenStep(isOpen ? -1 : index)}
+                    className="flex w-full items-center justify-between gap-3 px-4 py-3 text-left"
                   >
-                    <span className="block text-base-semi">{item.label}</span>
-                    <span className="block text-small-regular text-ui-fg-subtle mt-1">
-                      {item.description}
+                    <span className="min-w-0">
+                      <span className="flex items-center gap-2 text-xs text-ui-fg-muted">
+                        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-brand-600 text-[11px] font-semibold text-white">
+                          {index + 1}
+                        </span>
+                        {step.title}
+                      </span>
+                      <span className="mt-0.5 block truncate text-small-semi text-ui-fg-base">
+                        {selected?.label ?? "Choose"}
+                      </span>
                     </span>
+                    <svg
+                      viewBox="0 0 20 20"
+                      className={`h-4 w-4 shrink-0 text-ui-fg-muted transition-transform ${
+                        isOpen ? "rotate-180" : ""
+                      }`}
+                      aria-hidden
+                    >
+                      <path
+                        d="M5 7.5l5 5 5-5"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="1.8"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
                   </button>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <Text className="text-base-semi mb-3">Scale</Text>
-              <div className="grid grid-cols-1 gap-3">
-                {SCALES.map((item) => (
-                  <button
-                    key={item.key}
-                    type="button"
-                    onClick={() => setScale(item.key)}
-                    className={`min-h-[96px] text-left border rounded-md p-4 transition-colors ${
-                      scale === item.key
-                        ? "border-grey-90 bg-grey-10"
-                        : "border-ui-border-base bg-white hover:bg-grey-5"
-                    }`}
-                  >
-                    <span className="block text-base-semi">{item.label}</span>
-                    <span className="block text-small-regular text-ui-fg-subtle mt-1">
-                      {item.description}
-                    </span>
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <Text className="text-base-semi mb-3">Budget</Text>
-              <div className="grid grid-cols-1 gap-3">
-                {BUDGETS.map((item) => (
-                  <button
-                    key={item.key}
-                    type="button"
-                    onClick={() => setBudget(item.key)}
-                    className={`min-h-[88px] text-left border rounded-md p-4 transition-colors ${
-                      budget === item.key
-                        ? "border-brand-600 bg-brand-50"
-                        : "border-ui-border-base bg-white hover:bg-grey-5"
-                    }`}
-                  >
-                    <span className="block text-base-semi">{item.label}</span>
-                    <span className="block text-small-regular text-ui-fg-subtle mt-1">
-                      {item.description}
-                    </span>
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <Text className="text-base-semi mb-3">Deployment</Text>
-              <div className="grid grid-cols-1 gap-3">
-                {DEPLOYMENTS.map((item) => (
-                  <button
-                    key={item.key}
-                    type="button"
-                    onClick={() => setDeployment(item.key)}
-                    className={`min-h-[88px] text-left border rounded-md p-4 transition-colors ${
-                      deployment === item.key
-                        ? "border-grey-90 bg-grey-10"
-                        : "border-ui-border-base bg-white hover:bg-grey-5"
-                    }`}
-                  >
-                    <span className="block text-base-semi">{item.label}</span>
-                    <span className="block text-small-regular text-ui-fg-subtle mt-1">
-                      {item.description}
-                    </span>
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <Text className="text-base-semi mb-3">Model size</Text>
-              <div className="grid grid-cols-1 gap-3">
-                {MODEL_SIZES.map((item) => (
-                  <button
-                    key={item.key}
-                    type="button"
-                    onClick={() => setModelSize(item.key)}
-                    className={`min-h-[88px] text-left border rounded-md p-4 transition-colors ${
-                      modelSize === item.key
-                        ? "border-brand-600 bg-brand-50"
-                        : "border-ui-border-base bg-white hover:bg-grey-5"
-                    }`}
-                  >
-                    <span className="block text-base-semi">{item.label}</span>
-                    <span className="block text-small-regular text-ui-fg-subtle mt-1">
-                      {item.description}
-                    </span>
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <Text className="text-base-semi mb-3">Data profile</Text>
-              <div className="grid grid-cols-1 gap-3">
-                {DATA_SIZES.map((item) => (
-                  <button
-                    key={item.key}
-                    type="button"
-                    onClick={() => setDataSize(item.key)}
-                    className={`min-h-[88px] text-left border rounded-md p-4 transition-colors ${
-                      dataSize === item.key
-                        ? "border-grey-90 bg-grey-10"
-                        : "border-ui-border-base bg-white hover:bg-grey-5"
-                    }`}
-                  >
-                    <span className="block text-base-semi">{item.label}</span>
-                    <span className="block text-small-regular text-ui-fg-subtle mt-1">
-                      {item.description}
-                    </span>
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <Text className="text-base-semi mb-3">Condition preference</Text>
-              <div className="grid grid-cols-1 gap-3">
-                {CONDITIONS.map((item) => (
-                  <button
-                    key={item.key}
-                    type="button"
-                    onClick={() => setCondition(item.key)}
-                    className={`min-h-[88px] text-left border rounded-md p-4 transition-colors ${
-                      condition === item.key
-                        ? "border-brand-600 bg-brand-50"
-                        : "border-ui-border-base bg-white hover:bg-grey-5"
-                    }`}
-                  >
-                    <span className="block text-base-semi">{item.label}</span>
-                    <span className="block text-small-regular text-ui-fg-subtle mt-1">
-                      {item.description}
-                    </span>
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <Text className="text-base-semi mb-3">Timeline</Text>
-              <div className="grid grid-cols-1 gap-3">
-                {URGENCIES.map((item) => (
-                  <button
-                    key={item.key}
-                    type="button"
-                    onClick={() => setUrgency(item.key)}
-                    className={`min-h-[88px] text-left border rounded-md p-4 transition-colors ${
-                      urgency === item.key
-                        ? "border-grey-90 bg-grey-10"
-                        : "border-ui-border-base bg-white hover:bg-grey-5"
-                    }`}
-                  >
-                    <span className="block text-base-semi">{item.label}</span>
-                    <span className="block text-small-regular text-ui-fg-subtle mt-1">
-                      {item.description}
-                    </span>
-                  </button>
-                ))}
-              </div>
-            </div>
+                  {isOpen && (
+                    <div className="grid grid-cols-1 gap-2 border-t border-ui-border-base p-3 xsmall:grid-cols-2">
+                      {step.options.map((item) => {
+                        const active = step.value === item.key
+                        return (
+                          <button
+                            key={item.key}
+                            type="button"
+                            onClick={() => {
+                              step.set(item.key as never)
+                              setOpenStep(
+                                index + 1 < STEPS.length ? index + 1 : -1
+                              )
+                            }}
+                            className={`rounded-md border p-3 text-left transition-colors ${
+                              active
+                                ? "border-brand-600 bg-brand-50"
+                                : "border-ui-border-base bg-white hover:bg-grey-5"
+                            }`}
+                          >
+                            <span className="flex items-center justify-between gap-2">
+                              <span className="text-small-semi">
+                                {item.label}
+                              </span>
+                              {active && (
+                                <svg
+                                  viewBox="0 0 20 20"
+                                  className="h-4 w-4 shrink-0 text-brand-600"
+                                  aria-hidden
+                                >
+                                  <path
+                                    d="M5 10.5l3 3 7-7"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                  />
+                                </svg>
+                              )}
+                            </span>
+                            <span className="mt-1 block text-xs leading-5 text-ui-fg-subtle">
+                              {item.description}
+                            </span>
+                          </button>
+                        )
+                      })}
+                    </div>
+                  )}
+                </div>
+              )
+            })}
           </div>
         </div>
 
-        <aside className="border border-ui-border-base rounded-md bg-white p-6 shadow-elevation-card-rest">
+                <aside className="border border-ui-border-base rounded-md bg-white p-6 shadow-elevation-card-rest">
           <Text className="text-small-regular text-ui-fg-muted mb-2">
             Recommended starting point
           </Text>

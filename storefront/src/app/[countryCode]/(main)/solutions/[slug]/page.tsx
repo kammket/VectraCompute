@@ -14,6 +14,10 @@ type Props = {
   params: Promise<{ slug: string; countryCode: string }>
 }
 
+// The recommended-products grid reads request cookies, which is incompatible
+// with static generation (DYNAMIC_SERVER_USAGE). Render on demand instead.
+export const dynamic = "force-dynamic"
+
 export function generateStaticParams() {
   return SOLUTIONS.map((s) => ({ slug: s.slug }))
 }
