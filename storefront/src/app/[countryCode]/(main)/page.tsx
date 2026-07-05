@@ -40,8 +40,8 @@ export default async function Home(props: {
       <FeatureCards />
       <SoftwareStack />
       <WorkloadConfigurator />
-      <section className="content-container py-14">
-        <div className="grid grid-cols-1 large:grid-cols-[1fr_auto] items-center gap-6 rounded-md bg-grey-90 text-white px-6 small:px-8 py-10">
+      <section className="content-container py-8 small:py-14">
+        <div className="grid grid-cols-1 large:grid-cols-[1fr_auto] items-center gap-6 rounded-md bg-grey-90 text-white px-6 small:px-8 py-6 small:py-10">
           <div>
             <Text className="text-small-semi uppercase text-brand-200 mb-2">
               Need help choosing?

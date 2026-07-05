@@ -233,7 +233,7 @@ export default async function ShippingPage(props: {
         </section>
 
         {/* CTA */}
-        <section className="mt-12 rounded-md bg-grey-90 px-6 py-10 text-white small:px-8">
+        <section className="mt-12 rounded-md bg-grey-90 px-6 py-6 small:py-10 text-white small:px-8">
           <div className="grid grid-cols-1 items-center gap-6 large:grid-cols-[1fr_auto]">
             <div>
               <Text className="mb-2 text-small-semi uppercase text-brand-200">

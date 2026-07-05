@@ -23,7 +23,7 @@ export default async function AdminPage() {
   const currency = orders[0]?.currency_code ?? "usd"
 
   return (
-    <main className="min-h-screen bg-grey-5 px-6 py-10">
+    <main className="min-h-screen bg-grey-5 px-4 py-6 small:px-6 small:py-10">
       <div className="mx-auto max-w-6xl">
         <p className="text-small-semi uppercase text-brand-600">
           VectraCompute Admin

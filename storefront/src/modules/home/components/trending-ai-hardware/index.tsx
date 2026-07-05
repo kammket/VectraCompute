@@ -56,7 +56,7 @@ export default async function TrendingAiHardware({
 
   return (
     <section className="bg-white border-y border-ui-border-base">
-      <div className="content-container py-14">
+      <div className="content-container py-8 small:py-14">
         <div className="grid grid-cols-1 large:grid-cols-[340px_minmax(0,1fr)] gap-8 items-start">
           <div className="large:sticky large:top-24 rounded-md border border-grey-80 bg-grey-90 p-6 text-white shadow-elevation-card-rest">
             <Text className="text-small-semi uppercase text-brand-200 mb-2">

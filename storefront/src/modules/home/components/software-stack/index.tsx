@@ -19,7 +19,7 @@ const STACK = [
 const SoftwareStack = () => {
   return (
     <section className="bg-grey-90 text-white border-y border-grey-80">
-      <div className="content-container py-14">
+      <div className="content-container py-8 small:py-14">
         <div className="grid grid-cols-1 large:grid-cols-[360px_1fr] gap-8 items-start">
           <div>
             <Text className="text-small-semi uppercase text-brand-200 mb-2">

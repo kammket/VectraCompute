@@ -19,7 +19,7 @@ export default async function AdminSettingsPage(props: {
   const storageConnected = Boolean(process.env.DATABASE_URL)
 
   return (
-    <main className="min-h-screen bg-grey-5 px-6 py-10">
+    <main className="min-h-screen bg-grey-5 px-4 py-6 small:px-6 small:py-10">
       <div className="mx-auto max-w-3xl">
         <Link href="/admin" className="text-small-semi text-brand-700">
           Back to admin

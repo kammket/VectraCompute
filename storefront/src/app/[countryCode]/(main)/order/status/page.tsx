@@ -71,7 +71,7 @@ export default async function OrderStatusPage(props: {
   const currentIndex = STATUS_STEPS.findIndex((s) => s.status === status)
 
   return (
-    <div className="bg-grey-5 min-h-[calc(100vh-64px)] py-10">
+    <div className="bg-grey-5 min-h-[calc(100vh-64px)] py-6 small:py-10">
       <div className="content-container max-w-3xl">
         <p className="text-small-semi uppercase text-brand-700">
           Order tracking

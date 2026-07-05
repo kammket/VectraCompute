@@ -31,7 +31,7 @@ const FEATURES = [
 const FeatureCards = () => {
   return (
     <section className="bg-grey-5 border-y border-ui-border-base">
-      <div className="content-container py-14">
+      <div className="content-container py-8 small:py-14">
       <div className="grid grid-cols-1 large:grid-cols-[320px_1fr] gap-8 items-start">
         <div className="rounded-md border border-grey-80 bg-grey-90 p-6 text-white">
           <Text className="text-small-semi uppercase text-brand-200 mb-2">

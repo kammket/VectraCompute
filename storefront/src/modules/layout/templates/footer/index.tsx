@@ -32,7 +32,7 @@ export default async function Footer() {
 
   return (
     <footer className="border-t border-grey-80 bg-grey-90 text-white w-full">
-      <div className="content-container flex flex-col w-full py-12">
+      <div className="content-container flex flex-col w-full py-8 small:py-12">
         <div className="grid grid-cols-1 large:grid-cols-[320px_minmax(0,1fr)] gap-10">
           <div className="max-w-sm rounded-md border border-white/15 bg-white/10 p-5">
             <LocalizedClientLink

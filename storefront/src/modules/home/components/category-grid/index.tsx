@@ -18,7 +18,7 @@ const CategoryGrid = async () => {
 
   return (
     <section className="bg-grey-5">
-      <div className="content-container py-14">
+      <div className="content-container py-8 small:py-14">
       <div className="flex flex-col medium:flex-row medium:items-end medium:justify-between gap-4 mb-8">
         <div>
           <Text className="text-small-semi uppercase text-brand-600 mb-2">

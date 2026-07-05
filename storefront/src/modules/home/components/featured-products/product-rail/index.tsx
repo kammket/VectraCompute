@@ -27,7 +27,7 @@ export default async function ProductRail({
   }
 
   return (
-    <div className="content-container py-12">
+    <div className="content-container py-8 small:py-12">
       <div className="flex items-end justify-between gap-4 mb-6">
         <div>
           <Text className="text-small-semi uppercase text-brand-600 mb-2">

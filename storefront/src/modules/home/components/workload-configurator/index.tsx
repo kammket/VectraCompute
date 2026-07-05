@@ -790,7 +790,7 @@ const WorkloadConfigurator = () => {
 
   return (
     <section className="bg-grey-5 border-y border-ui-border-base">
-      <div className="content-container py-14 grid grid-cols-1 large:grid-cols-[minmax(0,1fr)_420px] gap-8 items-start">
+      <div className="content-container py-8 small:py-14 grid grid-cols-1 large:grid-cols-[minmax(0,1fr)_420px] gap-8 items-start">
         <div>
           <Text className="text-small-semi uppercase text-brand-600 mb-2">
             Guided buying

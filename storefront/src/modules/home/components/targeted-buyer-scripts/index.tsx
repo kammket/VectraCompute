@@ -45,7 +45,7 @@ const BUYER_SCRIPTS = [
 const TargetedBuyerScripts = () => {
   return (
     <section className="bg-grey-5 border-y border-ui-border-base">
-      <div className="content-container py-14">
+      <div className="content-container py-8 small:py-14">
         <div className="grid grid-cols-1 large:grid-cols-[340px_1fr] gap-8 items-start">
           <div>
             <Text className="text-small-semi uppercase text-brand-600 mb-2">

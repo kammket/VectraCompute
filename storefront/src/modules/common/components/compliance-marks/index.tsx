@@ -88,7 +88,7 @@ const MARKS: { key: string; label: string; description: string; art: React.React
 
 const ComplianceMarks = () => {
   return (
-    <section className="border-t border-ui-border-base py-10">
+    <section className="border-t border-ui-border-base py-6 small:py-10">
       <p className="text-small-semi uppercase tracking-wide text-brand-700">
         Standards &amp; compliance
       </p>

@@ -45,7 +45,7 @@ const Section = ({
   description?: string
   children: React.ReactNode
 }) => (
-  <section id={id} className="scroll-mt-24 border-t border-ui-border-base py-12">
+  <section id={id} className="scroll-mt-24 border-t border-ui-border-base py-8 small:py-12">
     <div className="mb-8 max-w-3xl">
       <p className="text-small-semi uppercase tracking-wide text-brand-700">
         {eyebrow}
@@ -209,7 +209,7 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
 
       {/* Human escalation CTA */}
       <section className="border-t border-ui-border-base bg-grey-90 text-white">
-        <div className="content-container grid grid-cols-1 gap-5 py-10 medium:grid-cols-[minmax(0,1fr)_260px] medium:items-center">
+        <div className="content-container grid grid-cols-1 gap-5 py-6 small:py-10 medium:grid-cols-[minmax(0,1fr)_260px] medium:items-center">
           <div>
             <p className="text-small-semi uppercase text-brand-200">
               Need certainty before ordering?

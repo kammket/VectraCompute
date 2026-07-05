@@ -81,7 +81,7 @@ export default function ConfigurePage() {
         <WorkloadConfigurator />
       </div>
 
-      <section className="content-container py-14">
+      <section className="content-container py-8 small:py-14">
         <div className="grid grid-cols-1 large:grid-cols-[minmax(0,1fr)_360px] gap-8 items-start">
           <div>
             <Text className="text-small-semi uppercase text-brand-600 mb-2">
