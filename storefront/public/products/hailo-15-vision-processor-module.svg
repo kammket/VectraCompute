@@ -1,20 +1,20 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600" role="img" aria-label="Hailo-15 Vision Processor…">
   <defs>
-    <linearGradient id="bgbuiuod" x1="0" y1="0" x2="1" y2="1">
+    <linearGradient id="bgao227m" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#1A1206"/>
       <stop offset="1" stop-color="#92400E"/>
     </linearGradient>
-    <radialGradient id="glowbuiuod" cx="0.5" cy="0.45" r="0.6">
+    <radialGradient id="glowao227m" cx="0.5" cy="0.45" r="0.6">
       <stop offset="0" stop-color="#FBBF24" stop-opacity="0.25"/>
       <stop offset="1" stop-color="#FBBF24" stop-opacity="0"/>
     </radialGradient>
-    <pattern id="dotsbuiuod" width="26" height="26" patternUnits="userSpaceOnUse">
+    <pattern id="dotsao227m" width="26" height="26" patternUnits="userSpaceOnUse">
       <circle cx="2" cy="2" r="1.4" fill="#FFFFFF" opacity="0.05"/>
     </pattern>
   </defs>
-  <rect width="800" height="600" fill="url(#bgbuiuod)"/>
-  <rect width="800" height="600" fill="url(#dotsbuiuod)"/>
-  <rect width="800" height="600" fill="url(#glowbuiuod)"/>
+  <rect width="800" height="600" fill="url(#bgao227m)"/>
+  <rect width="800" height="600" fill="url(#dotsao227m)"/>
+  <rect width="800" height="600" fill="url(#glowao227m)"/>
   
         <circle cx="400" cy="310" r="78" fill="none" stroke="#FBBF24" stroke-width="4"/>
         <circle cx="400" cy="310" r="30" fill="#FBBF24" opacity="0.85"/>

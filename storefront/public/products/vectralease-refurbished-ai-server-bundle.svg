@@ -1,20 +1,20 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600" role="img" aria-label="VectraLease Refurb AI Bundle">
   <defs>
-    <linearGradient id="bgvg4u1m" x1="0" y1="0" x2="1" y2="1">
+    <linearGradient id="bgj2jit2" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#0B0F1A"/>
       <stop offset="1" stop-color="#0F766E"/>
     </linearGradient>
-    <radialGradient id="glowvg4u1m" cx="0.5" cy="0.45" r="0.6">
+    <radialGradient id="glowj2jit2" cx="0.5" cy="0.45" r="0.6">
       <stop offset="0" stop-color="#2DD4BF" stop-opacity="0.25"/>
       <stop offset="1" stop-color="#2DD4BF" stop-opacity="0"/>
     </radialGradient>
-    <pattern id="dotsvg4u1m" width="26" height="26" patternUnits="userSpaceOnUse">
+    <pattern id="dotsj2jit2" width="26" height="26" patternUnits="userSpaceOnUse">
       <circle cx="2" cy="2" r="1.4" fill="#FFFFFF" opacity="0.05"/>
     </pattern>
   </defs>
-  <rect width="800" height="600" fill="url(#bgvg4u1m)"/>
-  <rect width="800" height="600" fill="url(#dotsvg4u1m)"/>
-  <rect width="800" height="600" fill="url(#glowvg4u1m)"/>
+  <rect width="800" height="600" fill="url(#bgj2jit2)"/>
+  <rect width="800" height="600" fill="url(#dotsj2jit2)"/>
+  <rect width="800" height="600" fill="url(#glowj2jit2)"/>
   
         <rect x="250" y="240" width="300" height="46" rx="6" fill="#0F172A" stroke="#2DD4BF" stroke-width="2.5"/>
         <rect x="250" y="296" width="300" height="46" rx="6" fill="#0F172A" stroke="#2DD4BF" stroke-width="2.5"/>

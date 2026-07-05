@@ -4273,6 +4273,425 @@ export const CATALOG_PRODUCTS = [
       "certifications": "Functionally tested, Firmware validated, Compatibility reviewed",
       "buyer_faq": "How is this different from Hailo-8? Hailo-8 accelerates a host; Hailo-15 IS the host - a full SoC that runs the camera by itself. | How do I start? The evaluation kit includes reference camera hardware and the full toolchain."
     }
+  },
+  {
+    "title": "AMD Instinct MI450 Accelerator",
+    "handle": "amd-instinct-mi450-accelerator",
+    "category": "Components & Accessories",
+    "description": "AMD Instinct MI450 accelerator from the MI400 'Helios' generation - next-generation HBM capacity and bandwidth for frontier training and inference. Supplied through our allocation channel with platform compatibility review before dispatch.",
+    "weight": 5400,
+    "optionTitle": "Configuration",
+    "variants": [
+      {
+        "title": "Single MI450 OAM module",
+        "sku": "VC-MI450-OAM",
+        "optionValue": "Single MI450 OAM module",
+        "priceUsd": 16999
+      },
+      {
+        "title": "8x MI450 platform set",
+        "sku": "VC-MI450-8X",
+        "optionValue": "8x MI450 platform set",
+        "priceUsd": 135899
+      }
+    ],
+    "metadata": {
+      "seo_title": "AMD Instinct MI450 Accelerator | Buy at 40% Below Market | VectraCompute",
+      "seo_description": "AMD Instinct MI450 accelerator from the MI400 'Helios' generation - next-generation HBM capacity and bandwidth for frontier training and inference. Su…",
+      "seo_keywords": "AMD MI450 price, buy Instinct MI450, MI400 series accelerator, Helios GPU, ROCm accelerator 2026",
+      "trust_note": "Every unit is functionally checked and reviewed against your platform before dispatch; allocation-class items are confirmed before payment is finalized.",
+      "best_for": "Frontier training, large-model inference, next-gen ROCm platforms",
+      "lead_time": "Ships in 4-8 weeks after allocation review",
+      "warranty": "Manufacturer warranty plus VectraCompute validation support",
+      "support_level": "Compatibility and deployment review included",
+      "condition": "New",
+      "financing": "PO support available",
+      "install_support": "Platform, facility, or fabric review against your deployment available before dispatch",
+      "certifications": "Functionally checked, Compatibility reviewed, Deployment scoped",
+      "buyer_faq": "How is MI450 different from MI300X? It is the next generation - more HBM capacity and bandwidth per device for larger models per GPU. | Can you actually get allocation? We confirm allocation with your order before any payment is finalized."
+    }
+  },
+  {
+    "title": "Cerebras CS-3 Wafer-Scale Deployment (Quote-Ready)",
+    "handle": "cerebras-cs-3-wafer-scale-deployment",
+    "category": "GPU Rack Servers",
+    "description": "Cerebras CS-3 wafer-scale AI system deployment, quote-ready. The CS-3 trains large models on a single wafer-scale engine instead of GPU clusters; we scope facility power, cooling, and networking, then coordinate the vendor quote and delivery.",
+    "weight": 20000,
+    "optionTitle": "Package",
+    "variants": [
+      {
+        "title": "Deployment assessment & allocation review",
+        "sku": "VC-CS3-ASSESS",
+        "optionValue": "Deployment assessment & allocation review",
+        "priceUsd": 7799
+      },
+      {
+        "title": "Reserved allocation planning package",
+        "sku": "VC-CS3-RESERVE",
+        "optionValue": "Reserved allocation planning package",
+        "priceUsd": 23399
+      }
+    ],
+    "metadata": {
+      "seo_title": "Cerebras CS-3 Wafer-Scale Deployment (Quote-Ready) | Buy at 40% Below Market | VectraCompute",
+      "seo_description": "Cerebras CS-3 wafer-scale AI system deployment, quote-ready. The CS-3 trains large models on a single wafer-scale engine instead of GPU clusters; we s…",
+      "seo_keywords": "Cerebras CS-3 price, buy Cerebras CS-3, wafer scale engine system, CS-3 deployment, GPU cluster alternative",
+      "trust_note": "Every unit is functionally checked and reviewed against your platform before dispatch; allocation-class items are confirmed before payment is finalized.",
+      "best_for": "Wafer-scale training, GPU-cluster alternatives, national-lab-class compute",
+      "lead_time": "Deployment scheduled after assessment; system lead time confirmed with vendor quote",
+      "warranty": "Manufacturer warranty plus VectraCompute validation support",
+      "support_level": "Compatibility and deployment review included",
+      "condition": "New",
+      "financing": "PO support available",
+      "install_support": "Platform, facility, or fabric review against your deployment available before dispatch",
+      "certifications": "Functionally checked, Compatibility reviewed, Deployment scoped",
+      "buyer_faq": "Why quote-ready instead of a fixed price? CS-3 systems are configured and quoted per deployment; the packages below cover assessment and reservation, credited to your final order. | Is my facility ready? The assessment covers power, cooling, and networking before any commitment."
+    }
+  },
+  {
+    "title": "Apple Mac Studio M3 Ultra (Local AI Configuration)",
+    "handle": "apple-mac-studio-m3-ultra-local-ai",
+    "category": "Workstations by CPU Platform",
+    "description": "Apple Mac Studio with M3 Ultra - up to 512GB of unified memory in near silence, letting very large quantized models run locally where discrete GPUs run out of VRAM. Configured and validated for local LLM work.",
+    "weight": 4400,
+    "optionTitle": "Configuration",
+    "variants": [
+      {
+        "title": "M3 Ultra / 96GB unified / 1TB",
+        "sku": "VC-MACSTU-96",
+        "optionValue": "M3 Ultra / 96GB unified / 1TB",
+        "priceUsd": 2999
+      },
+      {
+        "title": "M3 Ultra / 256GB unified / 2TB",
+        "sku": "VC-MACSTU-256",
+        "optionValue": "M3 Ultra / 256GB unified / 2TB",
+        "priceUsd": 4199
+      },
+      {
+        "title": "M3 Ultra / 512GB unified / 4TB",
+        "sku": "VC-MACSTU-512",
+        "optionValue": "M3 Ultra / 512GB unified / 4TB",
+        "priceUsd": 5699
+      }
+    ],
+    "metadata": {
+      "seo_title": "Apple Mac Studio M3 Ultra (Local AI Configuration) | Buy at 40% Below Market | VectraCompute",
+      "seo_description": "Apple Mac Studio with M3 Ultra - up to 512GB of unified memory in near silence, letting very large quantized models run locally where discrete GPUs ru…",
+      "seo_keywords": "Mac Studio M3 Ultra price, buy Mac Studio 512GB, Mac Studio local LLM, unified memory AI desktop, M3 Ultra deep learning",
+      "trust_note": "Every unit is functionally checked and reviewed against your platform before dispatch; allocation-class items are confirmed before payment is finalized.",
+      "best_for": "Very large local LLMs, silent desk-side inference, unified-memory workloads",
+      "lead_time": "Ships in 3-7 business days",
+      "warranty": "Manufacturer warranty plus VectraCompute validation support",
+      "support_level": "Compatibility and deployment review included",
+      "condition": "New",
+      "financing": "PO support available",
+      "install_support": "Platform, facility, or fabric review against your deployment available before dispatch",
+      "certifications": "Functionally checked, Compatibility reviewed, Deployment scoped",
+      "buyer_faq": "Why a Mac for local AI? 512GB of unified memory holds models no consumer GPU can - 200B+ quantized models run on one silent desktop. | What about M5 Ultra? Not released yet; we list what you can actually buy today and will stock M5 Ultra when Apple ships it."
+    }
+  },
+  {
+    "title": "NVIDIA GeForce RTX 5080 16GB GPU",
+    "handle": "nvidia-geforce-rtx-5080-gpu",
+    "category": "Components & Accessories",
+    "description": "NVIDIA GeForce RTX 5080 with 16GB GDDR7 - Blackwell-generation performance for mid-size local models, image generation, and development rigs at a friendlier price than the flagship.",
+    "weight": 2200,
+    "optionTitle": "Quantity",
+    "variants": [
+      {
+        "title": "Single card",
+        "sku": "VC-GPU-5080",
+        "optionValue": "Single card",
+        "priceUsd": 659
+      },
+      {
+        "title": "2x pair",
+        "sku": "VC-GPU-5080-2X",
+        "optionValue": "2x pair",
+        "priceUsd": 1309
+      }
+    ],
+    "metadata": {
+      "seo_title": "NVIDIA GeForce RTX 5080 16GB GPU | Buy at 40% Below Market | VectraCompute",
+      "seo_description": "NVIDIA GeForce RTX 5080 with 16GB GDDR7 - Blackwell-generation performance for mid-size local models, image generation, and development rigs at a frie…",
+      "seo_keywords": "buy RTX 5080, RTX 5080 price, 16GB GDDR7 GPU, Blackwell GPU for AI, RTX 5080 deep learning",
+      "trust_note": "Every unit is functionally checked and reviewed against your platform before dispatch; allocation-class items are confirmed before payment is finalized.",
+      "best_for": "Mid-size local models, image generation, AI development rigs",
+      "lead_time": "Ships in 2-5 business days",
+      "warranty": "Manufacturer warranty plus VectraCompute validation support",
+      "support_level": "Compatibility and deployment review included",
+      "condition": "New",
+      "financing": "PO support available",
+      "install_support": "Platform, facility, or fabric review against your deployment available before dispatch",
+      "certifications": "Functionally checked, Compatibility reviewed, Deployment scoped",
+      "buyer_faq": "5080 or 5090 for AI? 16GB handles 7B-13B models and SDXL comfortably; choose the 5090's 32GB when 70B-class models are the goal. | Pair option? Two 5080s split workloads across experiments nicely in one workstation."
+    }
+  },
+  {
+    "title": "ASUS ProArt GeForce RTX 4090 OG Edition",
+    "handle": "asus-proart-rtx-4090-og",
+    "category": "Components & Accessories",
+    "description": "ASUS ProArt GeForce RTX 4090 OG - the creator-focused 4090 in a 2.5-slot design that fits multi-GPU and compact builds where 3.5-slot coolers will not. Same 24GB GDDR6X, cleaner fit.",
+    "weight": 2500,
+    "optionTitle": "Quantity",
+    "variants": [
+      {
+        "title": "Single card",
+        "sku": "VC-GPU-4090-PROART",
+        "optionValue": "Single card",
+        "priceUsd": 1139
+      },
+      {
+        "title": "2x matched pair",
+        "sku": "VC-GPU-4090-PROART-2X",
+        "optionValue": "2x matched pair",
+        "priceUsd": 2269
+      }
+    ],
+    "metadata": {
+      "seo_title": "ASUS ProArt GeForce RTX 4090 OG Edition | Buy at 40% Below Market | VectraCompute",
+      "seo_description": "ASUS ProArt GeForce RTX 4090 OG - the creator-focused 4090 in a 2.5-slot design that fits multi-GPU and compact builds where 3.5-slot coolers will not…",
+      "seo_keywords": "ASUS ProArt RTX 4090 OG price, buy ProArt 4090, 2.5 slot RTX 4090, creator GPU",
+      "trust_note": "Every unit is functionally checked and reviewed against your platform before dispatch; allocation-class items are confirmed before payment is finalized.",
+      "best_for": "Compact multi-GPU builds, creator workstations, space-constrained cases",
+      "lead_time": "Ships in 3-7 business days",
+      "warranty": "Manufacturer warranty plus VectraCompute validation support",
+      "support_level": "Compatibility and deployment review included",
+      "condition": "New",
+      "financing": "PO support available",
+      "install_support": "Platform, facility, or fabric review against your deployment available before dispatch",
+      "certifications": "Functionally checked, Compatibility reviewed, Deployment scoped",
+      "buyer_faq": "Why the OG edition? Its 2.5-slot width lets two cards fit where standard 4090 coolers physically cannot. | Same performance as other 4090s? Same GPU and memory; the difference is form factor and acoustics tuning."
+    }
+  },
+  {
+    "title": "NXP i.MX 95 Applications Processor Kit",
+    "handle": "nxp-imx-95-applications-processor-kit",
+    "category": "Edge & Robotics",
+    "description": "NXP i.MX 95 applications processor with integrated eIQ Neutron NPU - industrial-grade edge AI with long-term supply commitment, for products that must ship for a decade. SoM for integration or full evaluation kit.",
+    "weight": 700,
+    "optionTitle": "Configuration",
+    "variants": [
+      {
+        "title": "i.MX 95 system-on-module",
+        "sku": "VC-IMX95-SOM",
+        "optionValue": "i.MX 95 system-on-module",
+        "priceUsd": 109
+      },
+      {
+        "title": "i.MX 95 evaluation kit (EVK)",
+        "sku": "VC-IMX95-EVK",
+        "optionValue": "i.MX 95 evaluation kit (EVK)",
+        "priceUsd": 509
+      }
+    ],
+    "metadata": {
+      "seo_title": "NXP i.MX 95 Applications Processor Kit | Buy at 40% Below Market | VectraCompute",
+      "seo_description": "NXP i.MX 95 applications processor with integrated eIQ Neutron NPU - industrial-grade edge AI with long-term supply commitment, for products that must…",
+      "seo_keywords": "NXP i.MX 95 price, buy i.MX95 EVK, i.MX 95 SoM, industrial edge AI processor, eIQ Neutron NPU",
+      "trust_note": "Every unit is functionally checked and reviewed against your platform before dispatch; allocation-class items are confirmed before payment is finalized.",
+      "best_for": "Industrial edge AI products, long-lifecycle devices, automotive-adjacent builds",
+      "lead_time": "Ships in 1-2 weeks",
+      "warranty": "Manufacturer warranty plus VectraCompute validation support",
+      "support_level": "Compatibility and deployment review included",
+      "condition": "New",
+      "financing": "PO support available",
+      "install_support": "Platform, facility, or fabric review against your deployment available before dispatch",
+      "certifications": "Functionally checked, Compatibility reviewed, Deployment scoped",
+      "buyer_faq": "Why i.MX 95 over Jetson? Industrial temperature range, functional-safety pedigree, and NXP's 10-15 year supply longevity program. | How do I start? The EVK boots Linux with the eIQ AI stack out of the box; the SoM is what you integrate."
+    }
+  },
+  {
+    "title": "Kioxia Enterprise PCIe 5.0 NVMe SSD",
+    "handle": "kioxia-enterprise-pcie5-nvme-ssd",
+    "category": "Storage & Memory",
+    "description": "Kioxia enterprise PCIe 5.0 NVMe SSD (CM7-class) - dual-port, power-loss-protected flash built for AI data pipelines, feeding GPUs at full PCIe 5.0 line rate so training never starves on storage.",
+    "weight": 300,
+    "optionTitle": "Capacity",
+    "variants": [
+      {
+        "title": "7.68TB U.3",
+        "sku": "VC-KIOXIA-7T6",
+        "optionValue": "7.68TB U.3",
+        "priceUsd": 659
+      },
+      {
+        "title": "15.36TB U.3",
+        "sku": "VC-KIOXIA-15T",
+        "optionValue": "15.36TB U.3",
+        "priceUsd": 1199
+      },
+      {
+        "title": "30.72TB U.3",
+        "sku": "VC-KIOXIA-30T",
+        "optionValue": "30.72TB U.3",
+        "priceUsd": 2279
+      }
+    ],
+    "metadata": {
+      "seo_title": "Kioxia Enterprise PCIe 5.0 NVMe SSD | Buy at 40% Below Market | VectraCompute",
+      "seo_description": "Kioxia enterprise PCIe 5.0 NVMe SSD (CM7-class) - dual-port, power-loss-protected flash built for AI data pipelines, feeding GPUs at full PCIe 5.0 lin…",
+      "seo_keywords": "Kioxia CM7 price, enterprise PCIe 5.0 SSD, buy Kioxia NVMe, AI server SSD, U.3 datacenter SSD",
+      "trust_note": "Every unit is functionally checked and reviewed against your platform before dispatch; allocation-class items are confirmed before payment is finalized.",
+      "best_for": "AI dataset storage, training data pipelines, GPU server storage upgrades",
+      "lead_time": "Ships in 3-7 business days",
+      "warranty": "Manufacturer warranty plus VectraCompute validation support",
+      "support_level": "Compatibility and deployment review included",
+      "condition": "New",
+      "financing": "PO support available",
+      "install_support": "Platform, facility, or fabric review against your deployment available before dispatch",
+      "certifications": "Functionally checked, Compatibility reviewed, Deployment scoped",
+      "buyer_faq": "Why enterprise flash for AI? Sustained-write endurance and power-loss protection - checkpoints and shuffled datasets punish consumer drives. | U.3 or E3.S? Both form factors available on request; tell us your backplane."
+    }
+  },
+  {
+    "title": "Yageo-Shibaura NTC Server Temperature Sensor Kit",
+    "handle": "yageo-shibaura-ntc-temperature-sensor-kit",
+    "category": "Power & Cooling",
+    "description": "Precision NTC thermistor kits (Yageo-Shibaura class) for AI server and rack thermal monitoring - the sensors high-density GPU deployments rely on to catch hotspots before throttling or shutdown.",
+    "weight": 200,
+    "optionTitle": "Kit",
+    "variants": [
+      {
+        "title": "12x NTC sensors + harness",
+        "sku": "VC-NTC-12",
+        "optionValue": "12x NTC sensors + harness",
+        "priceUsd": 29
+      },
+      {
+        "title": "Rack kit: 48x sensors + monitoring board",
+        "sku": "VC-NTC-48-KIT",
+        "optionValue": "Rack kit: 48x sensors + monitoring board",
+        "priceUsd": 119
+      }
+    ],
+    "metadata": {
+      "seo_title": "Yageo-Shibaura NTC Server Temperature Sensor Kit | Buy at 40% Below Market | VectraCompute",
+      "seo_description": "Precision NTC thermistor kits (Yageo-Shibaura class) for AI server and rack thermal monitoring - the sensors high-density GPU deployments rely on to c…",
+      "seo_keywords": "server temperature sensors, NTC thermistor kit, rack thermal monitoring, GPU server sensors",
+      "trust_note": "Every unit is functionally checked and reviewed against your platform before dispatch; allocation-class items are confirmed before payment is finalized.",
+      "best_for": "Rack thermal monitoring, GPU server hotspot detection, liquid-cooling loop instrumentation",
+      "lead_time": "Ships in 3-7 business days",
+      "warranty": "Manufacturer warranty plus VectraCompute validation support",
+      "support_level": "Compatibility and deployment review included",
+      "condition": "New",
+      "financing": "PO support available",
+      "install_support": "Platform, facility, or fabric review against your deployment available before dispatch",
+      "certifications": "Functionally checked, Compatibility reviewed, Deployment scoped",
+      "buyer_faq": "Where do these mount? Inlet/outlet air paths, coolant loops, and busbar contact points - the harness kit covers a full rack. | Do they work with my BMC? Standard 10k NTC curves are supported by common BMCs and monitoring controllers."
+    }
+  },
+  {
+    "title": "Vertiv 800 VDC Power Architecture (Quote-Ready)",
+    "handle": "vertiv-800-vdc-power-architecture",
+    "category": "Power & Cooling",
+    "description": "Vertiv 800 VDC rack power architecture, quote-ready - the direct-current distribution approach next-generation AI racks are moving to, cutting conversion losses at megawatt scale. We scope, plan, and coordinate the vendor quote.",
+    "weight": 15000,
+    "optionTitle": "Package",
+    "variants": [
+      {
+        "title": "800 VDC readiness assessment",
+        "sku": "VC-800VDC-ASSESS",
+        "optionValue": "800 VDC readiness assessment",
+        "priceUsd": 7799
+      },
+      {
+        "title": "Sidecar power rack planning package",
+        "sku": "VC-800VDC-PLAN",
+        "optionValue": "Sidecar power rack planning package",
+        "priceUsd": 19499
+      }
+    ],
+    "metadata": {
+      "seo_title": "Vertiv 800 VDC Power Architecture (Quote-Ready) | Buy at 40% Below Market | VectraCompute",
+      "seo_description": "Vertiv 800 VDC rack power architecture, quote-ready - the direct-current distribution approach next-generation AI racks are moving to, cutting convers…",
+      "seo_keywords": "Vertiv 800 VDC price, 800V DC rack power, AI data center power architecture, direct current rack",
+      "trust_note": "Every unit is functionally checked and reviewed against your platform before dispatch; allocation-class items are confirmed before payment is finalized.",
+      "best_for": "Next-gen AI rack power, megawatt-scale efficiency, GB300/Rubin-class facilities",
+      "lead_time": "Assessment scheduled within 2 weeks; equipment lead time confirmed with quote",
+      "warranty": "Manufacturer warranty plus VectraCompute validation support",
+      "support_level": "Compatibility and deployment review included",
+      "condition": "New",
+      "financing": "PO support available",
+      "install_support": "Platform, facility, or fabric review against your deployment available before dispatch",
+      "certifications": "Functionally checked, Compatibility reviewed, Deployment scoped",
+      "buyer_faq": "Why 800 VDC? Fewer AC-DC conversion stages at rack scale means measurably lower losses when racks pass 100kW. | Is this for me? If you are planning GB300/Rubin-class racks or 100kW+ densities, yes - the assessment tells you exactly what changes."
+    }
+  },
+  {
+    "title": "Vertiv Liebert XDU Liquid-to-Liquid CDU",
+    "handle": "vertiv-liebert-xdu-cdu",
+    "category": "Power & Cooling",
+    "description": "Vertiv Liebert XDU coolant distribution unit - liquid-to-liquid heat exchange between your facility water and direct-to-chip loops, the backbone of liquid-cooled GPU rows. Supplied with commissioning coordination.",
+    "weight": 120000,
+    "optionTitle": "Capacity",
+    "variants": [
+      {
+        "title": "XDU-class 70kW unit",
+        "sku": "VC-XDU-70",
+        "optionValue": "XDU-class 70kW unit",
+        "priceUsd": 23999
+      },
+      {
+        "title": "XDU-class 450kW row unit",
+        "sku": "VC-XDU-450",
+        "optionValue": "XDU-class 450kW row unit",
+        "priceUsd": 44999
+      }
+    ],
+    "metadata": {
+      "seo_title": "Vertiv Liebert XDU Liquid-to-Liquid CDU | Buy at 40% Below Market | VectraCompute",
+      "seo_description": "Vertiv Liebert XDU coolant distribution unit - liquid-to-liquid heat exchange between your facility water and direct-to-chip loops, the backbone of li…",
+      "seo_keywords": "Vertiv Liebert XDU price, liquid to liquid CDU, coolant distribution unit, direct to chip cooling",
+      "trust_note": "Every unit is functionally checked and reviewed against your platform before dispatch; allocation-class items are confirmed before payment is finalized.",
+      "best_for": "Direct-to-chip cooling rows, liquid-cooled GPU racks, facility heat rejection",
+      "lead_time": "Ships in 4-10 weeks with commissioning scheduled",
+      "warranty": "Manufacturer warranty plus VectraCompute validation support",
+      "support_level": "Compatibility and deployment review included",
+      "condition": "New",
+      "financing": "PO support available",
+      "install_support": "Platform, facility, or fabric review against your deployment available before dispatch",
+      "certifications": "Functionally checked, Compatibility reviewed, Deployment scoped",
+      "buyer_faq": "What does a CDU actually do? It isolates the clean direct-to-chip loop from facility water and controls flow, pressure, and temperature per rack row. | Which size? Roughly 1kW of CDU capacity per kW of GPU load on the row - we size it in review."
+    }
+  },
+  {
+    "title": "Cisco Nexus 9400 Series 800G Ethernet Switch",
+    "handle": "cisco-nexus-9400-800g-switch",
+    "category": "Networking & Interconnect",
+    "description": "Cisco Nexus 9000-series 800G Ethernet switching for AI fabrics - RoCE-ready, telemetry-rich, and the standards-based alternative to InfiniBand for multi-node training clusters.",
+    "weight": 25000,
+    "optionTitle": "Configuration",
+    "variants": [
+      {
+        "title": "32x 800G fixed configuration",
+        "sku": "VC-N9K-800G-32",
+        "optionValue": "32x 800G fixed configuration",
+        "priceUsd": 47999
+      },
+      {
+        "title": "64x 800G fixed configuration",
+        "sku": "VC-N9K-800G-64",
+        "optionValue": "64x 800G fixed configuration",
+        "priceUsd": 71999
+      }
+    ],
+    "metadata": {
+      "seo_title": "Cisco Nexus 9400 Series 800G Ethernet Switch | Buy at 40% Below Market | VectraCompute",
+      "seo_description": "Cisco Nexus 9000-series 800G Ethernet switching for AI fabrics - RoCE-ready, telemetry-rich, and the standards-based alternative to InfiniBand for mul…",
+      "seo_keywords": "Cisco Nexus 800G switch price, Nexus 9400 series, 800G Ethernet AI fabric, RoCE switch, AI cluster networking",
+      "trust_note": "Every unit is functionally checked and reviewed against your platform before dispatch; allocation-class items are confirmed before payment is finalized.",
+      "best_for": "AI training fabrics, 800G cluster networking, InfiniBand alternatives",
+      "lead_time": "Ships in 3-8 weeks with fabric design review",
+      "warranty": "Manufacturer warranty plus VectraCompute validation support",
+      "support_level": "Compatibility and deployment review included",
+      "condition": "New",
+      "financing": "PO support available",
+      "install_support": "Platform, facility, or fabric review against your deployment available before dispatch",
+      "certifications": "Functionally checked, Compatibility reviewed, Deployment scoped",
+      "buyer_faq": "Ethernet or InfiniBand for training? Modern 800G Ethernet with RoCE closes most of the gap and keeps standard tooling - we review your topology either way. | Does the price include optics? Optics and cabling are quoted with the fabric design review."
+    }
   }
 ] as const
 

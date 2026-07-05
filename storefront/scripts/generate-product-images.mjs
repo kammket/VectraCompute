@@ -774,6 +774,72 @@ const PRODUCTS = [
     "Camera-grade AI SoC",
     "component",
   ],
+  [
+    "amd-instinct-mi450-accelerator",
+    "AMD Instinct MI450 Acceler…",
+    "MI400-series accelerator",
+    "component",
+  ],
+  [
+    "cerebras-cs-3-wafer-scale-deployment",
+    "Cerebras CS-3 Wafer-Scale…",
+    "Wafer-scale AI system",
+    "server",
+  ],
+  [
+    "apple-mac-studio-m3-ultra-local-ai",
+    "Apple Mac Studio M3 Ultra…",
+    "Up to 512GB unified memory",
+    "cpu",
+  ],
+  [
+    "nvidia-geforce-rtx-5080-gpu",
+    "NVIDIA GeForce RTX 5080 16…",
+    "16GB GDDR7 Blackwell",
+    "component",
+  ],
+  [
+    "asus-proart-rtx-4090-og",
+    "ASUS ProArt GeForce RTX 40…",
+    "2.5-slot creator 4090",
+    "component",
+  ],
+  [
+    "nxp-imx-95-applications-processor-kit",
+    "NXP i.MX 95 Applications P…",
+    "Industrial edge AI SoC",
+    "component",
+  ],
+  [
+    "kioxia-enterprise-pcie5-nvme-ssd",
+    "Kioxia Enterprise PCIe 5.0…",
+    "PCIe 5.0 datacenter flash",
+    "component",
+  ],
+  [
+    "yageo-shibaura-ntc-temperature-sensor-kit",
+    "Yageo-Shibaura NTC Server…",
+    "Rack thermal sensing",
+    "component",
+  ],
+  [
+    "vertiv-800-vdc-power-architecture",
+    "Vertiv 800 VDC Power Archi…",
+    "Direct-current rack power",
+    "component",
+  ],
+  [
+    "vertiv-liebert-xdu-cdu",
+    "Vertiv Liebert XDU Liquid-…",
+    "Liquid-to-liquid CDU",
+    "component",
+  ],
+  [
+    "cisco-nexus-9400-800g-switch",
+    "Cisco Nexus 9400 Series 80…",
+    "800G AI fabric switch",
+    "component",
+  ],
 ]
 
 const CATEGORIES = [

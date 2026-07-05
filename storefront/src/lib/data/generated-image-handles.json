@@ -99,7 +99,18 @@
     "nvidia-jetson-orin-nano-module",
     "google-coral-m2-accelerator",
     "raspberry-pi-5-ai-kit",
-    "hailo-15-vision-processor-module"
+    "hailo-15-vision-processor-module",
+    "amd-instinct-mi450-accelerator",
+    "cerebras-cs-3-wafer-scale-deployment",
+    "apple-mac-studio-m3-ultra-local-ai",
+    "nvidia-geforce-rtx-5080-gpu",
+    "asus-proart-rtx-4090-og",
+    "nxp-imx-95-applications-processor-kit",
+    "kioxia-enterprise-pcie5-nvme-ssd",
+    "yageo-shibaura-ntc-temperature-sensor-kit",
+    "vertiv-800-vdc-power-architecture",
+    "vertiv-liebert-xdu-cdu",
+    "cisco-nexus-9400-800g-switch"
   ],
   "categories": [
     "ai-deep-learning-workstations",
