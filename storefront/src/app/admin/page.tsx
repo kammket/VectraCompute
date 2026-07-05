@@ -89,6 +89,11 @@ export default async function AdminPage() {
             title="Reviews"
             text="Moderate customer reviews. Verified purchases publish automatically; approve the rest."
           />
+          <AdminCard
+            href="/admin/settings"
+            title="Payment settings"
+            text="Manage the Bitcoin wallet address, QR code, confirmations, and payment window shown to buyers."
+          />
         </div>
       </div>
     </main>

@@ -328,20 +328,73 @@ const summarizeProduct = (product: BackendCatalogProduct) => ({
   })),
 })
 
-const getPaymentSettings = () => ({
-  enabled: Boolean(
-    process.env.BITCOIN_WALLET_ADDRESS || process.env.BITCOIN_QR_CODE_URL
-  ),
-  walletAddress: process.env.BITCOIN_WALLET_ADDRESS || "",
-  qrCodeImageUrl:
-    process.env.BITCOIN_QR_CODE_URL ||
-    "https://vectracompute-storefront.vercel.app/images/bitcoin-payment-qr.jpeg",
-  instructions:
-    process.env.BITCOIN_PAYMENT_INSTRUCTIONS ||
-    "Send the exact BTC amount and keep your transaction ID. Our team will confirm the payment before dispatch.",
-  requiredConfirmations: Number(process.env.BITCOIN_REQUIRED_CONFIRMATIONS || 2),
-  paymentExpiryMinutes: Number(process.env.BITCOIN_PAYMENT_EXPIRY || 30),
-})
+// Owner-provided store wallet, baked in as the last-resort default so buyers
+// always see a payable address. Admin-panel settings (vectra_settings table)
+// and env vars both override it.
+const DEFAULT_WALLET_ADDRESS = "bc1qap7qchncnq5axlqalamwnrqauupw8h33qcdw2v"
+
+let settingsCache: { value: Record<string, string>; at: number } | null = null
+
+const getStoredSettings = async () => {
+  if (settingsCache && Date.now() - settingsCache.at < 60_000) {
+    return settingsCache.value
+  }
+
+  const db = getPool()
+  if (!db) {
+    return {}
+  }
+
+  try {
+    await db.query(`
+      create table if not exists vectra_settings (
+        key text primary key,
+        value text not null,
+        updated_at timestamptz not null default now()
+      )
+    `)
+    const result = await db.query<{ key: string; value: string }>(
+      "select key, value from vectra_settings where key like 'bitcoin_%'"
+    )
+    const value = Object.fromEntries(
+      result.rows.map((row) => [row.key, row.value])
+    )
+    settingsCache = { value, at: Date.now() }
+    return value
+  } catch (error) {
+    console.error("Settings lookup failed", error)
+    return {}
+  }
+}
+
+const getPaymentSettings = async () => {
+  const stored = await getStoredSettings()
+  const walletAddress =
+    stored.bitcoin_wallet_address?.trim() ||
+    process.env.BITCOIN_WALLET_ADDRESS ||
+    DEFAULT_WALLET_ADDRESS
+
+  return {
+    enabled: true,
+    walletAddress,
+    qrCodeImageUrl:
+      stored.bitcoin_qr_code_url?.trim() ||
+      process.env.BITCOIN_QR_CODE_URL ||
+      "https://vectracompute-storefront.vercel.app/images/bitcoin-payment-qr.jpeg",
+    instructions:
+      stored.bitcoin_payment_instructions?.trim() ||
+      process.env.BITCOIN_PAYMENT_INSTRUCTIONS ||
+      "Send the exact BTC amount and keep your transaction ID. Our team will confirm the payment before dispatch.",
+    requiredConfirmations: Number(
+      stored.bitcoin_required_confirmations ||
+        process.env.BITCOIN_REQUIRED_CONFIRMATIONS ||
+        2
+    ),
+    paymentExpiryMinutes: Number(
+      stored.bitcoin_payment_expiry || process.env.BITCOIN_PAYMENT_EXPIRY || 30
+    ),
+  }
+}
 
 const getBtcEstimate = async (usdTotal: number) => {
   try {
@@ -598,7 +651,7 @@ const executeTool = async (
     }
 
     case "get_payment_instructions": {
-      const settings = getPaymentSettings()
+      const settings = await getPaymentSettings()
       const totalUsd = Number(args.total_usd) || 0
       const btcEstimate = totalUsd > 0 ? await getBtcEstimate(totalUsd) : null
       return {
@@ -976,7 +1029,7 @@ const persistAiOrder = async (
   })
 
   const btcEstimate = await getBtcEstimate(total)
-  const payment = getPaymentSettings()
+  const payment = await getPaymentSettings()
 
   return {
     order: {
@@ -1188,7 +1241,7 @@ const server = createServer(async (req, res) => {
     }
 
     if (req.method === "GET" && url.pathname === "/api/payment-settings") {
-      sendJson(req, res, 200, getPaymentSettings())
+      sendJson(req, res, 200, await getPaymentSettings())
       return
     }
 
